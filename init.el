@@ -17,6 +17,12 @@
 (column-number-mode t)
 (set-fringe-style -1)
 (tooltip-mode -1)
+(setq ring-bell-function (lambda () (message "*beep*")))
+
+;; OSX specifics
+(setq mac-option-modifier nil
+      mac-command-modifier 'meta
+      x-select-enable-clipboard t)
 
 ;; aesthetics
 (set-frame-font "Menlo-16")
@@ -31,6 +37,8 @@
 
 ;; load customizations
 (add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 (load "packages")
 (load "functions")
 (load "mappings")
