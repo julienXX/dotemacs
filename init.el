@@ -19,10 +19,10 @@
 (tooltip-mode -1)
 (setq ring-bell-function (lambda () (message "*beep*")))
 
-;; OSX specifics
-(setq mac-option-modifier nil
-      mac-command-modifier 'meta
-      x-select-enable-clipboard t)
+;; Free up the option key for special characters
+(setq ns-alternate-modifier 'none)
+(setq ns-command-modifier 'meta)
+(setq ns-function-modifier 'super)
 
 ;; aesthetics
 (set-frame-font "Menlo-16")
