@@ -29,7 +29,9 @@
                           ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
-;; load packages and their config
+;; load customizations
 (add-to-list 'load-path "~/.emacs.d")
 (load "packages")
+(load "functions")
+(load "mappings")
 
