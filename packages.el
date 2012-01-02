@@ -29,3 +29,6 @@
 
 ;; peepopen
 (require 'peepopen)
+
+;; automatic end insertion
+(require 'ruby-end)
