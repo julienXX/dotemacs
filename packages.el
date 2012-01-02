@@ -26,3 +26,6 @@
 ;; yasnippet
 (require 'yasnippet)
 (yas/global-mode 1)
+
+;; peepopen
+(require 'peepopen)

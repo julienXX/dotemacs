@@ -30,6 +30,9 @@
 (setq ns-command-modifier 'meta)
 (setq ns-function-modifier 'super)
 
+;; Opens files in the existing frame instead of making new ones.
+(setq ns-pop-up-frames nil)
+
 ;; aesthetics
 (set-frame-font "Menlo-16")
 (load-theme 'tango)
