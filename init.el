@@ -19,6 +19,12 @@
 (tooltip-mode -1)
 (setq ring-bell-function (lambda () (message "*beep*")))
 
+;; initial frame size
+(add-to-list 'default-frame-alist '(left . 0))
+(add-to-list 'default-frame-alist '(top . 0))
+(add-to-list 'default-frame-alist '(height . 50))
+(add-to-list 'default-frame-alist '(width . 155))
+
 ;; Free up the option key for special characters
 (setq ns-alternate-modifier 'none)
 (setq ns-command-modifier 'meta)

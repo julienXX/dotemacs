@@ -20,3 +20,9 @@
 (require 'autopair)
 (autopair-global-mode) ;; to enable in all buffers
 
+;; project-mode
+(autoload 'project-mode "project-mode" "Project Mode" t)
+
+;; yasnippet
+(require 'yasnippet)
+(yas/global-mode 1)
