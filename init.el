@@ -23,7 +23,7 @@
 (add-to-list 'default-frame-alist '(left . 0))
 (add-to-list 'default-frame-alist '(top . 0))
 (add-to-list 'default-frame-alist '(height . 50))
-(add-to-list 'default-frame-alist '(width . 155))
+(add-to-list 'default-frame-alist '(width . 145))
 
 ;; Free up the option key for special characters
 (setq ns-alternate-modifier 'none)
