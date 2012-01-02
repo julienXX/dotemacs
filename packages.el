@@ -32,3 +32,7 @@
 
 ;; automatic end insertion
 (require 'ruby-end)
+
+;; auto-complete
+(require 'auto-complete)
+(global-auto-complete-mode t)

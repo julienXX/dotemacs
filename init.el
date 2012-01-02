@@ -49,6 +49,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/yasnippet"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/auto-complete"))
 (load "packages")
 (load "functions")
 (load "mappings")
