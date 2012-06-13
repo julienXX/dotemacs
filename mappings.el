@@ -1,4 +1,6 @@
 (global-set-key "\C-cs" 'shell)
 (global-set-key "\C-cc" 'switch-to-previous-buffer)
 (global-set-key "\M-t" 'find-file-in-project)
-(global-set-key "\C-d" 'duplicate-line)
+(global-set-key "\C-cd" 'duplicate-line)
+(global-set-key "\M-]" 'textmate-shift-right)
+(global-set-key "\M-[" 'textmate-shift-left)
