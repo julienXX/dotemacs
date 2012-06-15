@@ -4,3 +4,4 @@
 (global-set-key "\C-cd" 'duplicate-line)
 (global-set-key "\M-]" 'textmate-shift-right)
 (global-set-key "\M-[" 'textmate-shift-left)
+(global-set-key "\M-/" 'comment-region)
