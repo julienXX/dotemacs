@@ -42,6 +42,8 @@
 ;; aesthetics
 (set-frame-font "Menlo-14")
 (load-theme 'tango)
+(setq linum-format "%3d ")
+(global-linum-mode)
 
 ;; package stuff
 (require 'package)
@@ -59,6 +61,7 @@
 (load "packages")
 (load "functions")
 (load "mappings")
+(load "modes")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

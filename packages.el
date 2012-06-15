@@ -83,3 +83,16 @@
 ;; CTags
 (autoload 'ctags-update-minor-mode "ctags-update" "update TAGS using ctags" t)
 (ctags-update-minor-mode 1)
+
+;; YAML
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+;; Gists
+(require 'gist)
+(setq gist-use-curl t)
+(setq gist-view-gist t)
+
+;; Partially.el
+(require 'partially)
+(setq partially:rails-root-fn 'rinari-root)
