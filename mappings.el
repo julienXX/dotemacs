@@ -5,3 +5,7 @@
 (global-set-key "\M-]" 'textmate-shift-right)
 (global-set-key "\M-[" 'textmate-shift-left)
 (global-set-key "\M-/" 'comment-region)
+(global-set-key "\C-xà" 'delete-window)
+(global-set-key "\C-x&" 'delete-other-windows)
+(global-set-key "\C-xé" 'split-window-below)
+(global-set-key "\C-x\"" 'split-window-right)
