@@ -13,3 +13,5 @@
 (add-to-list 'completion-ignored-extensions ".rbc")
 (add-to-list 'completion-ignored-extensions ".rbo")
 
+;; Treat some files as shell scripts
+(add-to-list 'auto-mode-alist '(".gitconfig$" . shell-script-mode))
