@@ -1,4 +1,8 @@
 ;;; -*- coding: utf-8 -*-
-(("/Users/julien/.emacs.d/elpa/elisp-slime-nav-0.2/elisp-slime-nav-autoloads.el" . 783)
+(("/Users/julien/.emacs.d/elpa/clojure-mode-1.11.5/clojure-mode-autoloads.el" . 1101)
+ ("/Users/julien/.emacs.d/elpa/elisp-slime-nav-0.2/elisp-slime-nav-autoloads.el" . 783)
+ ("/Users/julien/.emacs.d/elpa/slime-20100404.1/slime-autoloads.el" . 2548)
+ ("/Users/julien/.emacs.d/elpa/slime-repl-20100404/slime-repl-autoloads.el" . 408)
+ ("/Users/julien/.emacs.d/elpa/swank-clojure-1.1.0/swank-clojure-autoloads.el" . 1049)
  ("/Users/julien/.emacs.d/init.el" . 1282)
  ("/Users/julien/.emacs.d/packages.el" . 1279))
