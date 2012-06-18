@@ -9,3 +9,4 @@
 (global-set-key "\C-x&" 'delete-other-windows)
 (global-set-key "\C-xé" 'split-window-below)
 (global-set-key "\C-x\"" 'split-window-right)
+(global-set-key "\C-cj" 'ace-jump-mode)

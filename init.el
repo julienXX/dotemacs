@@ -62,6 +62,7 @@
 (load "functions")
 (load "mappings")
 (load "modes")
+(load "hooks")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -75,3 +76,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Setting rbenv path
+(setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
+(setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
