@@ -96,3 +96,7 @@
 ;; Partially.el
 (require 'partially)
 (setq partially:rails-root-fn 'rinari-root)
+
+;; ace-jump-mode
+(require 'ace-jump-mode)
+  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
