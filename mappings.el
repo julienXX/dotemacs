@@ -1,6 +1,7 @@
 (global-set-key "\C-cs" 'shell)
 (global-set-key "\C-cc" 'switch-to-previous-buffer)
 (global-set-key "\M-t" 'textmate-goto-file)
+(global-set-key "\M-T" 'textmate-goto-symbol)
 (global-set-key "\C-cd" 'duplicate-line)
 (global-set-key "\M-]" 'textmate-shift-right)
 (global-set-key "\M-[" 'textmate-shift-left)
