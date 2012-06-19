@@ -9,3 +9,6 @@
 (global-set-key "\C-x&" 'delete-other-windows)
 (global-set-key "\C-xé" 'split-window-below)
 (global-set-key "\C-x\"" 'split-window-right)
+(global-set-key "\M-l" 'goto-line)
+(global-set-key "\M-L" 'textmate-select-line)
+(global-set-key "\C-c,s" 'rspec-verify-single)
