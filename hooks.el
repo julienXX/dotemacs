@@ -11,7 +11,12 @@
 (add-hook 'shell-mode-hook 
   '(lambda () (linum-mode 0)))
 
-;; Autopair off in Slime
+;; SLIME hooks
 (add-hook 'slime-repl-mode-hook
-  #'(lambda ()
+  (lambda ()
     (setq autopair-dont-activate t)))
+
+;; Ruby hooks
+(add-hook 'ruby-mode-hook
+  (lambda ()
+     (ruby-electric-mode t)))

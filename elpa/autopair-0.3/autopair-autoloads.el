@@ -3,8 +3,8 @@
 ;;; Code:
 
 
-;;;### (autoloads nil nil ("autopair-pkg.el" "autopair.el") (20446
-;;;;;;  59978 391441))
+;;;### (autoloads nil nil ("autopair-pkg.el" "autopair.el") (20447
+;;;;;;  47777 112580))
 
 ;;;***
 
