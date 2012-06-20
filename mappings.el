@@ -13,3 +13,5 @@
 (global-set-key "\M-l" 'goto-line)
 (global-set-key "\M-L" 'textmate-select-line)
 (global-set-key "\C-c,s" 'rspec-verify-single)
+(global-set-key "\C-O" 'vi-open-line-above)
+(global-set-key "\C-o" 'vi-open-line-below)
