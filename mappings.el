@@ -1,4 +1,5 @@
 (global-set-key "\C-cs" 'shell)
+(global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
 (global-set-key "\C-cc" 'switch-to-previous-buffer)
 (global-set-key "\M-t" 'textmate-goto-file)
 (global-set-key "\M-T" 'textmate-goto-symbol)
@@ -13,5 +14,6 @@
 (global-set-key "\M-l" 'goto-line)
 (global-set-key "\M-L" 'textmate-select-line)
 (global-set-key "\C-c,s" 'rspec-verify-single)
-(global-set-key "\C-O" 'vi-open-line-above)
+(global-set-key "\C-co" 'vi-open-line-above)
 (global-set-key "\C-o" 'vi-open-line-below)
+(global-set-key "\C-c g" 'magit-status)
