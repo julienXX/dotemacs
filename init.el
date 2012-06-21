@@ -56,8 +56,12 @@
 (add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/yasnippet"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/auto-complete"))
+
+; Add external projects to load path
+(dolist (project (directory-files "~/.emacs.d/vendor" t "\\w+"))
+  (when (file-directory-p project)
+    (add-to-list 'load-path project)))
+
 (load "packages")
 (load "functions")
 (load "mappings")

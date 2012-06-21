@@ -1,14 +1,14 @@
 ;; Line numbers
-(add-hook 'eshell-mode-hook 
+(add-hook 'eshell-mode-hook
   '(lambda () (linum-mode 0)))
 
-(add-hook 'compilation-mode-hook 
+(add-hook 'compilation-mode-hook
   '(lambda () (linum-mode 0)))
 
-(add-hook 'dired-mode-hook 
+(add-hook 'dired-mode-hook
   '(lambda () (linum-mode 0)))
 
-(add-hook 'shell-mode-hook 
+(add-hook 'shell-mode-hook
   '(lambda () (linum-mode 0)))
 
 ;; SLIME hooks
@@ -20,3 +20,6 @@
 (add-hook 'ruby-mode-hook
   (lambda ()
      (ruby-electric-mode t)))
+
+;; Delete trailing whitespaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)

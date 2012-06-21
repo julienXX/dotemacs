@@ -92,6 +92,7 @@
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; Gists
+(require 'eieio)
 (require 'gist)
 (setq gist-use-curl t)
 (setq gist-view-gist t)
@@ -101,8 +102,8 @@
 (setq partially:rails-root-fn 'rinari-root)
 
 ;; ace-jump-mode
-(require 'ace-jump-mode)
-  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;(require 'ace-jump-mode)
+;;  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 ;; Ruby-electric
 (require 'ruby-electric)
@@ -118,3 +119,6 @@
                           (yas/expand))
                ad-do-it)))))
 (yas/advise-indent-function 'ruby-indent-line)
+
+;; RESTclient
+(require 'restclient)
