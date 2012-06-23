@@ -64,9 +64,9 @@
 
 (load "packages")
 (load "functions")
-(load "mappings")
 (load "modes")
 (load "hooks")
+(load "mappings")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
