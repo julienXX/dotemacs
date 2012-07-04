@@ -23,3 +23,8 @@
 
 ;; Delete trailing whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Rainbow mode hooks
+(add-hook 'css-mode-hook 'rainbow-mode)
+(add-hook 'scss-mode-hook 'rainbow-mode)
+(add-hook 'sass-mode-hook 'rainbow-mode)

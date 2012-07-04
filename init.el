@@ -42,12 +42,12 @@
 ;; aesthetics
 (set-frame-font "Menlo-14")
 (load-theme 'tango)
-(setq linum-format "%3d ")
+(setq linum-format " %3d ")
 (global-linum-mode)
 
 ;; package stuff
 (require 'package)
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                           ("gnu" . "http://elpa.gnu.org/packages/")
                           ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
@@ -73,7 +73,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ruby-electric-expand-delimiters-list nil))
+ '(column-number-mode t)
+ '(custom-safe-themes (quote ("501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" default)))
+ '(fci-rule-color "#073642")
+ '(fringe-mode 9 nil (fringe))
+ '(indicate-buffer-boundaries (quote right))
+ '(indicate-empty-lines t)
+ '(ruby-electric-expand-delimiters-list nil)
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
