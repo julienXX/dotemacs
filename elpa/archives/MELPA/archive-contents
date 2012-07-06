@@ -387,6 +387,9 @@
 	     ((prelude-programming
 	       (1 0 0)))
 	     "Emacs Prelude: cc-mode configuration. [source: github]" single])
+ (powerline .
+	    [(20120705)
+	     nil "fancy statusline [source: wiki]" single])
  (popwin .
 	 [(20120529)
 	  nil "Popup Window Manager. [source: github]" single])
@@ -540,7 +543,7 @@
 	   [(20120508)
 	    nil "JavaScript scanner [source: github]" single])
  (js2-mode .
-	   [(20120617)
+	   [(20120706)
 	    nil "an improved JavaScript editing mode [source: github]" tar])
  (js-comint .
 	    [(20080530)
@@ -599,7 +602,7 @@
 		      [(20110817)
 		       nil "highlight the word the point is on [source: github]" single])
  (icicles .
-	  [(20120703)
+	  [(20120705)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20111221)
