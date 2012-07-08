@@ -6,7 +6,7 @@
 		 [(20111231)
 		  nil "Unfold CSS-selector-like expressions to markup [source: github]" single])
  (zenburn-theme .
-		[(20120705)
+		[(20120706)
 		 nil "A low contrast color theme for Emacs. [source: github]" single])
  (zen-and-art-theme .
 		    [(20120622)
@@ -33,10 +33,10 @@
 		[(20120312)
 		 nil "window layout manager [source: github]" single])
  (wgrep .
-	[(20120530)
+	[(20120706)
 	 nil "Writable grep buffer and apply the changes to files [source: github]" tar])
  (websocket .
-	    [(20120702)
+	    [(20120707)
 	     nil "Emacs WebSocket client [source: github]" single])
  (w3m .
       [(20120702)
@@ -253,7 +253,7 @@
 		     [(20120428)
 		      nil "Highlight nested parens, brackets, braces a different color at each depth. [source: github]" single])
  (quickrun .
-	   [(20120613)
+	   [(20120707)
 	    nil "Run commands quickly [source: github]" single])
  (quick-buffer-switch .
 		      [(20120704)
@@ -391,7 +391,7 @@
 	    [(20120705)
 	     nil "fancy statusline [source: wiki]" single])
  (popwin .
-	 [(20120529)
+	 [(20120707)
 	  nil "Popup Window Manager. [source: github]" single])
  (popup .
 	[(20120331)
@@ -490,7 +490,7 @@
 		[(20120225)
 		 nil "Emacs Major mode for Markdown-formatted text files [source: github]" single])
  (mark-multiple .
-		[(20120516)
+		[(20120706)
 		 nil "A library that sorta lets you mark several regions at once [source: github]" tar])
  (magithub .
 	   [(20120209)
@@ -529,6 +529,9 @@
  (less-css-mode .
 		[(20111128)
 		 nil "Major mode for editing LESS CSS files (lesscss.org) [source: github]" single])
+ (legalese .
+	   [(20100119)
+	    nil "Add legalese to your program files [source: wiki]" single])
  (latex-pretty-symbols .
 		       [(20111011)
 			nil "Display many latex symbols as their unicode counterparts [source: hg]" single])
@@ -602,7 +605,7 @@
 		      [(20110817)
 		       nil "highlight the word the point is on [source: github]" single])
  (icicles .
-	  [(20120705)
+	  [(20120707)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20111221)
@@ -620,7 +623,7 @@
 		      [(20111115)
 		       nil "Hook slime's completion into hippie-expand [source: github]" single])
  (highline .
-	   [(20120628)
+	   [(20120706)
 	    nil "Rewrite of Powerline [source: github]" single])
  (highlight-symbol .
 		   [(20090413)
@@ -649,7 +652,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120705)
+       [(20120707)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (haskell-mode .
 	       [(20120704)
@@ -833,6 +836,9 @@
  (diminish .
 	   [(20091203)
 	    nil "Diminished modes are minor modes with no modeline display [source: github]" single])
+ (diff-hl .
+	  [(20120708)
+	   nil "VC diff fringe highlighting [source: github]" single])
  (delim-kill .
 	     [(20100517)
 	      nil "Kill text between delimiters. [source: github]" single])
@@ -869,7 +875,7 @@
 				 [(20120704)
 				  nil "A version of Chris Kempson's various Tomorrow themes [source: github]" tar])
  (color-theme-sanityinc-solarized .
-				  [(20120704)
+				  [(20120706)
 				   nil "A version of Ethan Schoonover's Solarized themes [source: github]" tar])
  (color-theme-buffer-local .
 			   [(20120703)

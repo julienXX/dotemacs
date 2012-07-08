@@ -122,3 +122,6 @@
 
 ;; RESTclient
 (require 'restclient)
+
+;; ESS
+(require 'ess-site)
