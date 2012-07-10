@@ -557,6 +557,11 @@
  (jaunte .
 	 [(20120212)
 	  nil "No description available. [source: github]" single])
+ (jade-mode .
+	    [(20120501)
+	     ((sws-mode
+	       (0)))
+	     "Major mode for editing .jade files [source: github]" single])
  (jabber-mode .
 	      [(20120615)
 	       nil "No description available. [source: git]" tar])
@@ -647,7 +652,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120707)
+       [(20120709)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (haskell-mode .
 	       [(20120704)
@@ -970,9 +975,4 @@
 	    nil "An auto-complete source using slime completions [source: github]" single])
  (ac-dabbrev .
 	     [(20091116)
-	      nil "auto-complete.el source for dabbrev [source: wiki]" single])
- (jade-mode .
-	    [(20120501)
-	     ((sws-mode
-	       (0)))
-	     "Major mode for editing .jade files [source: github]" single]))
+	      nil "auto-complete.el source for dabbrev [source: wiki]" single]))

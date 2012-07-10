@@ -19,7 +19,8 @@
 ;; Ruby hooks
 (add-hook 'ruby-mode-hook
   (lambda ()
-     (ruby-electric-mode t)))
+    (ruby-electric-mode t)
+    (ruby-tools-mode t)))
 
 ;; Delete trailing whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)

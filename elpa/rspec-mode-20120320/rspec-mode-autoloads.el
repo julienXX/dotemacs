@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (rspec-buffer-is-spec-p rspec-mode) "rspec-mode"
-;;;;;;  "rspec-mode.el" (20469 47193))
+;;;;;;  "rspec-mode.el" (20474 43068))
 ;;; Generated autoloads from rspec-mode.el
 
 (autoload 'rspec-mode "rspec-mode" "\
@@ -26,7 +26,7 @@ Returns true if the current buffer is a spec
 ;;;***
 
 ;;;### (autoloads nil nil ("rspec-mode-expectations.el" "rspec-mode-pkg.el")
-;;;;;;  (20469 47193 303854))
+;;;;;;  (20474 43068 887564))
 
 ;;;***
 

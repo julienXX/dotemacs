@@ -102,8 +102,14 @@
 (setq partially:rails-root-fn 'rinari-root)
 
 ;; ace-jump-mode
-;;(require 'ace-jump-mode)
-;;  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(require 'ace-jump-mode)
+  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;; RESTclient
+(require 'restclient)
+
+;; ESS
+(require 'ess-site)
 
 ;; Ruby-electric
 (require 'ruby-electric)
@@ -120,8 +126,9 @@
                ad-do-it)))))
 (yas/advise-indent-function 'ruby-indent-line)
 
-;; RESTclient
-(require 'restclient)
+;; RSpec mode
+(require 'rspec-mode)
+(setq rspec-use-rake-flag nil)
 
-;; ESS
-(require 'ess-site)
+;; ruby-tools
+(require 'ruby-tools)
