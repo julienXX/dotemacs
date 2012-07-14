@@ -12,7 +12,7 @@
 		    [(20120622)
 		     nil "zen and art color theme for GNU Emacs 24 [source: github]" single])
  (yasnippet .
-	    [(20120630)
+	    [(20120713)
 	     nil "Yet another snippet extension for Emacs. [source: github]" tar])
  (yari .
        [(20110417)
@@ -36,10 +36,10 @@
 	[(20120706)
 	 nil "Writable grep buffer and apply the changes to files [source: github]" tar])
  (websocket .
-	    [(20120707)
+	    [(20120714)
 	     nil "Emacs WebSocket client [source: github]" single])
  (w3m .
-      [(20120702)
+      [(20120713)
        nil "an Emacs interface to w3m [source: github]" tar])
  (volatile-highlights .
 		      [(20120215)
@@ -75,7 +75,7 @@
 			[(20120630)
 			 nil "A Emacs 24 faces port of the TextMate theme [source: github]" single])
  (twilight-anti-bright-theme .
-			     [(20120703)
+			     [(20120713)
 			      nil "A soothing Emacs 24 light-on-dark theme [source: github]" single])
  (todochiku .
 	    [(20120202)
@@ -105,7 +105,7 @@
 	   [(20120525)
 	    nil "emulate surround.vim from Vim [source: github]" single])
  (sunrise-commander .
-		    [(20120708)
+		    [(20120714)
 		     nil "two-pane file manager for Emacs based on Dired and inspired by MC [source: github]" tar])
  (stylus-mode .
 	      [(20120501)
@@ -170,13 +170,13 @@
 	    [(20120409)
 	     nil "Intelligent tab completion and indentation. [source: github]" single])
  (smart-mode-line .
-		  [(20120709)
+		  [(20120713)
 		   nil "A color coded smart mode-line. [source: github]" single])
  (slime-ritz .
 	     [(20120612)
 	      nil "slime extensions for ritz [source: github]" single])
  (slime .
-	[(20120619)
+	[(20120713)
 	 nil "Superior Lisp Interaction Mode for Emacs [source: git]" tar])
  (shimbun .
 	  [(20120501)
@@ -205,7 +205,7 @@
 	       (3 0 15)))
 	     "Major mode for editing Sass files [source: github]" single])
  (rvm .
-      [(20120329)
+      [(20120714)
        nil "Emacs integration for rvm [source: github]" single])
  (ruby-tools .
 	     [(20120528)
@@ -432,7 +432,7 @@
 	  [(20110508)
 	   nil "minor mode for editing parentheses [source: darcs]" single])
  (pandoc-mode .
-	      [(20120412)
+	      [(20120711)
 	       nil "Minor mode for interacting with Pandoc [source: github]" tar])
  (package-spec .
 	       [(20120403)
@@ -509,7 +509,7 @@
 	      (1 2)))
 	    "Magit extensions for using GitHub [source: github]" single])
  (magit .
-	[(20120616)
+	[(20120714)
 	 nil "Control Git from Emacs. [source: github]" tar])
  (lua-mode .
 	   [(20120612)
@@ -558,7 +558,7 @@
 	   [(20120508)
 	    nil "JavaScript scanner [source: github]" single])
  (js2-mode .
-	   [(20120706)
+	   [(20120713)
 	    nil "an improved JavaScript editing mode [source: github]" tar])
  (js-comint .
 	    [(20080530)
@@ -574,9 +574,6 @@
 	     ((sws-mode
 	       (0)))
 	     "Major mode for editing .jade files [source: github]" single])
- (jabber-mode .
-	      [(20120615)
-	       nil "No description available. [source: git]" tar])
  (iy-go-to-char .
 		[(20120416)
 		 nil "No description available. [source: wiki]" single])
@@ -617,7 +614,7 @@
 		      [(20110817)
 		       nil "highlight the word the point is on [source: github]" single])
  (icicles .
-	  [(20120711)
+	  [(20120714)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20111221)
@@ -664,7 +661,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120710)
+       [(20120714)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (haskell-mode .
 	       [(20120704)
@@ -777,13 +774,13 @@
 		[(20120705)
 		 nil "Increase selected region by semantic units. [source: github]" tar])
  (evil-numbers .
-	       [(20111001)
+	       [(20120712)
 		nil "increment/decrement numbers like in vim [source: github]" single])
  (evil-leader .
 	      [(20111001)
 	       nil "No description available. [source: github]" single])
  (evil .
-       [(20120619)
+       [(20120713)
 	((undo-tree
 	  (0 5 1)))
 	"Extensible Vi layer for Emacs. [source: git]" tar])
@@ -823,7 +820,7 @@
 	[(20120118)
 	 nil "running leiningen commands from emacs [source: github]" single])
  (ein .
-      [(20120710)
+      [(20120714)
        ((websocket
 	 (0 9)))
        "Emacs IPython Notebook [source: github]" tar])
@@ -882,7 +879,7 @@
 	     [(20110624)
 	      nil "Perl code editing commands for Emacs [source: github]" single])
  (color-theme-solarized .
-			[(20120624)
+			[(20120626)
 			 ((color-theme
 			   (6 5 5)))
 			 "Solarized themes for Emacs [source: github]" tar])
@@ -983,7 +980,7 @@
 		 [(20120620)
 		  nil "Yet another front-end for ack [source: github]" single])
  (ace-jump-mode .
-		[(20120701)
+		[(20120713)
 		 nil "a quick cursor location minor mode for emacs [source: github]" single])
  (ac-slime .
 	   [(20120524)
