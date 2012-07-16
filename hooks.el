@@ -12,13 +12,14 @@
   '(lambda () (linum-mode 0)))
 
 ;; SLIME hooks
-(add-hook 'slime-repl-mode-hook
-  (lambda ()
-    (setq autopair-dont-activate t)))
+(add-hook 'sldb-mode-hook
+          #'(lambda ()
+              (autopair-mode -1)))
 
 ;; Ruby hooks
 (add-hook 'ruby-mode-hook
   (lambda ()
+    (autopair-mode 1)
     (ruby-electric-mode t)
     (ruby-tools-mode t)))
 
