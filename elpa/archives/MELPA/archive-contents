@@ -650,6 +650,11 @@
 		    (projectile
 		     (0 6)))
 		   "Helm integration for Projectile [source: github]" single])
+ (helm-gtags .
+	     [(20120716)
+	      ((helm
+		(20120710)))
+	      "GNU GLOBAL helm interface [source: github]" single])
  (helm-git .
 	   [(20120629)
 	    nil "Helm extension for Git. [source: github]" single])
