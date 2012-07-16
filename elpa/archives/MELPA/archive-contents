@@ -36,7 +36,7 @@
 	[(20120706)
 	 nil "Writable grep buffer and apply the changes to files [source: github]" tar])
  (websocket .
-	    [(20120714)
+	    [(20120715)
 	     nil "Emacs WebSocket client [source: github]" single])
  (w3m .
       [(20120713)
@@ -105,7 +105,7 @@
 	   [(20120525)
 	    nil "emulate surround.vim from Vim [source: github]" single])
  (sunrise-commander .
-		    [(20120714)
+		    [(20120715)
 		     nil "two-pane file manager for Emacs based on Dired and inspired by MC [source: github]" tar])
  (stylus-mode .
 	      [(20120501)
@@ -397,8 +397,8 @@
 	     [(20120709)
 	      nil "run powershell as an inferior shell in emacs [source: wiki]" single])
  (powerline .
-	    [(20120709)
-	     nil "fancy statusline [source: wiki]" single])
+	    [(20120715)
+	     nil "Rewrite of Powerline [source: github]" single])
  (popwin .
 	 [(20120707)
 	  nil "Popup Window Manager. [source: github]" single])
@@ -520,7 +520,7 @@
 	    (1 3)))
 	  "logging library for Emacs [source: github]" single])
  (logalimacs .
-	     [(20120704)
+	     [(20120716)
 	      ((popwin
 		(20120529))
 	       (popup
@@ -762,10 +762,10 @@
 	[(20120124)
 	 nil "Breadth-first file-finding facility for (X)Emacs [source: github]" single])
  (find-file-in-project .
-		       [(20110903)
+		       [(20120715)
 			nil "Find files in a project quickly. [source: github]" single])
  (fill-column-indicator .
-			[(20120504)
+			[(20120715)
 			 nil "Graphically indicate the fill column [source: github]" tar])
  (feature-mode .
 	       [(20120524)
@@ -820,7 +820,7 @@
 	[(20120118)
 	 nil "running leiningen commands from emacs [source: github]" single])
  (ein .
-      [(20120714)
+      [(20120715)
        ((websocket
 	 (0 9)))
        "Emacs IPython Notebook [source: github]" tar])
@@ -879,7 +879,7 @@
 	     [(20110624)
 	      nil "Perl code editing commands for Emacs [source: github]" single])
  (color-theme-solarized .
-			[(20120626)
+			[(20120715)
 			 ((color-theme
 			   (6 5 5)))
 			 "Solarized themes for Emacs [source: github]" tar])
