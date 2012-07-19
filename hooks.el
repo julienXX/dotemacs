@@ -11,6 +11,9 @@
 (add-hook 'shell-mode-hook
   '(lambda () (linum-mode 0)))
 
+(add-hook 'magit-mode-hook
+  '(lambda () (linum-mode 0)))
+
 ;; SLIME hooks
 (add-hook 'sldb-mode-hook
           #'(lambda ()
