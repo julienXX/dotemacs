@@ -14,7 +14,7 @@
 ;; SLIME hooks
 (add-hook 'slime-repl-mode-hook
   (lambda ()
-    (setq autopair-dont-activate t)))
+    (autopair-mode -1)))
 
 ;; Ruby hooks
 (add-hook 'ruby-mode-hook

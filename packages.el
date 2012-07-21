@@ -132,3 +132,6 @@
 
 ;; ruby-tools
 (require 'ruby-tools)
+
+;; SLIME
+(setq inferior-lisp-program "/usr/local/bin/clisp")

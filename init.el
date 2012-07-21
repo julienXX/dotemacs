@@ -1,5 +1,7 @@
 ;; emacs configuration
-(push "/usr/local/bin" exec-path)
+;; Setting path
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path `("/usr/local/bin")))
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -92,7 +94,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-;; Setting rbenv path
-(setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
-(setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
