@@ -11,14 +11,18 @@
 (add-hook 'shell-mode-hook
   '(lambda () (linum-mode 0)))
 
+(add-hook 'magit-mode-hook
+  '(lambda () (linum-mode 0)))
+
 ;; SLIME hooks
-(add-hook 'slime-repl-mode-hook
-  (lambda ()
-    (autopair-mode -1)))
+(add-hook 'sldb-mode-hook
+          #'(lambda ()
+              (autopair-mode -1)))
 
 ;; Ruby hooks
 (add-hook 'ruby-mode-hook
   (lambda ()
+    (autopair-mode 1)
     (ruby-electric-mode t)
     (ruby-tools-mode t)))
 
