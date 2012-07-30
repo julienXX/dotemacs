@@ -36,7 +36,7 @@
 	[(20120706)
 	 nil "Writable grep buffer and apply the changes to files [source: github]" tar])
  (websocket .
-	    [(20120723)
+	    [(20120728)
 	     nil "Emacs WebSocket client [source: github]" single])
  (wc-mode .
 	  [(20120531)
@@ -117,10 +117,10 @@
 	   [(20120525)
 	    nil "emulate surround.vim from Vim [source: github]" single])
  (sunrise-commander .
-		    [(20120722)
+		    [(20120729)
 		     nil "two-pane file manager for Emacs based on Dired and inspired by MC [source: github]" tar])
  (stylus-mode .
-	      [(20120501)
+	      [(20120729)
 	       ((sws-mode
 		 (0)))
 	       "Major mode for editing .jade files [source: github]" single])
@@ -502,6 +502,11 @@
  (openwith .
 	   [(20120531)
 	    nil "Open files with external programs [source: hg]" single])
+ (nrepl .
+	[(20120729)
+	 ((clojure-mode
+	   (1 11)))
+	 "Client for Clojure nREPL [source: github]" single])
  (nginx-mode .
 	     [(20111201)
 	      nil "major mode for editing nginx config files [source: github]" single])
@@ -542,8 +547,12 @@
 	  [(20110427)
 	   nil "Minimap sidebar for Emacs [source: git]" single])
  (midje-mode .
-	     [(20120315)
-	      nil "Minor mode for running Midje tests in emacs, see: https://github.com/dnaumov/midje-mode [source: github]" tar])
+	     [(20120728)
+	      ((slime
+		(1 0))
+	       (clojure-mode
+		(1 0)))
+	      "Minor mode for running Midje tests in emacs, see: https://github.com/dnaumov/midje-mode [source: github]" tar])
  (mic-paren .
 	    [(20120716)
 	     nil "advanced highlighting of matching parentheses [source: wiki]" single])
@@ -565,7 +574,7 @@
 		[(20120726)
 		 nil "Emacs Major mode for Markdown-formatted text files [source: github]" single])
  (mark-multiple .
-		[(20120725)
+		[(20120726)
 		 nil "A library that sorta lets you mark several regions at once [source: github]" tar])
  (magithub .
 	   [(20120209)
@@ -599,7 +608,7 @@
 			  [(20120703)
 			   nil "Install emacs24 color themes by buffer. [source: github]" single])
  (lively .
-	 [(20120722)
+	 [(20120728)
 	  nil "Interactively updating text [source: wiki]" single])
  (linum-relative .
 		 [(20120612)
@@ -642,7 +651,7 @@
 	 [(20120212)
 	  nil "No description available. [source: github]" single])
  (jade-mode .
-	    [(20120501)
+	    [(20120729)
 	     ((sws-mode
 	       (0)))
 	     "Major mode for editing .jade files [source: github]" single])
@@ -668,7 +677,7 @@
 	    [(20120630)
 	     nil "code to split customizations into different files [source: github]" single])
  (info+ .
-	[(20120717)
+	[(20120728)
 	 nil "Extensions to `info.el'. [source: wiki]" single])
  (inflections .
 	      [(20120702)
@@ -738,10 +747,10 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120726)
+       [(20120729)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (haskell-mode .
-	       [(20120718)
+	       [(20120726)
 		nil "A Haskell editing mode [source: github]" tar])
  (handlebars-mode .
 		  [(20120412)
@@ -872,7 +881,7 @@
 	      [(20111001)
 	       nil "No description available. [source: github]" single])
  (evil .
-       [(20120724)
+       [(20120729)
 	((undo-tree
 	  (0 5 1)))
 	"Extensible Vi layer for Emacs. [source: git]" tar])
@@ -898,10 +907,8 @@
        [(20110425)
 	nil "No description available. [source: git]" tar])
  (emacs-setup .
-	      [(20120524)
-	       ((revive
-		 (2 19)))
-	       "Package for maintaining your emacs configuration. Clean up your .emacs! [source: github]" tar])
+	      [(20120727)
+	       nil "Package for maintaining your emacs configuration. Clean up your .emacs! [source: github]" tar])
  (elscreen .
 	   [(20120413)
 	    nil "Emacs window session manager [source: github]" single])
@@ -912,7 +919,7 @@
 	[(20120118)
 	 nil "running leiningen commands from emacs [source: github]" single])
  (ein .
-      [(20120725)
+      [(20120728)
        ((websocket
 	 (0 9)))
        "Emacs IPython Notebook [source: github]" tar])
