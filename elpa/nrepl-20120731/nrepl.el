@@ -44,6 +44,7 @@
 
 (require 'clojure-mode)
 (require 'thingatpt)
+(require 'etags)
 (require 'arc-mode)
 (require 'ansi-color)
 (eval-when-compile
@@ -146,9 +147,6 @@ joined together.")
 
 (defvar nrepl-output-end
   "Marker for the end of output.")
-
-(defvar nrepl-jump-stack nil
-  "Stack of locations visited with `nrepl-jump-to-def'.")
 
 (defun nrepl-make-variables-buffer-local (&rest variables)
   (mapcar #'make-variable-buffer-local variables))
@@ -311,6 +309,8 @@ Empty strings and duplicates are ignored."
   ;; TODO: got to be a simpler way to do this
   (nrepl-make-response-handler buffer
                                (lambda (buffer value)
+                                 (with-current-buffer buffer
+                                   (ring-insert find-tag-marker-ring (point-marker)))
                                  (nrepl-jump-to-def-for
                                   (car (read-from-string value))))
                                (lambda (buffer out) (message out))
@@ -328,19 +328,9 @@ Empty strings and duplicates are ignored."
 
 (defun nrepl-jump (query)
   (interactive "P")
-  (push (list (or (buffer-file-name)
-                  (current-buffer)) (point)) nrepl-jump-stack)
   (nrepl-read-symbol-name "Symbol: " 'nrepl-jump-to-def query))
 
-(defun nrepl-jump-back ()
-  "Return to the location from which `nrepl-jump-to-def' was invoked."
-  (interactive)
-  (when nrepl-jump-stack
-    (destructuring-bind (file-or-buffer point) (pop nrepl-jump-stack)
-      (if (bufferp file-or-buffer)
-          (switch-to-buffer file-or-buffer)
-        (find-file file-or-buffer))
-      (goto-char point))))
+(defalias 'nrepl-jump-back 'pop-tag-mark)
 
 (defun nrepl-perform-complete (buffer beginning-of-symbol value)
   (with-current-buffer buffer
@@ -378,6 +368,43 @@ Empty strings and duplicates are ignored."
                                              (save-excursion
                                                (backward-sexp)
                                                (point))))))
+
+(defun nrepl-eldoc-format-thing (thing)
+  (propertize thing 'face 'font-lock-function-name-face))
+
+(defun nrepl-eldoc-format-arglist (arglist)
+  ;; TODO: find out which arglist variant is in use and which argument
+  ;; is currently under point.  Highlight that argument
+  ;; for now:
+  arglist)
+
+(defun nrepl-eldoc-handler (buffer the-thing)
+  (lexical-let ((thing the-thing))
+    (nrepl-make-response-handler 
+     buffer
+     (lambda (buffer value)
+       (when (not (string-equal value "nil"))
+         (message (format "%s: %s" 
+                          (nrepl-eldoc-format-thing thing) 
+                          (nrepl-eldoc-format-arglist value)))))
+       nil nil nil)))
+
+(defun nrepl-eldoc ()
+  "Backend function for eldoc to show argument list in the echo area."
+  (let* ((thing (nrepl-operator-before-point))
+         (form (format "(try
+                         (:arglists 
+                          (meta (resolve (read-string \"%s\"))))
+                         (catch Throwable t nil))" thing)))
+    (when thing
+        (nrepl-send-string form (nrepl-current-ns) 
+                           (nrepl-eldoc-handler (current-buffer)
+                                                thing)))))
+
+(defun nrepl-eldoc-enable-in-current-buffer ()
+  (make-local-variable 'eldoc-documentation-function)
+  (setq eldoc-documentation-function 'nrepl-eldoc)
+  (turn-on-eldoc-mode))
 
 ;;; Response handlers
 (defmacro nrepl-dbind-response (response keys &rest body)
@@ -722,6 +749,27 @@ DIRECTION is 'forward' or 'backward' (in the history list)."
 (defvar nrepl-mode-syntax-table
   (copy-syntax-table clojure-mode-syntax-table))
 
+(defvar nrepl-interaction-mode-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map clojure-mode-map)
+    (define-key map (kbd "M-.") 'nrepl-jump)
+    (define-key map (kbd "M-,") 'nrepl-jump-back)
+    (define-key map (kbd "M-TAB") 'nrepl-complete)
+    (define-key map (kbd "C-M-x") 'nrepl-eval-expression-at-point)
+    (define-key map (kbd "C-x C-e") 'nrepl-eval-last-expression)
+    (define-key map (kbd "C-c C-e") 'nrepl-eval-last-expression)
+    (define-key map (kbd "C-c C-r") 'nrepl-eval-region)
+    (define-key map (kbd "C-c C-n") 'nrepl-eval-ns-form)
+    (define-key map (kbd "C-c C-m") 'nrepl-macroexpand-1-last-expression)
+    (define-key map (kbd "C-c M-m") 'nrepl-macroexpand-all-last-expression)
+    (define-key map (kbd "C-c M-n") 'nrepl-set-ns)
+    (define-key map (kbd "C-c C-d") 'nrepl-doc)
+    (define-key map (kbd "C-c C-z") 'nrepl-switch-to-repl-buffer)
+    (define-key map (kbd "C-c C-k") 'nrepl-load-current-buffer)
+    (define-key map (kbd "C-c C-l") 'nrepl-load-file)
+    (define-key map (kbd "C-c C-b") 'nrepl-interrupt)
+    map))
+
 (defvar nrepl-mode-map
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map clojure-mode-map)
@@ -742,6 +790,18 @@ DIRECTION is 'forward' or 'backward' (in the history list)."
     (define-key map (kbd "C-c C-b") 'nrepl-interrupt)
     map))
 
+(defun clojure-enable-nrepl ()
+  (nrepl-interaction-mode t))
+
+(add-hook 'clojure-mode-hook 'clojure-enable-nrepl)
+
+;;;###autoload
+(define-minor-mode nrepl-interaction-mode
+  "Minor mode for nrepl interaction from a Clojure buffer."
+   nil
+   " nREPL"
+   nrepl-interaction-mode-map)
+
 (defun nrepl-mode ()
   "Major mode for nREPL interactions."
   (interactive)
@@ -750,32 +810,8 @@ DIRECTION is 'forward' or 'backward' (in the history list)."
   (setq mode-name "nREPL"
         major-mode 'nrepl-mode)
   (set-syntax-table nrepl-mode-syntax-table)
+  (nrepl-eldoc-enable-in-current-buffer)
   (run-mode-hooks 'nrepl-mode-hook))
-
-;;;###autoload
-(define-derived-mode clojure-nrepl-mode clojure-mode "Clojure-nREPL"
-  "Major mode for nrepl interaction from a Clojure buffer.")
-
-(let ((map clojure-nrepl-mode-map))
-  (define-key map (kbd "M-.") 'nrepl-jump)
-  (define-key map (kbd "M-,") 'nrepl-jump-back)
-  (define-key map (kbd "M-TAB") 'nrepl-complete)
-  (define-key map (kbd "C-M-x") 'nrepl-eval-expression-at-point)
-  (define-key map (kbd "C-x C-e") 'nrepl-eval-last-expression)
-  (define-key map (kbd "C-c C-e") 'nrepl-eval-last-expression)
-  (define-key map (kbd "C-c C-r") 'nrepl-eval-region)
-  (define-key map (kbd "C-c C-n") 'nrepl-eval-ns-form)
-  (define-key map (kbd "C-c C-m") 'nrepl-macroexpand-1-last-expression)
-  (define-key map (kbd "C-c M-m") 'nrepl-macroexpand-all-last-expression)
-  (define-key map (kbd "C-c M-n") 'nrepl-set-ns)
-  (define-key map (kbd "C-c C-d") 'nrepl-doc)
-  (define-key map (kbd "C-c C-z") 'nrepl-switch-to-repl-buffer)
-  (define-key map (kbd "C-c C-k") 'nrepl-load-current-buffer)
-  (define-key map (kbd "C-c C-l") 'nrepl-load-file)
-  (define-key map (kbd "C-c C-b") 'nrepl-interrupt))
-
-;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-nrepl-mode))
 
 ;;; communication
 (defcustom nrepl-lein-command
@@ -1171,8 +1207,10 @@ Hint: You can use `display-buffer-reuse-frames' and
 `special-display-buffer-names' to customize the frame in which
 the buffer should appear."
   (interactive)
-  (pop-to-buffer (nrepl-repl-buffer))
-  (goto-char (point-max)))
+  (if (not (get-buffer "*nrepl-connection*"))
+      (message "No active nREPL connection.")
+    (pop-to-buffer (nrepl-repl-buffer))
+    (goto-char (point-max))))
 
 (defun nrepl-set-ns (ns)
   "Switch the namespace of the nREPL buffer to ns."
@@ -1232,6 +1270,13 @@ the buffer should appear."
   (setq nrepl-ido-ns ns)
   (nrepl-send-string (prin1-to-string (nrepl-ido-form nrepl-ido-ns)) nrepl-buffer-ns
                      (nrepl-ido-read-var-handler ido-callback (current-buffer))))
+
+(defun nrepl-operator-before-point ()
+  (ignore-errors
+    (save-excursion
+      (backward-up-list 1)
+      (down-list 1)
+      (nrepl-symbol-at-point))))
 
 (defun nrepl-read-symbol-name (prompt callback &optional query)
    "Either read a symbol name or choose the one at point.
@@ -1315,11 +1360,12 @@ under point, prompts for a var."
 ;;;###autoload
 (defun nrepl-enable-on-existing-clojure-buffers ()
   (interactive)
+  (add-hook 'clojure-mode-hook 'clojure-enable-nrepl)
   (save-window-excursion
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
         (when (eq major-mode 'clojure-mode)
-          (clojure-nrepl-mode))))))
+          (clojure-enable-nrepl))))))
 
 ;;;###autoload
 (defun nrepl-jack-in (prompt-project)

@@ -503,7 +503,7 @@
 	   [(20120531)
 	    nil "Open files with external programs [source: hg]" single])
  (nrepl .
-	[(20120729)
+	[(20120731)
 	 ((clojure-mode
 	   (1 11)))
 	 "Client for Clojure nREPL [source: github]" single])
@@ -651,7 +651,7 @@
 	 [(20120212)
 	  nil "No description available. [source: github]" single])
  (jade-mode .
-	    [(20120729)
+	    [(20120730)
 	     ((sws-mode
 	       (0)))
 	     "Major mode for editing .jade files [source: github]" single])
@@ -695,7 +695,7 @@
 		      [(20120724)
 		       nil "highlight the word the point is on [source: github]" single])
  (icicles .
-	  [(20120725)
+	  [(20120731)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20111221)
@@ -747,7 +747,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120729)
+       [(20120731)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (haskell-mode .
 	       [(20120726)
@@ -1019,7 +1019,7 @@
 		       (1 7)))
 		     "Minor mode for Clojure tests [source: github]" single])
  (clojure-mode .
-	       [(20120709)
+	       [(20120718)
 		nil "Major mode for Clojure code [source: github]" single])
  (citrus-mode .
 	      [(20120403)
