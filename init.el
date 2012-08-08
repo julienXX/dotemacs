@@ -45,7 +45,6 @@
 (set-frame-font "Menlo-14")
 (load-theme 'tango)
 (setq linum-format " %3d ")
-(global-linum-mode)
 
 ;; package stuff
 (require 'package)
