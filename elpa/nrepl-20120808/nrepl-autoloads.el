@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (nrepl nrepl-jack-in nrepl-enable-on-existing-clojure-buffers
-;;;;;;  nrepl-interaction-mode) "nrepl" "nrepl.el" (20514 26381 0
+;;;;;;  nrepl-interaction-mode) "nrepl" "nrepl.el" (20515 46163 0
 ;;;;;;  0))
 ;;; Generated autoloads from nrepl.el
 
@@ -32,7 +32,7 @@ Minor mode for nrepl interaction from a Clojure buffer.
 
 ;;;***
 
-;;;### (autoloads nil nil ("nrepl-pkg.el") (20514 26381 828261 0))
+;;;### (autoloads nil nil ("nrepl-pkg.el") (20515 46163 251456 0))
 
 ;;;***
 

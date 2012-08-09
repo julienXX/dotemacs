@@ -480,7 +480,7 @@
 	   [(20120722)
 	    nil "major mode for editing PHP code [source: github]" single])
  (php+-mode .
-	    [(20120725)
+	    [(20120808)
 	     nil "A better PHP mode with Zend Framework 1 support. [source: github]" tar])
  (perspective .
 	      [(20111121)
@@ -531,7 +531,7 @@
 		  [(20120731)
 		   nil "track data items by various instance slots [source: github]" single])
  (nrepl .
-	[(20120806)
+	[(20120808)
 	 ((clojure-mode
 	   (1 11)))
 	 "Client for Clojure nREPL [source: github]" single])
@@ -635,7 +635,7 @@
 	    (1 3)))
 	  "logging library for Emacs [source: github]" single])
  (logalimacs .
-	     [(20120723)
+	     [(20120809)
 	      ((popwin
 		(20120529))
 	       (popup
@@ -705,7 +705,7 @@
 		[(20120416)
 		 nil "No description available. [source: wiki]" single])
  (isearch+ .
-	   [(20120208)
+	   [(20120808)
 	    nil "Extensions to `isearch.el'. [source: wiki]" single])
  (ir_black-theme .
 		 [(20120503)
@@ -793,7 +793,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120807)
+       [(20120809)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header-button .
 		[(20120731)
@@ -1067,18 +1067,18 @@
 			(1 7)))
 		      "Major mode for ClojureScript code [source: github]" single])
  (clojure-test-mode .
-		    [(20120802)
+		    [(20120808)
 		     ((clojure-mode
 		       (1 7)))
 		     "Minor mode for Clojure tests [source: github]" single])
  (clojure-mode .
-	       [(20120806)
+	       [(20120808)
 		nil "Major mode for Clojure code [source: github]" single])
  (citrus-mode .
 	      [(20120403)
 	       nil "Major mode for editing Citrus files [source: github]" single])
  (caml .
-       [(20120802)
+       [(20120808)
 	nil "OCaml code editing commands for Emacs [source: svn]" tar])
  (calfw-gcal .
 	     [(20120111)
