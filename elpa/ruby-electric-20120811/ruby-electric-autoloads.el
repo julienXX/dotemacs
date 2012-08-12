@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (ruby-electric-mode) "ruby-electric" "ruby-electric.el"
-;;;;;;  (20474 59641))
+;;;;;;  (20519 63563 0 0))
 ;;; Generated autoloads from ruby-electric.el
 
 (autoload 'ruby-electric-mode "ruby-electric" "\
@@ -22,9 +22,12 @@ strings. Note that you must have Font Lock enabled.
 
 \(fn &optional ARG)" t nil)
 
+(eval-after-load 'ruby-mode '(add-hook 'ruby-mode-hook 'ruby-electric-mode))
+
 ;;;***
 
-;;;### (autoloads nil nil ("ruby-electric-pkg.el") (20474 59641 704123))
+;;;### (autoloads nil nil ("ruby-electric-pkg.el") (20519 63563 145403
+;;;;;;  0))
 
 ;;;***
 

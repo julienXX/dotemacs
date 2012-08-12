@@ -27,8 +27,6 @@
 ;;; Code:
 
 (require 'ido)
-;; Provides `union', `dolist' and `delete-if'.
-(require 'cl)
 
 (defgroup smex nil
   "M-x interface with Ido-style fuzzy matching and ranking heuristics."
@@ -87,7 +85,8 @@ Set this to nil to disable fuzzy matching."
   (interactive)
   (if (smex-already-running)
       (smex-update-and-rerun)
-    (and smex-auto-update (smex-detect-new-commands)
+    (and smex-auto-update
+         (smex-detect-new-commands)
          (smex-update))
     (smex-read-and-run smex-ido-cache)))
 
@@ -117,10 +116,10 @@ Set this to nil to disable fuzzy matching."
 (defun smex-major-mode-commands ()
   "Like `smex', but limited to commands that are relevant to the active major mode."
   (interactive)
-  (let ((commands (union (extract-commands-from-keymap (current-local-map))
-                         (extract-commands-from-features major-mode))))
+  (let ((commands (delete-dups (append (extract-commands-from-keymap (current-local-map))
+                                       (extract-commands-from-features major-mode)))))
     (setq commands (smex-sort-according-to-cache commands))
-    (setq commands (mapcar (lambda (command) (symbol-name command)) commands))
+    (setq commands (mapcar #'symbol-name commands))
     (smex-read-and-run commands)))
 
 (defun smex-completing-read (choices initial-input)
@@ -405,13 +404,17 @@ Returns nil when reaching the end of the list."
 (defun smex-key-advice (command)
   (let ((keys (where-is-internal command)))
     (if smex-key-advice-ignore-menu-bar
-        (setq keys (delete-if
-                    (lambda (vect) (equal (aref vect 0) 'menu-bar))
-                    keys)))
+        (setq keys (smex-filter-out-menu-bar-bindings keys)))
     (if keys
         (format "You can run the command `%s' with %s"
                 command
                 (mapconcat 'key-description keys ", ")))))
+
+(defsubst smex-filter-out-menu-bar-bindings (keys)
+  (delq nil (mapcar (lambda (key-vec)
+                      (unless (equal (aref key-vec 0) 'menu-bar)
+                        key-vec))
+                    keys)))
 
 (defun smex-unlogged-message (string)
   "Bypasses logging in *Messages*"
@@ -436,13 +439,13 @@ Returns nil when reaching the end of the list."
   (let ((library-path (symbol-file mode))
         (mode-name (symbol-name mode))
         commands)
-    
+
     (string-match "\\(.+?\\)\\(-mode\\)?$" mode-name)
     ;; 'lisp-mode' -> 'lisp'
     (setq mode-name (match-string 1 mode-name))
     (if (string= mode-name "c") (setq mode-name "cc"))
     (setq mode-name (regexp-quote mode-name))
-    
+
     (dolist (feature load-history)
       (let ((feature-path (car feature)))
         (when (and feature-path (or (equal feature-path library-path)
@@ -466,9 +469,11 @@ sorted by frequency of use."
                                             command-item))
                                         smex-data))))
     (view-buffer-other-window "*Smex: Unbound Commands*")
-    (toggle-read-only nil)
-    (erase-buffer)
-    (ido-pp 'unbound-commands)
+    (setq buffer-read-only t)
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (ido-pp 'unbound-commands))
+    (set-buffer-modified-p nil)
     (goto-char (point-min))))
 
 (provide 'smex)

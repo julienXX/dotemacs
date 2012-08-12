@@ -4,7 +4,6 @@
 
 ;; Author: Aaron S. Hawley <ashawley at uvm dot edu>,
 ;;         Art Taylor
-;; Version: 1.0
 ;; Keywords: lisp
 
 ;; This file is free software; you can redistribute it and/or modify

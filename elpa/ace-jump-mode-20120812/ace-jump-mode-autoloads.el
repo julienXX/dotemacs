@@ -3,9 +3,34 @@
 ;;; Code:
 
 
-;;;### (autoloads (ace-jump-mode) "ace-jump-mode" "ace-jump-mode.el"
-;;;;;;  (20481 55289))
+;;;### (autoloads (ace-jump-mode ace-jump-line-mode ace-jump-word-mode
+;;;;;;  ace-jump-char-mode ace-jump-mode-pop-mark) "ace-jump-mode"
+;;;;;;  "ace-jump-mode.el" (20519 63569 0 0))
 ;;; Generated autoloads from ace-jump-mode.el
+
+(autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "\
+Pop up a postion from `ace-jump-mode-mark-ring', and jump back to that position
+
+\(fn)" t nil)
+
+(autoload 'ace-jump-char-mode "ace-jump-mode" "\
+AceJump char mode
+
+\(fn QUERY-CHAR)" t nil)
+
+(autoload 'ace-jump-word-mode "ace-jump-mode" "\
+AceJump word mode.
+You can set `ace-jump-word-mode-use-query-char' to nil to prevent
+asking for a head char, that will mark all the word in current
+buffer.
+
+\(fn HEAD-CHAR)" t nil)
+
+(autoload 'ace-jump-line-mode "ace-jump-mode" "\
+AceJump line mode.
+Marked each no empty line and move there
+
+\(fn)" t nil)
 
 (autoload 'ace-jump-mode "ace-jump-mode" "\
 AceJump mode is a minor mode for you to quick jump to a
@@ -31,7 +56,8 @@ You can constrol whether use the case sensitive via
 
 ;;;***
 
-;;;### (autoloads nil nil ("ace-jump-mode-pkg.el") (20481 55289 23910))
+;;;### (autoloads nil nil ("ace-jump-mode-pkg.el") (20519 63569 950029
+;;;;;;  0))
 
 ;;;***
 
