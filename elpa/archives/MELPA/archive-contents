@@ -12,7 +12,7 @@
 		    [(20120622)
 		     nil "zen and art color theme for GNU Emacs 24 [source: github]" single])
  (yasnippet .
-	    [(20120718)
+	    [(20120811)
 	     nil "Yet another snippet extension for Emacs. [source: github]" tar])
  (yari .
        [(20110417)
@@ -84,7 +84,7 @@
 			     [(20120713)
 			      nil "A soothing Emacs 24 light-on-dark theme [source: github]" single])
  (tuareg .
-	 [(20120526)
+	 [(20120813)
 	  ((caml
 	    (3 12 0 1)))
 	  "OCaml mode for Emacs. [source: svn]" tar])
@@ -217,13 +217,13 @@
 	     [(20120612)
 	      nil "slime extensions for ritz [source: github]" single])
  (slime .
-	[(20120804)
+	[(20120813)
 	 nil "Superior Lisp Interaction Mode for Emacs [source: git]" tar])
  (slim-mode .
-	    [(20120623)
+	    [(20120814)
 	     nil "Major mode for editing Slim files [source: github]" single])
  (simple-httpd .
-	       [(20120807)
+	       [(20120812)
 		nil "HTTP/1.0 web server [source: github]" tar])
  (shimbun .
 	  [(20120719)
@@ -270,7 +270,7 @@
 	     [(20120528)
 	      nil "Collection of handy functions for ruby-mode [source: github]" single])
  (ruby-test-mode .
-		 [(20120201)
+		 [(20120814)
 		  nil "Minor mode for Behaviour and Test Driven [source: github]" single])
  (ruby-mode .
 	    [(20110630)
@@ -315,7 +315,7 @@
 	  [(20110405)
 	   nil "display the relative location of the region, in the fringe. [source: wiki]" single])
  (revive .
-	 [(20120524)
+	 [(20120814)
 	  nil "Resume Emacs [source: github]" single])
  (restclient .
 	     [(20120719)
@@ -348,10 +348,10 @@
 	       [(20120505)
 		nil "outline mode extension for python mode [source: wiki]" single])
  (python .
-	 [(20120719)
+	 [(20120814)
 	  nil "Python's flying circus support for Emacs [source: github]" single])
  (pyregexp .
-	   [(20120506)
+	   [(20120812)
 	    nil "A Python regexp/replace command for Emacs with interactive visual feedback [source: github]" tar])
  (puppet-mode .
 	      [(20120704)
@@ -486,7 +486,7 @@
 	     [(20120709)
 	      nil "run powershell as an inferior shell in emacs [source: wiki]" single])
  (powerline .
-	    [(20120722)
+	    [(20120813)
 	     nil "Rewrite of Powerline [source: github]" single])
  (popwin .
 	 [(20120707)
@@ -560,7 +560,7 @@
 	       [(20120721)
 		nil "Toodledo integration for Emacs Org mode [source: github]" tar])
  (org-readme .
-	     [(20120811)
+	     [(20120813)
 	      ((http-post-simple
 		(1 0))
 	       (yaoddmuse
@@ -601,7 +601,7 @@
 		  [(20120731)
 		   nil "track data items by various instance slots [source: github]" single])
  (nrepl .
-	[(20120812)
+	[(20120814)
 	 ((clojure-mode
 	   (1 11)))
 	 "Client for Clojure nREPL [source: github]" single])
@@ -621,7 +621,7 @@
 		[(20110927)
 		 nil "A major mode for editing Mustache files. [source: github]" single])
  (multiple-cursors .
-		   [(20120810)
+		   [(20120814)
 		    nil "Multiple cursors for Emacs. [source: github]" tar])
  (multi-web-mode .
 		 [(20110821)
@@ -839,7 +839,7 @@
 		      [(20120724)
 		       nil "highlight the word the point is on [source: github]" single])
  (icicles .
-	  [(20120810)
+	  [(20120814)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20111221)
@@ -907,7 +907,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120811)
+       [(20120814)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header-button .
 		[(20120731)
@@ -1061,7 +1061,7 @@
 	       [(20120720)
 		nil "Major mode for editing Gherkin (i.e. Cucumber) user stories [source: github]" tar])
  (expand-region .
-		[(20120808)
+		[(20120814)
 		 nil "Increase selected region by semantic units. [source: github]" tar])
  (evil-numbers .
 	       [(20120712)
@@ -1114,7 +1114,7 @@
 	[(20120118)
 	 nil "running leiningen commands from emacs [source: github]" single])
  (ein .
-      [(20120811)
+      [(20120812)
        ((websocket
 	 (0 9)))
        "Emacs IPython Notebook [source: github]" tar])
@@ -1312,7 +1312,7 @@
 		      [(20120612)
 		       nil "Auto Completion source for clang for GNU Emacs [source: github]" single])
  (auto-complete .
-		[(20120717)
+		[(20120813)
 		 ((popup
 		   (0 5)))
 		 "Auto Completion for GNU Emacs [source: github]" tar])
