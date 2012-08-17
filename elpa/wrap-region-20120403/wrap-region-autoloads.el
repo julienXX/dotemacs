@@ -5,7 +5,7 @@
 
 ;;;### (autoloads (wrap-region-global-mode turn-off-wrap-region-mode
 ;;;;;;  turn-on-wrap-region-mode wrap-region-mode) "wrap-region"
-;;;;;;  "wrap-region.el" (20469 47842))
+;;;;;;  "wrap-region.el" (20525 35467))
 ;;; Generated autoloads from wrap-region.el
 
 (autoload 'wrap-region-mode "wrap-region" "\
@@ -46,7 +46,7 @@ See `wrap-region-mode' for more information on Wrap-Region mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("wrap-region-pkg.el") (20469 47842 877005))
+;;;### (autoloads nil nil ("wrap-region-pkg.el") (20525 35467 408926))
 
 ;;;***
 
