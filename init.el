@@ -46,6 +46,10 @@
 (load-theme 'tango)
 (setq linum-format " %3d ")
 
+;; Only one window on startup
+(add-hook 'emacs-startup-hook
+          (lambda () (delete-other-windows)) t)
+
 ;; package stuff
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")

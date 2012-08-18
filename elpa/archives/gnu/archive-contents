@@ -87,7 +87,7 @@
 	 [(0 8)
 	  nil "OAuth 2.0 Authorization Protocol" single])
  (org .
-      [(20120816)
+      [(20120818)
        nil "Outline-based notes management and organizer" tar])
  (quarter-plane .
 		[(0 1)
@@ -137,4 +137,3 @@
  (xclip .
 	[(1 0)
 	 nil "Emacs Interface to XClip" single]))
-

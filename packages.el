@@ -102,8 +102,8 @@
 (setq twittering-url-show-status nil)        ; Keeps the echo area from showing all the http processes
 
 ;; CTags
-(autoload 'ctags-update-minor-mode "ctags-update" "update TAGS using ctags" t)
-(ctags-update-minor-mode 1)
+;;(autoload 'ctags-update-minor-mode "ctags-update" "update TAGS using ctags" t)
+;;(ctags-update-minor-mode 1)
 
 ;; YAML
 (require 'yaml-mode)

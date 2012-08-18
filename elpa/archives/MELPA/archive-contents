@@ -267,7 +267,7 @@
       [(20120714)
        nil "Emacs integration for rvm [source: github]" single])
  (rust-mode .
-	    [(20120813)
+	    [(20120816)
 	     ((cm-mode
 	       (0 1 0)))
 	     "A major emacs mode for editing Rust source code [source: github]" single])
@@ -344,7 +344,7 @@
 		     [(20120428)
 		      nil "Highlight nested parens, brackets, braces a different color at each depth. [source: github]" single])
  (quickrun .
-	   [(20120816)
+	   [(20120818)
 	    nil "Run commands quickly [source: github]" single])
  (quick-buffer-switch .
 		      [(20120704)
@@ -555,7 +555,7 @@
 		[(20120505)
 		 nil "outline mode extensions for Emacs [source: wiki]" single])
  (org2blog .
-	   [(20120809)
+	   [(20120818)
 	    ((org
 	      (7 7))
 	     (xml-rpc
@@ -608,8 +608,13 @@
  (o-blog .
 	 [(20120813)
 	  nil "Org-blog exporter [source: github]" tar])
+ (nrepl-ritz .
+	     [(20120817)
+	      ((nrepl
+		(0 1 3)))
+	      "nrepl extensions for ritz [source: github]" single])
  (nrepl .
-	[(20120815)
+	[(20120817)
 	 ((clojure-mode
 	   (1 11)))
 	 "Client for Clojure nREPL [source: github]" single])
@@ -675,7 +680,7 @@
 	    [(20120716)
 	     nil "advanced highlighting of matching parentheses [source: wiki]" single])
  (memoize .
-	  [(20120806)
+	  [(20120817)
 	   nil "Memoization functions [source: github]" single])
  (melpa .
 	[(20120202)
@@ -718,7 +723,7 @@
 	[(20120805)
 	 nil "Control Git from Emacs. [source: github]" tar])
  (lua-mode .
-	   [(20120612)
+	   [(20120817)
 	    nil "a major-mode for editing Lua scripts [source: github]" single])
  (lorem-ipsum .
 	      [(20051013)
@@ -837,6 +842,13 @@
  (inf-ruby .
 	   [(20120722)
 	    nil "Run a ruby process in a buffer [source: github]" single])
+ (impatient-mode .
+		 [(20120817)
+		  ((simple-httpd
+		    (1 2 0))
+		   (htmlize
+		    (1 40)))
+		  "Serve buffers live over HTTP [source: github]" single])
  (iedit .
 	[(20120809)
 	 nil "Edit multiple regions in the same way simultaneously. [source: github]" tar])
@@ -915,7 +927,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120816)
+       [(20120818)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header-button .
 		[(20120731)
@@ -1068,8 +1080,11 @@
  (feature-mode .
 	       [(20120720)
 		nil "Major mode for editing Gherkin (i.e. Cucumber) user stories [source: github]" tar])
+ (fakespace .
+	    [(20120817)
+	     nil "fake namespaces with defpackage [source: github]" single])
  (expand-region .
-		[(20120814)
+		[(20120817)
 		 nil "Increase selected region by semantic units. [source: github]" tar])
  (evil-numbers .
 	       [(20120712)
@@ -1086,7 +1101,7 @@
 	      [(20090327)
 	       nil "Set tags table(s) based on current file [source: wiki]" single])
  (ess .
-      [(20120808)
+      [(20120818)
        nil "No description available. [source: github]" tar])
  (escreen .
 	  [(20091203)
@@ -1228,7 +1243,7 @@
 				 [(20120720)
 				  nil "A version of Chris Kempson's various Tomorrow themes [source: github]" tar])
  (color-theme-sanityinc-solarized .
-				  [(20120720)
+				  [(20120813)
 				   nil "A version of Ethan Schoonover's Solarized themes [source: github]" tar])
  (color-theme-buffer-local .
 			   [(20120703)
@@ -1243,7 +1258,7 @@
 	      [(20120522)
 	       nil "Major mode to edit CoffeeScript files in Emacs [source: github]" single])
  (cm-mode .
-	  [(20120813)
+	  [(20120814)
 	   nil "Wrapper for CodeMirror-style Emacs modes [source: github]" single])
  (closure-lint-mode .
 		    [(20101118)
@@ -1294,7 +1309,7 @@
 	   [(20081011)
 	    nil "Quote text with a semi-box. [source: github]" single])
  (bookmark+ .
-	    [(20120810)
+	    [(20120817)
 	     nil "Bookmark+: extensions to standard library `bookmark.el'. [source: wiki]" tar])
  (bm .
      [(20120611)
@@ -1366,4 +1381,3 @@
  (ac-dabbrev .
 	     [(20091116)
 	      nil "auto-complete.el source for dabbrev [source: wiki]" single]))
-
