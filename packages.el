@@ -76,34 +76,9 @@
 (require 'wrap-region)
 (wrap-region-global-mode)
 
-;; Twittering mode
-(add-hook 'twittering-mode-hook
-           (lambda ()
-             (mapc (lambda (pair)
-                     (let ((key (car pair))
-                           (func (cdr pair)))
-                       (define-key twittering-mode-map
-                         (read-kbd-macro key) func)))
-                   '(("F" . twittering-friends-timeline)
-                     ("R" . twittering-replies-timeline)
-                     ("U" . twittering-user-timeline)
-                     ("W" . twittering-update-status-interactive)))))
-
-(add-hook 'twittering-new-tweets-hook (lambda ()
-   (let ((n twittering-new-tweets-count))
-     (start-process "twittering-notify" nil "notify-send"
-                    "-i" "/usr/share/pixmaps/gnome-emacs.png"
-                    "New tweets"
-                    (format "You have %d new tweet%s"
-                            n (if (> n 1) "s" ""))))))
-
-(setq twittering-icon-mode t)                ; Show icons
-(setq twittering-timer-interval 300)         ; Update your timeline each 300 seconds (5 minutes)
-(setq twittering-url-show-status nil)        ; Keeps the echo area from showing all the http processes
-
 ;; CTags
-;;(autoload 'ctags-update-minor-mode "ctags-update" "update TAGS using ctags" t)
-;;(ctags-update-minor-mode 1)
+(autoload 'ctags-update-minor-mode "ctags-update" "update TAGS using ctags" t)
+(ctags-update-minor-mode 1)
 
 ;; YAML
 (require 'yaml-mode)
