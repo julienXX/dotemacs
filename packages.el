@@ -122,6 +122,7 @@
 ;; RSpec mode
 (require 'rspec-mode)
 (setq rspec-use-rake-flag nil)
+(define-key rspec-mode-verifible-keymap (kbd "s") 'rspec-verify-single)
 
 ;; ruby-tools
 (require 'ruby-tools)
