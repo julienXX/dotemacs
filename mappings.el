@@ -16,4 +16,5 @@
 (global-set-key (kbd "C-o")     'vi-open-line-below)
 (global-set-key (kbd "C-c g")   'magit-status)
 (global-set-key (kbd "M-l")     'goto-line-with-feedback)
+(global-set-key (kbd "M-z")     'zap-up-to-char)
 (global-set-key (kbd "C-x -")   'toggle-windows-split)
