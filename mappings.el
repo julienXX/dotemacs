@@ -6,7 +6,7 @@
 (global-set-key (kbd "C-c d")   'duplicate-line)
 (global-set-key (kbd "M-]")     'textmate-shift-right)
 (global-set-key (kbd "M-[")     'textmate-shift-left)
-(global-set-key (kbd "M-/")     'comment-region)
+(global-set-key (kbd "M-/")     'comment-or-uncomment-region)
 (global-set-key (kbd "C-x à")   'delete-window)
 (global-set-key (kbd "C-x &")   'delete-other-windows)
 (global-set-key (kbd "C-x é")   'split-window-below)
