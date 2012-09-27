@@ -42,7 +42,7 @@
 (setq ns-pop-up-frames nil)
 
 ;; aesthetics
-(set-frame-font "Menlo-14")
+(set-frame-font "Source\ Code\ Pro-14")
 (load-theme 'tango)
 (setq linum-format " %3d ")
 

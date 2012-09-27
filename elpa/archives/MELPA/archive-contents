@@ -97,7 +97,7 @@
 			(0 2 3)))
 		      "teach whitespace-mode about fancy characters [source: github]" single])
  (unicode-progress-reporter .
-			    [(20120914 1557)
+			    [(20120924 1400)
 			     ((emacs
 			       (24 1 0))
 			      (ucs-utils
@@ -139,7 +139,7 @@
 		   [(20120615 1149)
 		    nil "A gentle, deep blue color theme [source: github]" single])
  (ucs-utils .
-	    [(20120914 1552)
+	    [(20120924 2019)
 	     ((persistent-soft
 	       (0 8 0))
 	      (pcache
@@ -397,7 +397,7 @@
 		[(20120811 1309)
 		 nil "electric editing commands for ruby files [source: github]" single])
  (ruby-compilation .
-		   [(20111018 1320)
+		   [(20120925 800)
 		    ((ruby-mode
 		      (1 1))
 		     (inf-ruby
@@ -469,7 +469,7 @@
 	       [(20120505 1355)
 		nil "outline mode extension for python mode [source: wiki]" single])
  (python .
-	 [(20120814 1020)
+	 [(20120924 1710)
 	  nil "Python's flying circus support for Emacs [source: github]" single])
  (pyregexp .
 	   [(20120919 1909)
@@ -754,7 +754,7 @@
 		     [(20120914 1844)
 		      nil "Tiny functionality enhancements for evaluating sexps. [source: github]" single])
  (nrepl .
-	[(20120923 911)
+	[(20120924 1959)
 	 ((clojure-mode
 	   (1 11)))
 	 "Client for Clojure nREPL [source: github]" single])
@@ -777,10 +777,10 @@
 		[(20110927 1253)
 		 nil "A major mode for editing Mustache files. [source: github]" single])
  (multiple-cursors .
-		   [(20120924 1349)
+		   [(20120924 2000)
 		    nil "Multiple cursors for Emacs. [source: github]" tar])
  (multi-web-mode .
-		 [(20110821 1317)
+		 [(20120925 916)
 		  nil "multiple major mode support for web editing [source: github]" tar])
  (multi-term .
 	     [(20110326 608)
@@ -1009,7 +1009,7 @@
 	    [(20120630 1244)
 	     nil "code to split customizations into different files [source: github]" single])
  (info+ .
-	[(20120826 522)
+	[(20120924 2044)
 	 nil "Extensions to `info.el'. [source: wiki]" single])
  (inflections .
 	      [(20120702 1646)
@@ -1034,7 +1034,7 @@
 		 [(20120907 2141)
 		  nil "Use ido (nearly) everywhere. [source: github]" single])
  (ido-load-library .
-		   [(20120914 1602)
+		   [(20120924 2027)
 		    ((persistent-soft
 		      (0 1 0))
 		     (pcache
@@ -1044,7 +1044,7 @@
 		      [(20120920 1848)
 		       nil "highlight the word the point is on [source: github]" single])
  (icicles .
-	  [(20120922 1759)
+	  [(20120925 42)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20120922 1120)
@@ -1129,7 +1129,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20120924 1050)
+       [(20120925 928)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header2 .
 	  [(20120823 1956)
@@ -1236,6 +1236,13 @@
  (framemove .
 	    [(20101013 2052)
 	     nil "directional frame selection routines [source: wiki]" single])
+ (font-utils .
+	     [(20120924 1758)
+	      ((persistent-soft
+		(0 8 0))
+	       (pcache
+		(0 2 3)))
+	      "Utility functions for working with fonts [source: github]" single])
  (fold-dwim-org .
 		[(20111202 902)
 		 ((fold-dwim
@@ -1337,7 +1344,7 @@
 	   (0 0 5)))
 	 "Library for working with xml via esxml and sxml [source: github]" single])
  (ess .
-      [(20120918 1223)
+      [(20120924 1839)
        nil "No description available. [source: github]" tar])
  (escreen .
 	  [(20091203 1913)
@@ -1370,8 +1377,8 @@
 	   [(20120413 1107)
 	    nil "Emacs window session manager [source: github]" single])
  (elixir-mode .
-	      [(20120313 2242)
-	       nil "No description available. [source: github]" single])
+	      [(20120924 1516)
+	       nil "Major mode for editing Elixir files [source: github]" single])
  (elisp-slime-nav .
 		  [(20111111 1229)
 		   nil "Make M-. and M-, work in elisp like they do in slime [source: github]" single])
@@ -1401,8 +1408,10 @@
        [(20120601 1806)
 	nil "simple window manager for emacs [source: github]" tar])
  (dynamic-fonts .
-		[(20120914 1624)
-		 ((persistent-soft
+		[(20120924 1808)
+		 ((font-utils
+		   (0 6 1))
+		  (persistent-soft
 		   (0 8 0))
 		  (pcache
 		   (0 2 3)))
@@ -1455,7 +1464,7 @@
 	   [(20091203 1912)
 	    nil "Diminished modes are minor modes with no modeline display [source: github]" single])
  (diff-hl .
-	  [(20120924 320)
+	  [(20120925 403)
 	   ((smartrep
 	     (0 0 3)))
 	   "VC diff fringe highlighting [source: github]" single])
@@ -1592,14 +1601,11 @@
 		   ((string-utils
 		     (0 0 3)))
 		   "Context-sensitive external browse URL or Internet search [source: github]" single])
- (browse-kill-ring .
-		   [(20100315 2253)
-		    nil "interactively insert items from kill-ring [source: github]" single])
  (boxquote .
 	   [(20081011 2126)
 	    nil "Quote text with a semi-box. [source: github]" single])
  (bookmark+ .
-	    [(20120924 52)
+	    [(20120924 2017)
 	     nil "Bookmark+: extensions to standard library `bookmark.el'. [source: wiki]" tar])
  (bm .
      [(20120611 4)
@@ -1694,4 +1700,7 @@
 	    "An auto-complete source for Clojure using nrepl completions [source: github]" single])
  (ac-dabbrev .
 	     [(20091116 1626)
-	      nil "auto-complete.el source for dabbrev [source: wiki]" single]))
+	      nil "auto-complete.el source for dabbrev [source: wiki]" single])
+ (browse-kill-ring .
+		   [(20100315 2253)
+		    nil "interactively insert items from kill-ring [source: github]" single]))
