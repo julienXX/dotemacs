@@ -130,3 +130,20 @@
 (setq inferior-lisp-program "/usr/local/bin/clisp")
 (require 'slime)
 (slime-setup)
+
+;; multi-term
+(require 'multi-term)
+(setq multi-term-dedicated-select-after-open-p t)
+
+(defun it-multi-term-dedicated-toggle ()
+  "jump back to previous location after toggling ded term off"
+  (interactive)
+  (if (multi-term-dedicated-exist-p)
+      (progn
+	(multi-term-dedicated-toggle)
+	(switch-to-buffer-other-window old-buf))
+    (progn
+      (setq old-buf (current-buffer))
+      (multi-term-dedicated-toggle))
+    )
+  )
