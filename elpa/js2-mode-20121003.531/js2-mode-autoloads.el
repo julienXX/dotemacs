@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (js2-imenu-extras-setup) "js2-imenu-extras" "js2-imenu-extras.el"
-;;;;;;  (20585 34010))
+;;;;;;  (20588 1368))
 ;;; Generated autoloads from js2-imenu-extras.el
 
 (autoload 'js2-imenu-extras-setup "js2-imenu-extras" "\
@@ -14,18 +14,20 @@
 
 ;;;***
 
-;;;### (autoloads (js2-mode) "js2-mode" "js2-mode.el" (20585 34010))
+;;;### (autoloads (js2-mode) "js2-mode" "js2-mode.el" (20588 1368))
 ;;; Generated autoloads from js2-mode.el
  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 (autoload 'js2-mode "js2-mode" "\
 Major mode for editing JavaScript code.
 
+\\{js2-mode-map}
+
 \(fn)" t nil)
 
 ;;;***
 
-;;;### (autoloads nil nil ("js2-mode-pkg.el") (20585 34010 949183))
+;;;### (autoloads nil nil ("js2-mode-pkg.el") (20588 1368 719938))
 
 ;;;***
 
