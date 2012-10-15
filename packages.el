@@ -133,7 +133,10 @@
 
 ;; multi-term
 (require 'multi-term)
+(set-terminal-coding-system 'utf-8-unix)
 (setq multi-term-dedicated-select-after-open-p t)
+(setq multi-term-program "/usr/local/bin/zsh")
+(setq multi-term-buffer-name "Terminal")
 
 (defun it-multi-term-dedicated-toggle ()
   "jump back to previous location after toggling ded term off"
