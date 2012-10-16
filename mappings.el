@@ -18,4 +18,5 @@
 (global-set-key (kbd "M-l")     'goto-line-with-feedback)
 (global-set-key (kbd "M-z")     'zap-up-to-char)
 (global-set-key (kbd "C-x -")   'toggle-windows-split)
-(global-set-key (kbd "<f12>")    'multi-term-dedicated-toggle)
+(global-set-key (kbd "<f12>")   'multi-term-dedicated-toggle)
+(global-set-key (kbd "C-c p")   'partially/visit-partial)
