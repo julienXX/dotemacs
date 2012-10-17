@@ -103,7 +103,7 @@
 			(0 2 3)))
 		      "teach whitespace-mode about fancy characters [source: github]" single])
  (unicode-progress-reporter .
-			    [(20121005 2033)
+			    [(20121015 1921)
 			     ((emacs
 			       (24 1 0))
 			      (ucs-utils
@@ -179,7 +179,7 @@
 		 (1 8 1)))
 	       "An Emacs tumblr client. [source: github]" tar])
  (tuareg .
-	 [(20120929 1120)
+	 [(20121015 914)
 	  ((caml
 	    (3 12 0 1)))
 	  "OCaml mode for Emacs. [source: svn]" tar])
@@ -776,7 +776,7 @@
 		     [(20121011 2145)
 		      nil "Tiny functionality enhancements for evaluating sexps. [source: github]" single])
  (nrepl .
-	[(20121008 2110)
+	[(20121015 1731)
 	 ((clojure-mode
 	   (1 11)))
 	 "Client for Clojure nREPL [source: github]" single])
@@ -816,6 +816,11 @@
  (mouse+ .
 	 [(20120823 2320)
 	  nil "Extensions to `mouse.el'. [source: wiki]" single])
+ (mote-mode .
+	    [(20121015 119)
+	     ((ruby-mode
+	       (1 1)))
+	     "Mote minor mode [source: github]" single])
  (monky .
 	[(20120411 2108)
 	 nil "Control Hg from Emacs. [source: github]" tar])
@@ -835,7 +840,7 @@
 	  [(20110427 1123)
 	   nil "Minimap sidebar for Emacs [source: git]" single])
  (minimal-session-saver .
-			[(20120929 2153)
+			[(20121015 1915)
 			 nil "Very lean session saver [source: github]" single])
  (midje-mode .
 	     [(20120728 208)
@@ -934,7 +939,7 @@
 	 [(20120728 1413)
 	  nil "Interactively updating text [source: wiki]" single])
  (list-utils .
-	     [(20121013 1754)
+	     [(20121015 1245)
 	      nil "List-manipulation utility functions [source: github]" single])
  (linum-relative .
 		 [(20120905 1503)
@@ -973,12 +978,12 @@
 	    [(20120826 2232)
 	     nil "navigation by char [source: github]" single])
  (jump .
-       [(20120820 1951)
+       [(20121016 1203)
 	((findr
 	  (0 7))
 	 (inflections
-	  (1 0)))
-	"build functions which contextually jump between files [source: github]" tar])
+	  (1 1)))
+	"build functions which contextually jump between files [source: github]" single])
  (js3-mode .
 	   [(20121004 1709)
 	    nil "JavaScript scanner [source: github]" single])
@@ -1040,7 +1045,7 @@
 	[(20120924 2044)
 	 nil "Extensions to `info.el'. [source: wiki]" single])
  (inflections .
-	      [(20120702 1646)
+	      [(20121016 957)
 	       nil "convert english words between singular and plural [source: github]" single])
  (inf-ruby .
 	   [(20120722 2249)
@@ -1056,7 +1061,7 @@
 	    [(20121011 1857)
 	     nil "Ignore backups, build files, et al. [source: github]" single])
  (iedit .
-	[(20120912 1523)
+	[(20121006 1303)
 	 nil "Edit multiple regions in the same way simultaneously. [source: github]" tar])
  (ido-ubiquitous .
 		 [(20120907 2141)
@@ -1072,7 +1077,7 @@
 		      [(20120920 1848)
 		       nil "highlight the word the point is on [source: github]" single])
  (icicles .
-	  [(20121011 2320)
+	  [(20121015 2129)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20120922 1120)
@@ -1192,6 +1197,27 @@
  (graphviz-dot-mode .
 		    [(20120821 1835)
 		     nil "Mode for the dot-language used by graphviz (att). [source: github]" single])
+ (graphene .
+	   [(20121016 1045)
+	    ((smart-tab
+	      (20120409))
+	     (auto-complete
+	      (20120909))
+	     (autopair
+	      (20120818))
+	     (multi-web-mode
+	      (20110821))
+	     (smex
+	      (20120831))
+	     (sr-speedbar
+	      (20090723))
+	     (project-persist
+	      (20120921))
+	     (projectile
+	      (20120612))
+	     (exec-path-from-shell
+	      (20121007)))
+	    "Newbie-friendly defaults [source: github] [source: github]" tar])
  (goto-chg .
 	   [(20080919 2256)
 	    nil "goto last change [source: wiki]" single])
@@ -1292,7 +1318,7 @@
 	    [(20120926 1236)
 	     nil "No description available. [source: github]" single])
  (flyspell-lazy .
-		[(20121012 1604)
+		[(20121015 1701)
 		 nil "Improve flyspell responsiveness using idle timers [source: github]" single])
  (flymake-shell .
 		[(20120409 1704)
@@ -1330,8 +1356,8 @@
 		 [(20120319 1559)
 		  nil "Flymake support for coffee script [source: github]" single])
  (flymake-checkers .
-		   [(20121011 1646)
-		    nil "Additional syntax checkers for flymake [source: github]" single])
+		   [(20121015 1742)
+		    nil "Flymake reloaded with useful checkers [source: github]" single])
  (flex-isearch .
 	       [(20120606 1317)
 		nil "Flex matching (like ido) in isearch. [source: hg]" single])
@@ -1362,7 +1388,7 @@
 	    [(20120817 2006)
 	     nil "fake namespaces with defpackage [source: github]" single])
  (expand-region .
-		[(20121013 808)
+		[(20121016 812)
 		 nil "Increase selected region by semantic units. [source: github]" tar])
  (exec-path-from-shell .
 		       [(20121007 1428)
@@ -1432,7 +1458,7 @@
 	[(20120118 1537)
 	 nil "running leiningen commands from emacs [source: github]" single])
  (ein .
-      [(20121012 1818)
+      [(20121015 2241)
        ((websocket
 	 (0 9))
 	(auto-complete
@@ -1544,7 +1570,7 @@
 	 [(20121011 50)
 	  nil "D Programming Language mode for (X)Emacs [source: github]" single])
  (cyberpunk-theme .
-		  [(20121014 2141)
+		  [(20121015 1228)
 		   nil "Cyberpunk Color Theme [source: github]" single])
  (cus-edit+ .
 	    [(20120823 1659)
@@ -1586,10 +1612,10 @@
 			   (6 5 5)))
 			 "Solarized themes for Emacs [source: github]" tar])
  (color-theme-sanityinc-tomorrow .
-				 [(20121010 1346)
+				 [(20121015 1209)
 				  nil "A version of Chris Kempson's various Tomorrow themes [source: github]" tar])
  (color-theme-sanityinc-solarized .
-				  [(20121010 1345)
+				  [(20121015 1209)
 				   nil "A version of Ethan Schoonover's Solarized themes [source: github]" tar])
  (color-theme-buffer-local .
 			   [(20120703 17)
@@ -1634,7 +1660,7 @@
 		       [(20100310 1348)
 			nil "cursor stays vertically centered [source: wiki]" single])
  (caml .
-       [(20120928 1156)
+       [(20121015 1250)
 	nil "OCaml code editing commands for Emacs [source: svn]" tar])
  (calfw-gcal .
 	     [(20120111 1900)
@@ -1743,8 +1769,13 @@
 		       [(20120829 1352)
 			nil "Show quote from http://theangrypolicecaptain.com in the minibuffer [source: github]" single])
  (anaphora .
-	   [(20121013 1853)
+	   [(20121015 1243)
 	    nil "anaphoric macros providing implicit temp variables [source: github]" single])
+ (align-cljlet .
+	       [(20120831 821)
+		((clojure-mode
+		  (1 11 5)))
+		"Space align various Clojure forms [source: github]" single])
  (alert .
 	[(20121013 1557)
 	 ((string-utils

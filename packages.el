@@ -150,3 +150,6 @@
       (multi-term-dedicated-toggle))
     )
   )
+
+;; SCSS
+(setq scss-compile-at-save nil)
