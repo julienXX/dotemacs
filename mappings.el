@@ -1,5 +1,5 @@
 (global-set-key (kbd "C-c s")   'shell)
-(global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
+(global-set-key (kbd "C-x C-v") 'ido-find-file-other-window)
 (global-set-key (kbd "C-c c")   'switch-to-previous-buffer)
 (global-set-key (kbd "M-t")     'textmate-goto-file)
 (global-set-key (kbd "M-T")     'textmate-goto-symbol)
