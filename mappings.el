@@ -20,3 +20,4 @@
 (global-set-key (kbd "C-x -")   'toggle-windows-split)
 (global-set-key (kbd "<f12>")   'multi-term-dedicated-toggle)
 (global-set-key (kbd "C-c p")   'partially/visit-partial)
+(global-set-key (kbd "C-c ,,")   'ruby-open-spec-other-buffer)

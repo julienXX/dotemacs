@@ -121,7 +121,3 @@ Ignores CHAR at point."
                           (current-buffer))))
       (switch-to-buffer source-buffer)
       (pop-to-buffer other-buffer))))
-
-(eval-after-load 'ruby-mode
-  '(progn
-     (define-key ruby-mode-map (kbd "C-c , ,") 'ruby-open-spec-other-buffer)))

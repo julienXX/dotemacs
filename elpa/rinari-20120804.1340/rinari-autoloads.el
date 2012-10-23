@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (rinari-minor-mode rinari-launch) "rinari" "rinari.el"
-;;;;;;  (20563 8922))
+;;;;;;  (20606 31294))
 ;;; Generated autoloads from rinari.el
 
 (autoload 'rinari-launch "rinari" "\
@@ -26,7 +26,7 @@ Enable Rinari minor mode to support working with the Ruby on Rails framework.
 ;;;***
 
 ;;;### (autoloads (rinari-merb-minor-mode) "rinari-merb" "rinari-merb.el"
-;;;;;;  (20563 8922))
+;;;;;;  (20606 31294))
 ;;; Generated autoloads from rinari-merb.el
 
 (autoload 'rinari-merb-minor-mode "rinari-merb" "\
@@ -37,7 +37,7 @@ with the Ruby on Rails framework.
 
 ;;;***
 
-;;;### (autoloads nil nil ("rinari-pkg.el") (20563 8922 124080))
+;;;### (autoloads nil nil ("rinari-pkg.el") (20606 31294 678419))
 
 ;;;***
 

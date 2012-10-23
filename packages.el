@@ -153,3 +153,10 @@
 
 ;; SCSS
 (setq scss-compile-at-save nil)
+
+;; Rinari
+(require 'rinari)
+
+;; Golden ration
+(require 'golden-ratio)
+(golden-ratio-enable)
