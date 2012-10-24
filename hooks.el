@@ -26,6 +26,14 @@
     (ruby-electric-mode t)
     (ruby-tools-mode t)))
 
+;; HAML hooks
+(add-hook 'haml-mode-hook
+  (lambda ()
+    (ruby-tools-mode t)
+    (setq indent-tabs-mode nil)
+    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+
+
 ;; Delete trailing whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
