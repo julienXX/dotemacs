@@ -44,7 +44,7 @@
 		 [(20120505 1756)
 		  nil "Polish up poor writing on the fly [source: github]" single])
  (wrap-region .
-	      [(20121020 1842)
+	      [(20121028 1159)
 	       nil "Wrap region with stuff. [source: github]" tar])
  (workgroups .
 	     [(20110724 1825)
@@ -149,6 +149,9 @@
  (unfill .
 	 [(20120529 1250)
 	  nil "The inverse of fill-paragraph and fill-region [source: github]" single])
+ (undo-tree .
+	    [(20121022 2041)
+	     nil "Treat undo history as a tree [source: git]" single])
  (underwater-theme .
 		   [(20120615 1149)
 		    nil "A gentle, deep blue color theme [source: github]" single])
@@ -254,7 +257,7 @@
 		 (0)))
 	       "Major mode for editing .jade files [source: github]" single])
  (string-utils .
-	       [(20121025 952)
+	       [(20121027 1646)
 		((list-utils
 		  (0 1 2)))
 		"String-manipulation utilities [source: github]" single])
@@ -456,7 +459,7 @@
 	   [(20121021 1341)
 	    nil "Roy major mode [source: github]" single])
  (rinari .
-	 [(20120804 1340)
+	 [(20121028 954)
 	  ((ruby-mode
 	    (1 1))
 	   (inf-ruby
@@ -465,7 +468,7 @@
 	    (0 8))
 	   (jump
 	    (2 0)))
-	  "Rinari Is Not A Rails IDE [source: github]" tar])
+	  "Rinari Is Not A Rails IDE [source: github]" single])
  (rfringe .
 	  [(20110405 1520)
 	   nil "display the relative location of the region, in the fringe. [source: wiki]" single])
@@ -491,7 +494,7 @@
 		   [(20111019 1608)
 		    nil "narrow-to-region that operates recursively [source: github]" single])
  (rebox2 .
-	 [(20121009 2244)
+	 [(20121028 238)
 	  nil "Handling of comment boxes in various styles. [source: github]" single])
  (rdp .
       [(20120928 2154)
@@ -509,7 +512,7 @@
 	  [(20121017 157)
 	   nil "No description available. [source: github]" single])
  (quickrun .
-	   [(20121012 2325)
+	   [(20121028 1610)
 	    nil "Run commands quickly [source: github]" single])
  (quick-buffer-switch .
 		      [(20120827 2008)
@@ -738,7 +741,7 @@
 	      [(20120913 1323)
 	       nil "Minor mode for interacting with Pandoc [source: github]" tar])
  (packed .
-	 [(20120930 1703)
+	 [(20121029 1142)
 	  ((magit
 	    (1 1 1)))
 	  "Package manager agnostic Emacs Lisp package utilities [source: github]" tar])
@@ -754,9 +757,9 @@
 		(0 6 2)))
 	      "Web browsing helpers for OS X [source: github]" single])
  (org2blog .
-	   [(20121014 1926)
+	   [(20121027 2131)
 	    ((org
-	      (7 7))
+	      (7 8))
 	     (xml-rpc
 	      (1 6 8)))
 	    "Blog from Org mode to wordpress [source: github]" tar])
@@ -891,7 +894,7 @@
 	  [(20110427 1123)
 	   nil "Minimap sidebar for Emacs [source: git]" single])
  (minimal-session-saver .
-			[(20121025 1051)
+			[(20121027 1058)
 			 nil "Very lean session saver [source: github]" single])
  (midje-mode .
 	     [(20121015 2222)
@@ -955,7 +958,7 @@
 	[(20121014 1043)
 	 nil "Control Git from Emacs. [source: github]" tar])
  (macrostep .
-	    [(20120924 708)
+	    [(20121028 101)
 	     nil "interactive macro stepper for Emacs Lisp [source: github]" single])
  (lua-mode .
 	   [(20120919 1821)
@@ -1134,7 +1137,7 @@
 		[(20120831 1806)
 		 nil "Major mode API client for status.net open microblogging [source: github]" tar])
  (icicles .
-	  [(20121027 25)
+	  [(20121028 18)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20120922 1120)
@@ -1486,7 +1489,7 @@
 	      [(20111001 1917)
 	       nil "No description available. [source: github]" single])
  (evil .
-       [(20121008 2306)
+       [(20121028 1801)
 	((undo-tree
 	  (0 5 1)))
 	"Extensible Vi layer for Emacs. [source: git]" tar])
@@ -1499,7 +1502,7 @@
 	   (0 0 5)))
 	 "Library for working with xml via esxml and sxml [source: github]" single])
  (ess .
-      [(20121020 118)
+      [(20121027 2218)
        nil "No description available. [source: github]" tar])
  (espuds .
 	 [(20121020 1836)
@@ -1663,7 +1666,7 @@
    [(20120306 1807)
     nil "Simple asynchronous functions for emacs lisp [source: github]" single])
  (dash .
-       [(20121024 1318)
+       [(20121027 1619)
 	nil "A modern list library for Emacs [source: github]" single])
  (darcsum .
 	  [(20120115 1513)
@@ -1725,10 +1728,10 @@
 			   (6 5 5)))
 			 "Solarized themes for Emacs [source: github]" tar])
  (color-theme-sanityinc-tomorrow .
-				 [(20121015 1209)
+				 [(20121028 1114)
 				  nil "A version of Chris Kempson's various Tomorrow themes [source: github]" tar])
  (color-theme-sanityinc-solarized .
-				  [(20121015 1209)
+				  [(20121028 1114)
 				   nil "A version of Ethan Schoonover's Solarized themes [source: github]" tar])
  (color-theme-buffer-local .
 			   [(20120703 17)
@@ -1754,7 +1757,7 @@
 			(1 7)))
 		      "Major mode for ClojureScript code [source: github]" single])
  (clojure-test-mode .
-		    [(20120914 1423)
+		    [(20121025 1300)
 		     ((clojure-mode
 		       (1 7)))
 		     "Minor mode for Clojure tests [source: github]" single])
@@ -1869,7 +1872,7 @@
 		   (0 5)))
 		 "Auto Completion for GNU Emacs [source: github]" tar])
  (auto-compile .
-	       [(20120731 2050)
+	       [(20121028 2147)
 		((magit
 		  (1 1 1))
 		 (packed
@@ -1930,7 +1933,4 @@
 	    "auto-complete sources for Clojure using nrepl completions [source: github]" single])
  (ac-dabbrev .
 	     [(20091116 1626)
-	      nil "auto-complete.el source for dabbrev [source: wiki]" single])
- (undo-tree .
-	    [(20121022 2041)
-	     nil "Treat undo history as a tree [source: git]" single]))
+	      nil "auto-complete.el source for dabbrev [source: wiki]" single]))
