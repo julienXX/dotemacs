@@ -23,7 +23,7 @@
 		    [(20120622 937)
 		     nil "zen and art color theme for GNU Emacs 24 [source: github]" single])
  (yasnippet .
-	    [(20120923 1126)
+	    [(20121106 450)
 	     nil "Yet another snippet extension for Emacs. [source: github]" tar])
  (yari .
        [(20110417 2248)
@@ -1152,7 +1152,7 @@
 		[(20120831 1806)
 		 nil "Major mode API client for status.net open microblogging [source: github]" tar])
  (icicles .
-	  [(20121104 2318)
+	  [(20121106 14)
 	   nil "Minibuffer input completion and cycling. [source: wiki]" tar])
  (ibuffer-vc .
 	     [(20120922 1120)
@@ -1245,7 +1245,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20121104 1945)
+       [(20121106 841)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header2 .
 	  [(20120823 1956)
@@ -1283,7 +1283,7 @@
 		    [(20120821 1835)
 		     nil "Mode for the dot-language used by graphviz (att). [source: github]" single])
  (graphene .
-	   [(20121031 900)
+	   [(20121106 818)
 	    ((auto-complete
 	      (20120909))
 	     (ac-dabbrev
@@ -1346,7 +1346,7 @@
 		 [(20121012 1635)
 		  nil "Major mode for editing .gitconfig files [source: github]" single])
  (git-commit-mode .
-		  [(20121012 1635)
+		  [(20121105 959)
 		   nil "Major mode for editing git commit messages [source: github]" single])
  (git-blame .
 	    [(20110509 1226)
@@ -1511,7 +1511,7 @@
 	    [(20120817 2006)
 	     nil "fake namespaces with defpackage [source: github]" single])
  (expand-region .
-		[(20121102 649)
+		[(20121105 1415)
 		 nil "Increase selected region by semantic units. [source: github]" tar])
  (exec-path-from-shell .
 		       [(20121026 1037)
@@ -1523,7 +1523,7 @@
 	      [(20111001 1917)
 	       nil "No description available. [source: github]" single])
  (evil .
-       [(20121104 958)
+       [(20121105 1450)
 	((undo-tree
 	  (0 5 1)))
 	"Extensible Vi layer for Emacs. [source: git]" tar])
@@ -1777,7 +1777,7 @@
 	       [(20120811 2127)
 		nil "multi-buffer occur (grep) mode [source: github]" single])
  (coffee-mode .
-	      [(20121026 2211)
+	      [(20121105 1810)
 	       nil "Major mode to edit CoffeeScript files in Emacs [source: github]" single])
  (cm-mode .
 	  [(20120814 1203)
