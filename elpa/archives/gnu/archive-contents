@@ -96,7 +96,7 @@
 	 [(0 8)
 	  nil "OAuth 2.0 Authorization Protocol" single])
  (org .
-      [(20121105)
+      [(20121112)
        nil "Outline-based notes management and organizer" tar])
  (quarter-plane .
 		[(0 1)
@@ -105,7 +105,7 @@
 	[(0 1)
 	 nil "Queue data structure" single])
  (rainbow-mode .
-	       [(0 2)
+	       [(0 4)
 		nil "Colorize color names in buffers" single])
  (register-list .
 		[(0 1)

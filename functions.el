@@ -130,3 +130,9 @@ Ignores CHAR at point."
         (when (and (buffer-file-name) (not (buffer-modified-p)))
           (revert-buffer t t t) )))
     (message "Refreshed open files.") )
+
+(defun jb-ac-tab-noconflict ()
+  (let ((command (key-binding [tab]))) ; remember command
+    (local-unset-key [tab]) ; unset from (kbd "<tab>")
+    (local-set-key (kbd "TAB") command))) ; bind to (kbd "TAB")
+

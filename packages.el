@@ -43,10 +43,9 @@
 
 ;; yasnippet
 (require 'yasnippet)
-(require 'yasnippet-bundle)
-(setq yas/root-directory "~/.emacs.d/snippets")
-(yas/load-directory yas/root-directory)
-(yas/global-mode 1)
+(setq yas-snippets-dir
+      '("~/.emacs.d/snippets"))
+(yas-global-mode 1)
 
 ;; automatic end insertion
 (require 'ruby-end)
@@ -107,16 +106,16 @@
 (require 'ruby-electric)
 
 ;; Workaround for ruby-electric messing with yasnippet
-(defun yas/advise-indent-function (function-symbol)
-  (eval `(defadvice ,function-symbol (around yas/try-expand-first activate)
+(defun yas-advise-indent-function (function-symbol)
+  (eval `(defadvice ,function-symbol (around yas-try-expand-first activate)
            ,(format
              "Try to expand a snippet before point, then call `%s' as usual"
              function-symbol)
-           (let ((yas/fallback-behavior nil))
+           (let ((yas-fallback-behavior nil))
              (unless (and (interactive-p)
-                          (yas/expand))
+                          (yas-expand))
                ad-do-it)))))
-(yas/advise-indent-function 'ruby-indent-line)
+(yas-advise-indent-function 'ruby-indent-line)
 
 ;; RSpec mode
 (require 'rspec-mode)
