@@ -516,7 +516,7 @@
 		   [(20111019 1608)
 		    nil "narrow-to-region that operates recursively [source: github]" single])
  (rebox2 .
-	 [(20121111 1526)
+	 [(20121113 2100)
 	  nil "Handling of comment boxes in various styles. [source: github]" single])
  (rdp .
       [(20120928 2154)
@@ -762,6 +762,9 @@
  (pandoc-mode .
 	      [(20120913 1323)
 	       nil "Minor mode for interacting with Pandoc [source: github]" tar])
+ (page-break-lines .
+		   [(20121113 1201)
+		    nil "Display ugly ^L page breaks as tidy horizontal lines [source: github]" single])
  (packed .
 	 [(20121101 1354)
 	  ((magit
@@ -847,7 +850,7 @@
 		     [(20121011 2145)
 		      nil "Tiny functionality enhancements for evaluating sexps. [source: github]" single])
  (nrepl .
-	[(20121026 1746)
+	[(20121104 2301)
 	 ((clojure-mode
 	   (1 11)))
 	 "Client for Clojure nREPL [source: github]" single])
@@ -879,7 +882,7 @@
 		   [(20121027 913)
 		    nil "Multiple cursors for Emacs. [source: github]" tar])
  (multifiles .
-	     [(20120926 1435)
+	     [(20121113 631)
 	      nil "View and edit parts of multiple files in one buffer [source: github]" single])
  (multi-web-mode .
 		 [(20120925 942)
@@ -1261,7 +1264,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20121112 741)
+       [(20121113 1412)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header2 .
 	  [(20120823 1956)
@@ -1493,7 +1496,7 @@
 		    (0 1)))
 		  "A flymake handler for coffee script [source: github]" single])
  (flycheck .
-	   [(20121104 2203)
+	   [(20121113 1221)
 	    nil "Flymake reloaded with useful checkers [source: github]" single])
  (flex-isearch .
 	       [(20120606 1317)
@@ -1614,8 +1617,11 @@
  (elein .
 	[(20120118 1537)
 	 nil "running leiningen commands from emacs [source: github]" single])
+ (el-mock .
+	  [(20121004 2057)
+	   nil "Tiny Mock and Stub framework in Emacs Lisp [source: wiki]" single])
  (ein .
-      [(20121103 2218)
+      [(20121113 1230)
        ((websocket
 	 (0 9))
 	(auto-complete
@@ -1818,12 +1824,12 @@
 			(1 7)))
 		      "Major mode for ClojureScript code [source: github]" single])
  (clojure-test-mode .
-		    [(20121029 1622)
+		    [(20121111 1347)
 		     ((clojure-mode
 		       (1 7)))
 		     "Minor mode for Clojure tests [source: github]" single])
  (clojure-mode .
-	       [(20121027 1455)
+	       [(20121111 1347)
 		nil "Major mode for Clojure code [source: github]" single])
  (cljsbuild-mode .
 		 [(20121024 1041)
@@ -1995,4 +2001,3 @@
  (ac-dabbrev .
 	     [(20091116 1626)
 	      nil "auto-complete.el source for dabbrev [source: wiki]" single]))
-

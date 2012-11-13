@@ -38,9 +38,6 @@
 
 (ad-activate 'paredit-mode)
 
-;; project-mode
-(autoload 'project-mode "project-mode" "Project Mode" t)
-
 ;; yasnippet
 (require 'yasnippet)
 (setq yas-snippets-dir
