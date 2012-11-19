@@ -43,7 +43,6 @@
 (add-hook 'sass-mode-hook 'rainbow-mode)
 
 ;; Tab no conflict
-(add-hook 'ruby-mode-hook 'jb-ac-tab-noconflict)
-(add-hook 'markdown-mode-hook 'jb-ac-tab-noconflict)
-(add-hook 'org-mode-hook 'jb-ac-tab-noconflict)
-
+;; (add-hook 'ruby-mode-hook 'jb-ac-tab-noconflict)
+;; (add-hook 'markdown-mode-hook 'jb-ac-tab-noconflict)
+;; (add-hook 'org-mode-hook 'jb-ac-tab-noconflict)
