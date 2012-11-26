@@ -212,7 +212,7 @@ Use `font-lock-add-keywords' in case of `ruby-mode' or
             (concat "\\(^\\|[^_:.@$]\\|\\.\\.\\)\\b"
 		    (regexp-opt keywords t)
 		    ruby-keyword-end-re)
-            (list 2 font-lock-keyword-face))))))
+            (list 2 'font-lock-builtin-face))))))
 
 (defun rinari-apply-keywords-for-file-type ()
   "Apply extra font lock keywords specific to models, controllers etc."

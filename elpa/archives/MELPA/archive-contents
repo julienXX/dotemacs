@@ -221,7 +221,7 @@
 	   [(20120615 1752)
 	    nil "Thing at Point optional utilities [source: github]" single])
  (thesaurus .
-	    [(20120408 57)
+	    [(20121125 1937)
 	     nil "replace a word with a synonym looked up in a web service. [source: wiki]" single])
  (tfs .
       [(20120508 1820)
@@ -485,7 +485,7 @@
 	   [(20121021 1341)
 	    nil "Roy major mode [source: github]" single])
  (rinari .
-	 [(20121122 1217)
+	 [(20121125 2043)
 	  ((ruby-mode
 	    (1 0))
 	   (inf-ruby
@@ -1318,7 +1318,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20121125 1735)
+       [(20121126 931)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header2 .
 	  [(20120823 1956)
@@ -1669,11 +1669,11 @@
 	   [(20121003 221)
 	    nil "assign files to projects, programatically [source: github]" tar])
  (epc .
-      [(20121117 1837)
+      [(20121126 1328)
        ((concurrent
 	 (0 3 1))
 	(ctable
-	 (0 1 0)))
+	 (0 1 1)))
        "A RPC stack for the Emacs Lisp [source: github]" tar])
  (enclose .
 	  [(20121008 1814)
@@ -1691,7 +1691,7 @@
 	     [(20121121 1747)
 	      nil "Handy functions for inspecting and comparing package archives [source: github]" single])
  (elixir-mode .
-	      [(20120924 1516)
+	      [(20121125 2251)
 	       nil "Major mode for editing Elixir files [source: github]" single])
  (elisp-slime-nav .
 		  [(20111111 1229)
@@ -1845,7 +1845,7 @@
 	[(20110911 1204)
 	 nil "Exuberant Ctags utilities for Emacs [source: hg]" single])
  (ctable .
-	 [(20120615 1718)
+	 [(20121126 1326)
 	  nil "Table component for Emacs Lisp [source: github]" single])
  (csv-nav .
 	  [(20091121 37)
@@ -2045,7 +2045,7 @@
 		   (0 5)))
 		 "Auto Completion for GNU Emacs [source: github]" tar])
  (auto-compile .
-	       [(20121121 1402)
+	       [(20121125 2300)
 		((packed
 		  (0 3 2)))
 		"automatically compile Emacs Lisp libraries [source: github]" single])
@@ -2108,4 +2108,3 @@
  (ac-dabbrev .
 	     [(20091116 1626)
 	      nil "auto-complete.el source for dabbrev [source: wiki]" single]))
-
