@@ -1,5 +1,4 @@
 My emacs config.
 ==========
 
-Clone in .emacs.d and play!
-
+Clone in .emacs.d and code!
