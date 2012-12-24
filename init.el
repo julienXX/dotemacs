@@ -50,6 +50,13 @@
 (add-hook 'emacs-startup-hook
           (lambda () (delete-other-windows)) t)
 
+;; Auto refresh buffers
+(global-auto-revert-mode 1)
+
+;; Also auto refresh dired, but be quiet about it
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
+
 ;; package stuff
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
