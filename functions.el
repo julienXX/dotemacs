@@ -38,36 +38,23 @@
   (next-line arg))
 
 ;; Behave like vi's o command
-(defun vi-open-line-above ()
-  "Insert a newline above the current line and put point at beginning."
+(defun open-line-below ()
   (interactive)
-  (unless (bolp)
-    (beginning-of-line))
+  (if (eolp)
+      (newline)
+    (end-of-line)
+    (newline))
+  (indent-for-tab-command))
+
+(defun open-line-above ()
+  (interactive)
+  (beginning-of-line)
   (newline)
   (forward-line -1)
-  (indent-according-to-mode))
+  (indent-for-tab-command))
 
-(defun vi-open-line-below ()
-  "Insert a newline below the current line and put point at beginning."
-  (interactive)
-  (unless (eolp)
-    (end-of-line))
-  (newline-and-indent))
-
-(defun vi-open-line (&optional abovep)
-  "Insert a newline below the current line and put point at beginning.
-With a prefix argument, insert a newline above the current line."
-  (interactive "P")
-  (if abovep
-      (vi-open-line-above)
-    (vi-open-line-below)))
-
-(defun kill-current-line (&optional n)
-  (interactive "p")
-  (save-excursion
-    (beginning-of-line)
-    (let ((kill-whole-line t))
-      (kill-line n))))
+(global-set-key (kbd "<C-return>") 'open-line-below)
+(global-set-key (kbd "<C-S-return>") 'open-line-above)
 
 ;; custom goto-line
 ;; turn line numbers off by default
@@ -135,4 +122,3 @@ Ignores CHAR at point."
   (let ((command (key-binding [tab]))) ; remember command
     (local-unset-key [tab]) ; unset from (kbd "<tab>")
     (local-set-key (kbd "TAB") command))) ; bind to (kbd "TAB")
-
