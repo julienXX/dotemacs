@@ -40,10 +40,8 @@
 ;; Behave like vi's o command
 (defun open-line-below ()
   (interactive)
-  (if (eolp)
-      (newline)
-    (end-of-line)
-    (newline))
+  (end-of-line)
+  (newline)
   (indent-for-tab-command))
 
 (defun open-line-above ()
@@ -52,9 +50,6 @@
   (newline)
   (forward-line -1)
   (indent-for-tab-command))
-
-(global-set-key (kbd "<C-return>") 'open-line-below)
-(global-set-key (kbd "<C-S-return>") 'open-line-above)
 
 ;; custom goto-line
 ;; turn line numbers off by default
@@ -139,3 +134,20 @@ Ignores CHAR at point."
       (forward-line)
       (transpose-lines -1))
     (move-to-column col)))
+
+(defun rename-current-buffer-file ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (let ((new-name (read-file-name "New name: " filename)))
+        (if (get-buffer new-name)
+            (error "A buffer named '%s' already exists!" new-name)
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil)
+          (message "File '%s' successfully renamed to '%s'"
+                   name (file-name-nondirectory new-name)))))))
