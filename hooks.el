@@ -42,7 +42,14 @@
 (add-hook 'scss-mode-hook 'rainbow-mode)
 (add-hook 'sass-mode-hook 'rainbow-mode)
 
-;; Tab no conflict
-;; (add-hook 'ruby-mode-hook 'jb-ac-tab-noconflict)
-;; (add-hook 'markdown-mode-hook 'jb-ac-tab-noconflict)
-;; (add-hook 'org-mode-hook 'jb-ac-tab-noconflict)
+;; C-d to exit shell
+(defun comint-delchar-or-eof-or-kill-buffer (arg)
+  (interactive "p")
+  (if (null (get-buffer-process (current-buffer)))
+      (kill-buffer)
+    (comint-delchar-or-maybe-eof arg)))
+
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (define-key shell-mode-map
+              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
