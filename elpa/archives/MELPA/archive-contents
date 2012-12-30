@@ -290,7 +290,7 @@
 	   [(20121022 1257)
 	    nil "emulate surround.vim from Vim [source: github]" single])
  (sunrise-commander .
-		    [(20121117 2055)
+		    [(20121229 1720)
 		     nil "two-pane file manager for Emacs based on Dired and inspired by MC [source: github]" tar])
  (sudden-death .
 	       [(20121218 2249)
@@ -540,7 +540,7 @@
 	   [(20121207 1930)
 	    nil "Roy major mode [source: github]" single])
  (robe .
-       [(20121229 505)
+       [(20121230 555)
 	((inf-ruby
 	  (2 2 3)))
 	"Code navigation, documentation lookup and completion for Ruby [source: github]" tar])
@@ -548,7 +548,7 @@
 	   [(20121227 1802)
 	    nil "A major mode for editing RELAX NG Compact syntax. [source: github]" single])
  (rinari .
-	 [(20121125 2043)
+	 [(20121229 1333)
 	  ((ruby-mode
 	    (1 0))
 	   (inf-ruby
@@ -567,6 +567,9 @@
  (restclient .
 	     [(20121122 1336)
 	      nil "An interactive HTTP client for Emacs [source: github]" tar])
+ (request .
+	  [(20121230 49)
+	   nil "Compatible layer for URL request in Emacs [source: github]" tar])
  (regex-tool .
 	     [(20120510 209)
 	      nil "No description available. [source: github]" single])
@@ -614,7 +617,7 @@
 	       [(20120505 1355)
 		nil "outline mode extension for python mode [source: wiki]" single])
  (python .
-	 [(20121228 1548)
+	 [(20121229 1002)
 	  nil "Python's flying circus support for Emacs [source: github]" single])
  (pyregexp .
 	   [(20120919 1909)
@@ -1406,14 +1409,17 @@
 	       ((helm
 		 (20120811)))
 	       "Migemo plug-in for helm [source: github]" single])
- (helm-git .
-	   [(20120629 1358)
-	    nil "Helm extension for Git. [source: github]" single])
+ (helm-ls-git .
+	      [(20121010 1426)
+	       nil "list git files. [source: github]" single])
  (helm-gtags .
 	     [(20121119 2156)
 	      ((helm
 		(1 0)))
 	      "GNU GLOBAL helm interface [source: github]" single])
+ (helm-git .
+	   [(20120629 1358)
+	    nil "Helm extension for Git. [source: github]" single])
  (helm-gist .
 	    [(20120820 935)
 	     ((helm
@@ -1455,7 +1461,7 @@
 	   (1 2)))
 	 "Emacs client for hastebin (http://hastebin.com/about.md) [source: github]" single])
  (haskell-mode .
-	       [(20121228 1550)
+	       [(20121229 210)
 		nil "A Haskell editing mode [source: github]" tar])
  (hardhat .
 	  [(20121126 1228)
@@ -1692,12 +1698,12 @@
 		    (0 1)))
 		  "A flymake handler for coffee script [source: github]" single])
  (flycheck .
-	   [(20121228 1709)
+	   [(20121230 1046)
 	    ((s
 	      (1 3 0))
 	     (dash
 	      (1 0 3)))
-	    "Flymake done right [source: github]" single])
+	    "Flymake done right [source: github]" tar])
  (flex-isearch .
 	       [(20120606 1317)
 		nil "Flex matching (like ido) in isearch. [source: hg]" single])
@@ -1823,6 +1829,21 @@
  (elscreen .
 	   [(20120413 1107)
 	    nil "Emacs window session manager [source: github]" single])
+ (elpy .
+       [(20121205 1404)
+	((pymacs
+	  (0 25))
+	 (auto-complete
+	  (1 4))
+	 (yasnippet
+	  (0 8))
+	 (fuzzy
+	  (0 1))
+	 (virtualenv
+	  (1 2))
+	 (highlight-indentation
+	  (0 5 0)))
+	"Emacs Lisp Python Environment [source: github]" single])
  (elpa-audit .
 	     [(20121121 1747)
 	      nil "Handy functions for inspecting and comparing package archives [source: github]" single])
@@ -1842,7 +1863,7 @@
 	  [(20121004 2057)
 	   nil "Tiny Mock and Stub framework in Emacs Lisp [source: wiki]" single])
  (ein .
-      [(20121226 1930)
+      [(20121229 1848)
        ((websocket
 	 (0 9))
 	(auto-complete
@@ -2069,19 +2090,19 @@
 		    [(20101118 2224)
 		     nil "minor mode for the Closure Linter [source: github]" single])
  (clojurescript-mode .
-		     [(20121227 2126)
+		     [(20121229 2155)
 		      ((clojure-mode
 			(1 7)))
 		      "Major mode for ClojureScript code [source: github]" single])
  (clojure-test-mode .
-		    [(20121228 2134)
+		    [(20121229 2155)
 		     ((clojure-mode
 		       (1 7))
 		      (nrepl
 		       (0 1 5)))
 		     "Minor mode for Clojure tests [source: github]" single])
  (clojure-mode .
-	       [(20121228 2134)
+	       [(20121229 2155)
 		nil "Major mode for Clojure code [source: github]" single])
  (cljsbuild-mode .
 		 [(20121024 1041)
@@ -2161,7 +2182,7 @@
 		(3 0)))
 	      "vCard import/export for BBDB [source: github]" tar])
  (bbdb .
-       [(20121226 2334)
+       [(20121230 40)
 	nil "core of BBDB [source: git]" tar])
  (bash-completion .
 		  [(20111120 1539)
