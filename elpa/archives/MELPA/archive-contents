@@ -17,7 +17,7 @@
 		 [(20111231 345)
 		  nil "Unfold CSS-selector-like expressions to markup [source: github]" single])
  (zenburn-theme .
-		[(20121223 1135)
+		[(20121231 1556)
 		 nil "A low contrast color theme for Emacs. [source: github]" single])
  (zen-and-art-theme .
 		    [(20120622 937)
@@ -91,7 +91,7 @@
 	    [(20121013 1846)
 	     nil "Emacs WebSocket client and server [source: github]" single])
  (web-mode .
-	   [(20121226 2006)
+	   [(20121231 1842)
 	    nil "major mode for editing HTML templates [source: github]" single])
  (wc-mode .
 	  [(20120531 1344)
@@ -112,7 +112,7 @@
 	       [(20121205 1458)
 		nil "Vector-manipulation utility functions [source: github]" single])
  (vcomp .
-	[(20120820 2219)
+	[(20121231 1148)
 	 nil "compare version strings [source: github]" single])
  (vcl-mode .
 	   [(20121129 2114)
@@ -372,7 +372,7 @@
 	     [(20090325 2254)
 	      nil "indentation of SQL statements [source: wiki]" single])
  (solarized-theme .
-		  [(20121228 1654)
+		  [(20121231 1555)
 		   nil "The Solarized color theme, ported to Emacs. [source: github]" tar])
  (smooth-scrolling .
 		   [(20121012 1154)
@@ -390,7 +390,7 @@
 	   [(20120905 2101)
 	    nil "Support sequential operation which omitted prefix keys. [source: github]" single])
  (smartparens .
-	      [(20121229 207)
+	      [(20121231 33)
 	       ((dash
 		 (1 0 2)))
 	       "Autoinsert pairs of defined brackets and wrap regions [source: github]" single])
@@ -548,7 +548,7 @@
 	   [(20121227 1802)
 	    nil "A major mode for editing RELAX NG Compact syntax. [source: github]" single])
  (rinari .
-	 [(20121229 1333)
+	 [(20121231 943)
 	  ((ruby-mode
 	    (1 0))
 	   (inf-ruby
@@ -1444,7 +1444,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [source: github]" single])
  (helm .
-       [(20121229 128)
+       [(20121230 2036)
 	nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
  (header2 .
 	  [(20121228 2051)
@@ -1572,16 +1572,16 @@
 	    [(20110509 1226)
 	     nil "Minor mode for incremental blame for Git [source: github]" single])
  (gist .
-       [(20120916 1845)
+       [(20121231 212)
 	((eieio
 	  (1 3))
 	 (gh
-	  (0 5 3))
+	  (0 6 0))
 	 (tabulated-list
 	  (0)))
 	"Emacs integration for gist.github.com [source: github]" single])
  (gh .
-     [(20120927 1646)
+     [(20121231 208)
       ((eieio
 	(1 3))
        (pcache
@@ -1672,7 +1672,7 @@
 			(0 3)))
 		      "Flymake handler for Perl to invoke Perl::Critic [source: github]" tar])
  (flymake-jslint .
-		 [(20121104 1927)
+		 [(20121230 1750)
 		  ((flymake-easy
 		    (0 1)))
 		  "A flymake handler for javascript using jslint [source: github]" single])
@@ -1698,7 +1698,7 @@
 		    (0 1)))
 		  "A flymake handler for coffee script [source: github]" single])
  (flycheck .
-	   [(20121230 1046)
+	   [(20121231 1456)
 	    ((s
 	      (1 3 0))
 	     (dash
@@ -1798,6 +1798,9 @@
  (eredis .
 	 [(20120808 2207)
 	  nil "eredis, a Redis client in emacs lisp [source: svn]" single])
+ (ercn .
+       [(20121230 1313)
+	nil "Flexible ERC notifications [source: github]" single])
  (erc-track-score .
 		  [(20100717 958)
 		   nil "Add score support to tracked channel buffers [source: git]" single])
@@ -1854,7 +1857,7 @@
 	      [(20121125 2251)
 	       nil "Major mode for editing Elixir files [source: github]" single])
  (elisp-slime-nav .
-		  [(20121219 1438)
+		  [(20121231 1118)
 		   nil "Make M-. and M-, work in elisp like they do in slime [source: github]" single])
  (elein .
 	[(20120118 1537)
@@ -2242,7 +2245,7 @@
 	      [(20080905 553)
 	       nil "major mode for editing Apache configuration files [source: wiki]" single])
  (anti-zenburn-theme .
-		     [(20121224 8)
+		     [(20121231 1)
 		      nil "Low-contrast Zenburn-inverted theme [source: github]" single])
  (ansi .
        [(20121008 1920)
