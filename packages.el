@@ -161,3 +161,8 @@
 (require 'saveplace)
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
+
+;; Make dired less verbose
+(require 'dired-details)
+(setq-default dired-details-hidden-string "--- ")
+(dired-details-install)
