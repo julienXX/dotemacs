@@ -101,6 +101,7 @@
 
 ;; Ruby-electric
 (require 'ruby-electric)
+(setq ruby-electric-expand-delimiters-list nil)
 
 ;; Workaround for ruby-electric messing with yasnippet
 (defun yas-advise-indent-function (function-symbol)
