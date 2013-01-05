@@ -42,8 +42,9 @@
 (setq ns-pop-up-frames nil)
 
 ;; aesthetics
-(set-frame-font "Source\ Code\ Pro-14")
-(load-theme 'tango)
+(set-default-font
+  "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(load-theme 'dichromacy)
 (setq linum-format " %3d ")
 
 ;; Only one window on startup
