@@ -1994,9 +1994,6 @@
  (deferred .
    [(20120306 1807)
     nil "Simple asynchronous functions for emacs lisp [source: github]" single])
- (dash .
-       [(20130102 1950)
-	nil "A modern list library for Emacs [source: github]" single])
  (dart-mode .
 	    [(20121218 1449)
 	     nil "Major mode for editing Dart files [source: github]" single])
@@ -2305,4 +2302,7 @@
 	    "auto-complete sources for Clojure using nrepl completions [source: github]" single])
  (ac-dabbrev .
 	     [(20091116 1626)
-	      nil "auto-complete.el source for dabbrev [source: wiki]" single]))
+	      nil "auto-complete.el source for dabbrev [source: wiki]" single])
+ (dash .
+       [(20130102 1950)
+	nil "A modern list library for Emacs [source: github]" single]))

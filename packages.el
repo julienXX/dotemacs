@@ -96,9 +96,6 @@
 ;; RESTclient
 (require 'restclient)
 
-;; ESS
-(require 'ess-site)
-
 ;; Ruby-electric
 (require 'ruby-electric)
 (setq ruby-electric-expand-delimiters-list nil)
@@ -167,3 +164,7 @@
 (require 'dired-details)
 (setq-default dired-details-hidden-string "--- ")
 (dired-details-install)
+
+;; Pomodoro
+(require 'tomatinho)
+(setq tomatinho-time-face '(:family "Source Code Pro" :height 888 :width "Light"))
