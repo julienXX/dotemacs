@@ -42,7 +42,8 @@
 (setq ns-pop-up-frames nil)
 
 ;; aesthetics
-(set-default-font "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-default-font
+  "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 (load-theme 'dichromacy)
 (setq linum-format " %3d ")
 
