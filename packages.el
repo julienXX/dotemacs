@@ -164,6 +164,7 @@
 (require 'dired-details)
 (setq-default dired-details-hidden-string "--- ")
 (dired-details-install)
+(setq insert-directory-program "gls" dired-use-ls-dired t)
 
 ;; Pomodoro
 (require 'tomatinho)
