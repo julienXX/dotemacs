@@ -38,9 +38,6 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; Opens files in the existing frame instead of making new ones.
-(setq ns-pop-up-frames nil)
-
 ;; aesthetics
 (set-default-font
   "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
@@ -83,9 +80,16 @@
 (load "mappings")
 (load "setup-magit")
 
+;; stop opening a new frame (window) for each file
+(setq ns-pop-up-frames nil)
+
 ;; Shell variables on OSX
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+;; Setting rbenv path
+(setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
+(setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
