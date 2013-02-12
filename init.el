@@ -44,6 +44,9 @@
 (load-theme 'dichromacy)
 (setq linum-format " %3d ")
 
+;; stop opening a new frame (window) for each file
+(setq ns-pop-up-frames nil)
+
 ;; Only one window on startup
 (add-hook 'emacs-startup-hook
           (lambda () (delete-other-windows)) t)
@@ -79,9 +82,6 @@
 (load "hooks")
 (load "mappings")
 (load "setup-magit")
-
-;; stop opening a new frame (window) for each file
-(setq ns-pop-up-frames nil)
 
 ;; Shell variables on OSX
 (when (memq window-system '(mac ns))

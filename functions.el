@@ -176,3 +176,8 @@ Ignores CHAR at point."
              (set-window-start w1 s2)
              (set-window-start w2 s1)
              (setq i (1+ i)))))))
+
+(defun jxx-markdown-preview ()
+  (interactive)
+  (save-buffer)
+  (call-process "open" nil nil nil "-a" "Marked.app" (buffer-file-name)))

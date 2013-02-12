@@ -53,3 +53,7 @@
           (lambda ()
             (define-key shell-mode-map
               (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c o p") 'jxx-markdown-preview)))

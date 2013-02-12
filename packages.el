@@ -169,3 +169,7 @@
 ;; Pomodoro
 (require 'tomatinho)
 (setq tomatinho-time-face '(:family "Source Code Pro" :height 888 :width "Light"))
+
+;; configure markdown-mode
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)

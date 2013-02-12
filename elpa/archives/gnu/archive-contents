@@ -104,7 +104,7 @@
 	 [(0 8)
 	  nil "OAuth 2.0 Authorization Protocol" single])
  (org .
-      [(20130121)
+      [(20130128)
        nil "Outline-based notes management and organizer" tar])
  (quarter-plane .
 		[(0 1)
@@ -128,7 +128,7 @@
 		 [(4 0)
 		  nil "Insert operators with surrounding spaces smartly" single])
  (sml-mode .
-	   [(6 2)
+	   [(6 3)
 	    nil "Major mode for editing (Standard) ML" single])
  (svg-clock .
 	    [(0 4)
