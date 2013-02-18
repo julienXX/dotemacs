@@ -173,3 +173,14 @@
 ;; configure markdown-mode
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
+
+;; git-gutter
+(require 'git-gutter)
+(global-git-gutter-mode t)
+(setq git-gutter:diff-option "-w")
+(setq git-gutter:modified-sign "<> ")
+(setq git-gutter:added-sign "++ ")
+(setq git-gutter:deleted-sign "-- ")
+(set-face-background 'git-gutter:modified "white")
+(set-face-foreground 'git-gutter:added "dark green")
+(set-face-foreground 'git-gutter:deleted "red")
