@@ -180,10 +180,14 @@
 (setq git-gutter:modified-sign "<> ")
 (setq git-gutter:added-sign "++ ")
 (setq git-gutter:deleted-sign "-- ")
-(set-face-background 'git-gutter:modified "white")
-(set-face-foreground 'git-gutter:added "dark green")
-(set-face-foreground 'git-gutter:deleted "red")
 
 ;; robe
 (require 'robe)
 (add-hook 'ruby-mode-hook 'robe-mode)
+
+;; multiple-cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
