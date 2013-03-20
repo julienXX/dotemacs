@@ -81,7 +81,8 @@
 (load "modes")
 (load "hooks")
 (load "mappings")
-(load "setup-magit")
+
+(eval-after-load 'magit '(require 'setup-magit))
 
 ;; Shell variables on OSX
 (when (memq window-system '(mac ns))

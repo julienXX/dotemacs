@@ -1,3 +1,5 @@
+(require 'magit)
+
 ;; C-x C-k to kill file on line
 
 (defun magit-kill-file-on-line ()
