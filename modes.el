@@ -25,3 +25,6 @@
 (add-to-list 'auto-mode-alist '("\\.markdn"   . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mdown"    . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md"       . markdown-mode))
+
+;; Javascript
+(add-to-list 'auto-mode-alist '("\\.js" . js2-mode))
