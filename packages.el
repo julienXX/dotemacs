@@ -20,9 +20,9 @@
 (require 'textmate)
 (textmate-mode)
 
-;; autopair
-(require 'autopair)
-(autopair-global-mode 1)
+;; smartparens
+(require 'smartparens)
+(smartparens-global-mode t)
 
 (require 'paredit)
 (defadvice paredit-mode (around disable-autopairs-around (arg))
