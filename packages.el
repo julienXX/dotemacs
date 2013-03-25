@@ -22,10 +22,7 @@
 
 ;; autopair
 (require 'autopair)
-
-(defvar autopair-modes '(r-mode ruby-mode))
-(defun turn-on-autopair-mode () (autopair-mode 1))
-(dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
+(autopair-global-mode 1)
 
 (require 'paredit)
 (defadvice paredit-mode (around disable-autopairs-around (arg))

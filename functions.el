@@ -181,3 +181,9 @@ Ignores CHAR at point."
   (interactive)
   (save-buffer)
   (call-process "open" nil nil nil "-a" "Marked.app" (buffer-file-name)))
+
+(defun jxx-show-ruby-tags ()
+  (interactive)
+  (occur "^\\s-*\\\(class \\\|module \\\|def \\\|[^:]include \\\|private\\b\\\|protected\\b\\\)"))
+
+(define-key ruby-mode-map (kbd "C-c t") 'jxx-show-ruby-tags)
