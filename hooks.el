@@ -22,7 +22,6 @@
 ;; Ruby hooks
 (add-hook 'ruby-mode-hook
   (lambda ()
-    (autopair-mode 1)
     (ruby-electric-mode t)
     (ruby-tools-mode t)))
 
