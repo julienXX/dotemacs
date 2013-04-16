@@ -73,6 +73,9 @@
 	    ((emacs
 	      (24 1)))
 	    "Improved JavaScript editing mode" single])
+ (jumpc .
+	[(2 0)
+	 nil "jump to previous insertion points" single])
  (lex .
       [(1 1)
        nil "Lexical analyser construction" tar])
@@ -109,8 +112,11 @@
  (oauth2 .
 	 [(0 8)
 	  nil "OAuth 2.0 Authorization Protocol" single])
+ (omn-mode .
+	   [(1 0)
+	    nil "Support for OWL Manchester Notation" single])
  (org .
-      [(20130401)
+      [(20130415)
        nil "Outline-based notes management and organizer" tar])
  (quarter-plane .
 		[(0 1)
