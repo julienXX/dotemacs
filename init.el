@@ -81,7 +81,7 @@
 (load "modes")
 (load "hooks")
 (load "mappings")
-(load "erc")
+(load "erc_settings")
 
 (eval-after-load 'magit '(require 'setup-magit))
 
@@ -103,8 +103,9 @@
  '(column-number-mode t)
  '(custom-safe-themes (quote ("e9a1226ffed627ec58294d77c62aa9561ec5f42309a1f7a2423c6227e34e3581" "4be2645396d79e94d37867be5a7f41b66e05fa81c5b266d705a7edd7fb785302" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" default)))
  '(erc-away-nickname "(away)")
- '(erc-modules (quote (autojoin completion fill list notifications services ercn netsplit fill button match track completion readonly networks ring autojoin noncommands irccontrols move-to-prompt stamp menu list)))
- '(erc-nick "julienXX")
+ '(erc-modules (quote (autojoin completion fill list ring services ercn netsplit button match track readonly networks noncommands irccontrols move-to-prompt stamp menu)))
+ '(erc-nick nil)
+ '(erc-prompt-for-password nil)
  '(fci-rule-character-color "#192028")
  '(fci-rule-color "#073642")
  '(fringe-mode nil nil (fringe))

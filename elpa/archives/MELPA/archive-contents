@@ -175,7 +175,7 @@
 	[(20120108 1245)
 	 nil "show vertical line (column highlighting) mode. [source: wiki]" single])
  (vlfi .
-       [(20130416 1556)
+       [(20130417 1446)
 	nil "View Large Files Improved [source: github]" single])
  (visual-regexp-steroids .
 			 [(20130411 2323)
@@ -818,7 +818,7 @@
 	   [(20121227 1802)
 	    nil "A major mode for editing RELAX NG Compact syntax. [source: github]" single])
  (rinari .
-	 [(20130202 1020)
+	 [(20130417 1117)
 	  ((ruby-mode
 	    (1 0))
 	   (inf-ruby
@@ -1174,7 +1174,7 @@
 	   [(20130319 1601)
 	    nil "Syncing between Jira and Org-mode. [source: github]" tar])
  (org-jekyll .
-	     [(20110917 1421)
+	     [(20130417 1159)
 	      ((org
 		(7 5)))
 	      "Export jekyll-ready posts form org-mode entries [source: github]" single])
@@ -1586,7 +1586,7 @@
 	    [(20080915 2156)
 	     nil "map pairs of simultaneously pressed keys to commands [source: wiki]" single])
  (kanban .
-	 [(20130413 1602)
+	 [(20130417 1005)
 	  ((org
 	    (7)))
 	  "Parse org-todo headlines to use org-tables as Kanban tables [source: hg]" single])
