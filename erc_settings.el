@@ -9,5 +9,3 @@
 (erc :server "localhost" :port 6667 :nick "Julien_Blanchard")
 
 (setq erc-hide-list '("JOIN" "PART" "QUIT"))
-
-(erc-hl-nicks-mode)

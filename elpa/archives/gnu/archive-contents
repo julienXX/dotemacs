@@ -80,7 +80,7 @@
       [(1 1)
        nil "Lexical analyser construction" tar])
  (lmc .
-      [(1 1)
+      [(1 2)
        nil "Little Man Computer in Elisp" single])
  (load-dir .
 	   [(0 0 3)
