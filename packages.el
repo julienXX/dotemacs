@@ -149,8 +149,8 @@
 (require 'rinari)
 
 ;; Golden ration
-(require 'golden-ratio)
-(golden-ratio-enable)
+;; (require 'golden-ratio)
+;; (golden-ratio-enable)
 
 ;; Save point position between sessions
 (require 'saveplace)
