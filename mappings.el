@@ -1,7 +1,7 @@
 (global-set-key (kbd "C-c s")        'shell)
 (global-set-key (kbd "C-x C-v")      'ido-find-file-other-window)
 (global-set-key (kbd "C-c c")        'switch-to-previous-buffer)
-(global-set-key (kbd "M-t")          'helm-mini)
+(global-set-key (kbd "M-t")          'textmate-goto-file)
 (global-set-key (kbd "M-T")          'textmate-goto-symbol)
 (global-set-key (kbd "C-c d")        'duplicate-line)
 (global-set-key (kbd "M-]")          'textmate-shift-right)
@@ -25,3 +25,4 @@
 (global-set-key (kbd "<C-S-up>")     'move-line-up)
 (global-set-key (kbd "<C-return>")   'open-line-below)
 (global-set-key (kbd "<C-S-return>") 'open-line-above)
+(global-set-key (kbd "C-x ,")        'helm-mini)
