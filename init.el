@@ -121,4 +121,4 @@
  ;; If there is more than one, they won't work right.
  '(erc-timestamp-face ((t (:foreground "gainsboro" :weight bold))))
  '(helm-candidate-number ((t (:background "gainsboro" :foreground "black"))))
- '(helm-selection ((t (:background "yellow")))))
+ '(helm-selection ((t (:background "ghost white")))))

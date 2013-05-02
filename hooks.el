@@ -56,3 +56,6 @@
 (add-hook 'markdown-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c o p") 'jxx-markdown-preview)))
+
+;; FlyCheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
