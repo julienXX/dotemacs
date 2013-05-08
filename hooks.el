@@ -59,3 +59,7 @@
 
 ;; FlyCheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; Angular Docs
+(eval-after-load "sgml-mode"
+  '(define-key html-mode-map (kbd "C-c C-d") 'ng-snip-show-docs-at-point))
