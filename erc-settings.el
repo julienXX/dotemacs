@@ -6,6 +6,6 @@
             ("localhost" "#dev" "#the_tigerlily_lobby")))
 
 (erc :server "irc.freenode.net" :port 6667 :nick "julienXX")
-(erc :server "localhost" :port 6667 :nick "Julien_Blanchard")
+;; (erc :server "localhost" :port 6667 :nick "Julien_Blanchard")
 
 (setq erc-hide-list '("JOIN" "PART" "QUIT"))
