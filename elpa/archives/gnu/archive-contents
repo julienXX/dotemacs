@@ -18,7 +18,7 @@
 	      [(0 4 1)
 	       nil "Major mode for CoffeeScript files" tar])
  (company .
-	  [(0 6 8)
+	  [(0 6 9)
 	   nil "Modular in-buffer completion framework" tar])
  (csv-mode .
 	   [(1 2)
@@ -69,7 +69,7 @@
 	      [(1 0)
 	       nil "Major mode for Jgraph files" single])
  (js2-mode .
-	   [(20130307)
+	   [(20130510)
 	    ((emacs
 	      (24 1)))
 	    "Improved JavaScript editing mode" single])
