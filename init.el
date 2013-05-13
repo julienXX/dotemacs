@@ -71,7 +71,13 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 
-; Add external projects to load path
+;; Set Frame title with file path
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+
+;; Add external projects to load path
 (dolist (project (directory-files "~/.emacs.d/vendor" t "\\w+"))
   (when (file-directory-p project)
     (add-to-list 'load-path project)))
