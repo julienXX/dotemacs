@@ -122,6 +122,7 @@
  '(fringe-mode nil nil (fringe))
  '(indicate-buffer-boundaries (quote right))
  '(indicate-empty-lines t)
+ '(powerline-default-separator (quote zigzag))
  '(safe-local-variable-values (quote ((encoding . utf-8) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
@@ -131,8 +132,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(erc-timestamp-face ((t (:foreground "gainsboro" :weight bold))))
- '(helm-candidate-number ((t (:background "gainsboro" :foreground "black"))) t)
- '(helm-selection ((t (:background "ghost white"))) t))
+ '(helm-candidate-number ((t (:background "gainsboro" :foreground "black"))))
+ '(helm-selection ((t (:background "ghost white"))))
+ '(mode-line ((t (:background "#e5e5e5" :foreground "black" :box (:line-width -1 :style released-button) :weight light))))
+ '(powerline-active1 ((t (:inherit mode-line :background "dark gray"))))
+ '(powerline-active2 ((t (:inherit mode-line :background "dark gray"))))
+ '(powerline-inactive1 ((t (:inherit mode-line-inactive :background "dim gray"))))
+ '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "dim grey")))))
 
 (provide 'init)
 ;;; init.el ends here
