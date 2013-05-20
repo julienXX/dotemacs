@@ -9,7 +9,7 @@
 (erc :server "localhost" :port 6667 :nick "julien@tigerlilyapps.com")
 
 (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
-(setq erc-max-buffer-size 30000)
+(setq erc-max-buffer-size 3000)
 
 (defvar erc-insert-post-hook)
     (add-hook 'erc-insert-post-hook
