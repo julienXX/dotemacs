@@ -90,6 +90,7 @@
 
 (eval-after-load 'magit '(require 'setup-magit))
 (eval-after-load 'erc '(load "erc-settings"))
+(eval-after-load 'jabber '(load "jabber-settings"))
 
 ;; Shell variables on OSX
 (when (memq window-system '(mac ns))
@@ -113,7 +114,7 @@
  '(custom-enabled-themes (quote (dichromacy)))
  '(custom-safe-themes (quote ("06f5145c01ec774a0abb49eeffa3980743ce2f997112b537effeb188b7c51caf" "38c4fb6c8b2625f6307f3dde763d5c61d774d854ecee9c5eb9c5433350bc0bef" "967c58175840fcea30b56f2a5a326b232d4939393bed59339d21e46cf4798ecf" "75d4ccc5e912b93f722e57cca3ca1a15e079032cd69fd9bc67268b4c85639663" "88d556f828e4ec17ac074077ef9dcaa36a59dccbaa6f2de553d6528b4df79cbd" "e5a32add82d288d27323f9cbb9f78e3da3949bdc6283073cb98ae1dc712b6b71" "5f7044d9fc9c9c9d56508ac8217483c8358a191599448859640ce80be92acbd6" "77bd459212c0176bdf63c1904c4ba20fce015f730f0343776a1a14432de80990" "c1fb68aa00235766461c7e31ecfc759aa2dd905899ae6d95097061faeb72f9ee" "e9a1226ffed627ec58294d77c62aa9561ec5f42309a1f7a2423c6227e34e3581" "4be2645396d79e94d37867be5a7f41b66e05fa81c5b266d705a7edd7fb785302" "501caa208affa1145ccbb4b74b6cd66c3091e41c5bb66c677feda9def5eab19c" default)))
  '(erc-away-nickname "(away)")
- '(erc-modules (quote (autojoin completion ring smiley stamp hl-nicks image fill list services netsplit button match track readonly networks noncommands irccontrols move-to-prompt stamp menu)))
+ '(erc-modules (quote (autojoin completion ring smiley stamp hl-nicks fill list services netsplit button match track readonly networks noncommands irccontrols move-to-prompt stamp menu)))
  '(erc-nick nil)
  '(erc-prompt-for-password nil)
  '(fci-rule-character-color "#192028")
@@ -122,6 +123,7 @@
  '(fringe-mode nil nil (fringe))
  '(indicate-buffer-boundaries (quote right))
  '(indicate-empty-lines t)
+ '(jabber-mode-line-mode t)
  '(powerline-default-separator (quote zigzag))
  '(safe-local-variable-values (quote ((encoding . utf-8) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(show-paren-mode t)
