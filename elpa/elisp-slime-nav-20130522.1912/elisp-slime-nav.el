@@ -3,7 +3,8 @@
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Keywords: navigation slime elisp emacs-lisp
 ;; URL: https://github.com/purcell/elisp-slime-nav
-;; Version: DEV
+;; Version: 20130522.1912
+;; X-Original-Version: DEV
 ;; Package-Requires: ((cl-lib "0.2"))
 ;;
 ;;; Commentary:
@@ -17,11 +18,11 @@
 ;;
 ;; Usage:
 ;;
-;; Enable the package in elisp and ielm modes by simply loading it:
+;; Enable the package in elisp and ielm modes as follows:
 ;;
-;;   (require 'elisp-slime-nav)
-;;
-;; When installing from an ELPA package, this is not necessary.
+;;   (require 'elisp-slime-nav) ;; optional if installed via package.el
+;;   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+;;     (add-hook hook 'elisp-slime-nav-mode))
 ;;
 ;; Known issues:
 ;;
@@ -94,10 +95,6 @@ With a prefix arg, prompt for the symbol to jump to.
 Argument SYM-NAME thing to find."
   (interactive (list (elisp-slime-nav--read-symbol-at-point)))
   (help-xref-interned (intern sym-name)))
-
-;;;###autoload
-(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-  (add-hook hook 'elisp-slime-nav-mode))
 
 
 (provide 'elisp-slime-nav)

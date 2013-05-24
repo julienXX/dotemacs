@@ -12,7 +12,7 @@
 	 [(11 86)
 	  nil "Integrated environment for *TeX*" tar])
  (cl-lib .
-	 [(0 2)
+	 [(0 3)
 	  nil "Properly prefixed CL functions and macros" single])
  (coffee-mode .
 	      [(0 4 1)
