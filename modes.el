@@ -9,6 +9,9 @@
 (add-to-list 'auto-mode-alist '("Procfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist (cons "\\.erb$" #'rhtml-mode))
+
+;; Golang
 (add-to-list 'auto-mode-alist (cons "\\.go$" #'go-mode))
 
 ;; We never want to edit Rubinius bytecode or MacRuby binaries
