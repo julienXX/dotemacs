@@ -91,6 +91,7 @@
 (eval-after-load 'magit '(require 'setup-magit))
 (eval-after-load 'erc '(load "erc-settings"))
 (eval-after-load 'jabber '(load "jabber-settings"))
+(eval-after-load 'circe '(load "circe-settings"))
 
 ;; Shell variables on OSX
 (when (memq window-system '(mac ns))
