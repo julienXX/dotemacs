@@ -124,9 +124,16 @@
  '(fringe-mode nil nil (fringe))
  '(indicate-buffer-boundaries (quote right))
  '(indicate-empty-lines t)
+ '(jabber-auto-reconnect t)
+ '(jabber-avatar-verbose nil)
+ '(jabber-chat-buffer-format "*-jabber-%n-*")
  '(jabber-history-enabled t)
  '(jabber-mode-line-mode t)
+ '(jabber-roster-buffer "*-jabber-*")
+ '(jabber-roster-line-format " %c %-25n %u %-8s (%r)")
+ '(jabber-show-offline-contacts nil)
  '(jabber-use-global-history t)
+ '(jabber-vcard-avatars-retrieve nil)
  '(powerline-default-separator (quote zigzag))
  '(safe-local-variable-values (quote ((encoding . utf-8) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(show-paren-mode t)
@@ -137,8 +144,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(erc-timestamp-face ((t (:foreground "gainsboro" :weight bold))) t)
- '(jabber-activity-face ((t (:foreground "firebrick" :weight bold))) t)
- '(jabber-activity-personal-face ((t (:foreground "blue" :weight bold))) t))
+ '(jabber-activity-face ((t (:foreground "firebrick" :weight bold))))
+ '(jabber-activity-personal-face ((t (:foreground "blue" :weight bold)))))
 
 (provide 'init)
 ;;; init.el ends here

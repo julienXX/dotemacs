@@ -23,4 +23,4 @@
 (global-set-key (kbd "<C-S-up>")     'move-line-up)
 (global-set-key (kbd "<C-return>")   'open-line-below)
 (global-set-key (kbd "<C-S-return>") 'open-line-above)
-(global-set-key (kbd "C-x ,")        'helm-mini)
+(global-set-key (kbd "C-x ,")        'helm-projectile)

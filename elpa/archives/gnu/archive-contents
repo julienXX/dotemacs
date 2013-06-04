@@ -57,7 +57,7 @@
 			[(1 1)
 			 nil "Parse and browse f90 interfaces" single])
  (ggtags .
-	 [(0 6 4)
+	 [(0 6 5)
 	  nil "GNU Global source code tagging system" single])
  (heap .
        [(0 3)
@@ -116,7 +116,7 @@
 	   [(1 0)
 	    nil "Support for OWL Manchester Notation" single])
  (org .
-      [(20130527)
+      [(20130603)
        nil "Outline-based notes management and organizer" tar])
  (quarter-plane .
 		[(0 1)
