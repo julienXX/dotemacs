@@ -1257,6 +1257,9 @@
  (pabbrev .
 	  [(20121025 1200)
 	   nil "Predictive abbreviation expansion [hg]" single])
+ (p4 .
+     [(20130531 1130)
+      nil "Simple Perforce-Emacs Integration [github]" single])
  (outlined-elisp-mode .
 		      [(20130515 941)
 		       nil "outline-minor-mode settings for emacs lisp [github]" single])
@@ -1435,7 +1438,7 @@
 	   (2 0 0)))
 	 "Client for Clojure nREPL [github]" single])
  (notmuch .
-	  [(20130602 2043)
+	  [(20130604 839)
 	   nil "No description available. [git]" tar])
  (nose .
        [(20110804 819)
@@ -1834,7 +1837,7 @@
      [(20130407 1418)
       nil "key/value data structure functions [github]" single])
  (kmacro-decision .
-		  [(20130602 2220)
+		  [(20130604 1305)
 		   ((el-x
 		     (1 0)))
 		   "Add conditional branching to keyboard macros [github]" single])
@@ -2324,7 +2327,7 @@
 	   (1 2)))
 	 "Emacs client for hastebin (http://hastebin.com/about.md) [github]" single])
  (haskell-mode .
-	       [(20130602 2232)
+	       [(20130604 1129)
 		nil "A Haskell editing mode [github]" tar])
  (hardhat .
 	  [(20130522 1243)
@@ -2723,7 +2726,7 @@
 			      (1 2)))
 			    "Change mode line color with Flycheck status [github]" single])
  (flycheck .
-	   [(20130602 2120)
+	   [(20130604 1157)
 	    ((s
 	      (1 6 0))
 	     (dash

@@ -192,3 +192,4 @@
 
 ;; projectile
 (projectile-global-mode)
+(setq projectile-globally-ignored-files '("TAGS" ".#*"))

@@ -1,1 +1,1 @@
-("/Users/julien/.emacs.d/" "/Users/julien/Code/users/")
+("/Users/julien/.emacs.d/" "/Users/julien/Code/users/" "/Users/julien/Code/2pac/" "/Users/julien/zsh-simple/")
