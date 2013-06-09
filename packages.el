@@ -179,10 +179,6 @@
 (setq git-gutter:added-sign "++ ")
 (setq git-gutter:deleted-sign "-- ")
 
-;; robe
-(require 'robe)
-(add-hook 'ruby-mode-hook 'robe-mode)
-
 ;; multiple-cursors
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
