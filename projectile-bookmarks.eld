@@ -1,1 +1,1 @@
-("/Users/julien/.emacs.d/" "/Users/julien/Code/users/" "/Users/julien/Code/2pac/" "/Users/julien/zsh-simple/")
+("/Users/julien/Code/users/" "/Users/julien/.emacs.d/" "/Users/julien/Code/wallmanager/" "/Users/julien/Code/dashboard/" "/Users/julien/Code/2pac/" "/Users/julien/zsh-simple/" "/Users/julien/dotfiles/" "/Users/julien/Code/campfire-notifier/" "/Users/julien/Code/twitterlily/" "/Users/julien/Code/gifgg/" "/Users/julien/.emacs.d/elpa/jazz-theme/")

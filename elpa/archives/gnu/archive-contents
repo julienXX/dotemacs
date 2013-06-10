@@ -57,7 +57,7 @@
 			[(1 1)
 			 nil "Parse and browse f90 interfaces" single])
  (ggtags .
-	 [(0 6 5)
+	 [(0 6 6)
 	  nil "GNU Global source code tagging system" single])
  (heap .
        [(0 3)
@@ -69,7 +69,7 @@
 	      [(1 0)
 	       nil "Major mode for Jgraph files" single])
  (js2-mode .
-	   [(20130510)
+	   [(20130608)
 	    ((emacs
 	      (24 1)))
 	    "Improved JavaScript editing mode" single])
