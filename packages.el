@@ -1,6 +1,6 @@
 ;; CL
-(require 'cl)
-(define-obsolete-variable-alias 'custom-print-functions 'cl-custom-print-functions "24.1")
+;; (require 'cl)
+;; (define-obsolete-variable-alias 'custom-print-functions 'cl-custom-print-functions "24.1")
 
 ;; add ido
 (require 'ido)
@@ -91,9 +91,6 @@
 (require 'ace-jump-mode)
   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
-;; RESTclient
-(require 'restclient)
-
 ;; Ruby-electric
 (require 'ruby-electric)
 (setq ruby-electric-expand-delimiters-list nil)
@@ -113,7 +110,7 @@
 ;; RSpec mode
 (require 'rspec-mode)
 (setq rspec-use-rake-flag nil)
-(define-key rspec-mode-verifible-keymap (kbd "s") 'rspec-verify-single)
+(define-key rspec-mode-verifiable-keymap (kbd "s") 'rspec-verify-single)
 
 ;; ruby-tools
 (require 'ruby-tools)
@@ -163,10 +160,6 @@
 (setq-default dired-details-hidden-string "--- ")
 (dired-details-install)
 (setq insert-directory-program "gls" dired-use-ls-dired t)
-
-;; Pomodoro
-(require 'tomatinho)
-(setq tomatinho-time-face '(:family "Source Code Pro" :height 888 :width "Light"))
 
 ;; configure markdown-mode
 (autoload 'markdown-mode "markdown-mode.el"
