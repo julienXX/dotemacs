@@ -8,4 +8,5 @@ url
 var
 .places
 private.el
-*.elcprojectile-bookmarks.eld
+*.elc
+projectile-bookmarks.eld
