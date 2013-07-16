@@ -3,8 +3,12 @@
 ;; (define-obsolete-variable-alias 'custom-print-functions 'cl-custom-print-functions "24.1")
 
 ;; add ido
-(require 'ido)
-(ido-mode)
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-use-faces nil)
 
 ;; smex
 (require 'smex)
