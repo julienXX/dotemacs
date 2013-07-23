@@ -91,6 +91,7 @@
 (load "modes")
 (load "hooks")
 (load "mappings")
+(load "mode-line")
 
 (eval-after-load 'magit '(require 'setup-magit))
 (eval-after-load 'erc '(load "erc-settings"))
