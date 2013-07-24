@@ -126,7 +126,7 @@
  '(fci-rule-character-color "#192028")
  '(fci-rule-color "#073642")
  '(foreground-color "#cccccc")
- '(fringe-mode nil nil (fringe))
+ '(fringe-mode (quote (4 . 4)) nil (fringe))
  '(indicate-buffer-boundaries (quote right))
  '(indicate-empty-lines t)
  '(jabber-auto-reconnect t)
