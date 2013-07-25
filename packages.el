@@ -75,7 +75,9 @@
 (wrap-region-global-mode)
 
 ;; CTags
-;; (autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
+(require 'ctags-update)
+(autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
+(add-hook 'prog-mode-hook  'turn-on-ctags-auto-update-mode)
 
 ;; YAML
 (require 'yaml-mode)

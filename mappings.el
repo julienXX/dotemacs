@@ -24,3 +24,4 @@
 (global-set-key (kbd "<C-return>")   'open-line-below)
 (global-set-key (kbd "<C-S-return>") 'open-line-above)
 (global-set-key (kbd "C-x ,")        'helm-projectile)
+(global-set-key (kbd "M-.")          'helm-etags-select)
