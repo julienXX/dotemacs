@@ -34,3 +34,6 @@
 
 ;; RESTClient
 (add-to-list 'auto-mode-alist '("\\.http" . restclient-mode))
+
+;; Elixir
+(add-to-list 'auto-mode-alist '("\\.exs" . elixir-mode))
