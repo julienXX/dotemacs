@@ -63,3 +63,11 @@
 ;; Angular Docs
 (eval-after-load "sgml-mode"
   '(define-key html-mode-map (kbd "C-c C-d") 'ng-snip-show-docs-at-point))
+
+;; Elixir
+(add-hook 'elixir-mode-hook
+          (defun auto-activate-ruby-end-mode-for-elixir-mode ()
+            (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
+                 "\\(?:^\\|\\s-+\\)\\(?:do\\)")
+            (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
+            (ruby-end-mode +1)))
