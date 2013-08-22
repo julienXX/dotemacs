@@ -757,11 +757,11 @@
 	   [(20130312 1839)
 	    nil "Support sequential operation which omitted prefix keys. [github]" single])
  (smartparens .
-	      [(20130820 1746)
+	      [(20130821 2017)
 	       ((cl-lib
 		 (0 1))
 		(dash
-		 (1 1 0)))
+		 (2 1 0)))
 	       "Automatic insertion, wrapping and paredit-like navigation with user defined pairs. [github]" tar])
  (smart-window .
 	       [(20130214 1142)
@@ -1232,7 +1232,7 @@
 	 [(20130329 2035)
 	  nil "Popup Window Manager. [github]" single])
  (popup-switcher .
-		 [(20130820 2110)
+		 [(20130821 1909)
 		  ((popup
 		    (0 5 0)))
 		  "switch to other buffers and files via popup. [github]" single])
@@ -1277,7 +1277,7 @@
 		  [(20130319 2233)
 		   nil "Interact with Pivotal Tracker through its API [github]" single])
  (pig-mode .
-	   [(20130709 819)
+	   [(20130821 1454)
 	    nil "Major mode for Pig files [github]" single])
  (php-mode .
 	   [(20130817 346)
@@ -1709,7 +1709,7 @@
 		     (9)))
 		   "decompilation extension for nrepl.el [github]" single])
  (nrepl .
-	[(20130820 2347)
+	[(20130822 1051)
 	 ((clojure-mode
 	   (2 0 0))
 	  (cl-lib
@@ -1776,6 +1776,9 @@
  (muttrc-mode .
 	      [(20090804 2252)
 	       nil "Major mode to edit muttrc under Emacs [wiki]" single])
+ (mustang-theme .
+		[(20130821 1945)
+		 nil "port of vim's mustang theme [github]" single])
  (mustache-mode .
 		[(20110927 1253)
 		 nil "A major mode for editing Mustache files. [github]" single])
@@ -2186,19 +2189,6 @@
  (lacarte .
 	  [(20130723 2337)
 	   nil "Execute menu items as commands, with completion. [wiki]" single])
- (kwin .
-       [(20130207 31)
-	nil "communcate with the KWin window manager [github]" single])
- (kv .
-     [(20130818 1137)
-      nil "key/value data structure functions [github]" single])
- (kmacro-decision .
-		  [(20130713 2239)
-		   ((el-x
-		     (1 0))
-		    (jb-misc-macros
-		     (0 2)))
-		   "Add conditional branching to keyboard macros [github]" single])
  (kivy-mode .
 	    [(20130710 2132)
 	     nil "Emacs major mode for editing Kivy files [github]" single])
@@ -2656,7 +2646,7 @@
 	      [(20130511 1253)
 	       nil "list git files. [github]" single])
  (helm-gtags .
-	     [(20130815 1553)
+	     [(20130822 755)
 	      ((helm
 		(1 0)))
 	      "GNU GLOBAL helm interface [github]" single])
@@ -2731,7 +2721,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [github]" single])
  (helm .
-       [(20130820 1624)
+       [(20130820 1647)
 	nil "Helm is an Emacs incremental and narrowing framework [github]" tar])
  (header2 .
 	  [(20130723 2321)
@@ -2806,7 +2796,7 @@
 		    [(20120821 1835)
 		     nil "Mode for the dot-language used by graphviz (att). [github]" single])
  (graphene .
-	   [(20130811 1403)
+	   [(20130821 2016)
 	    ((auto-complete
 	      (20130330))
 	     (smartparens
@@ -2861,7 +2851,7 @@
 	   [(20130812 1018)
 	    nil "God-like command entering minor mode [github]" single])
  (go-snippets .
-	      [(20130602 2225)
+	      [(20130821 844)
 	       ((yasnippet
 		 (0 8 0)))
 	       "Yasnippets for go [github]" tar])
@@ -2958,6 +2948,9 @@
  (git-auto-commit-mode .
 		       [(20130410 157)
 			nil "Emacs Minor mode to automatically commit and push [github]" single])
+ (git-annex .
+	    [(20130816 1258)
+	     nil "Mode for easy editing of git-annex'd files [github]" single])
  (gist .
        [(20130315 2306)
 	((eieio
@@ -3343,12 +3336,17 @@
 	      (0 3 1)))
 	   "File activity logger [github]" single])
  (f .
-    [(20130818 1057)
+    [(20130821 2204)
      ((s
        (1 6 1))
       (dash
        (1 5 0)))
      "Modern API for working with files and directories [github]" single])
+ (ez-query-replace .
+		   [(20130821 1808)
+		    ((dash
+		      (1 2 0)))
+		    "A helpful query-replace. [github]" single])
  (extend-dnd .
 	     [(20130328 1234)
 	      nil "R drag and Drop [github]" tar])
@@ -3444,13 +3442,13 @@
 	    (1 0)))
 	  "A collection of emacs utilities [github]" tar])
  (ert-runner .
-	     [(20130816 2146)
+	     [(20130821 1031)
 	      ((s
 		(1 6 1))
 	       (dash
 		(1 8 0))
 	       (f
-		(0 6 0))
+		(0 7 0))
 	       (commander
 		(0 2 0))
 	       (ansi
@@ -3546,7 +3544,7 @@
 		   (3 0)))
 		 "Extra functions for emms-mark-mode and emms-tag-edit-mode [github]" single])
  (emms .
-       [(20130816 1327)
+       [(20130821 1048)
 	nil "The Emacs Multimedia System [git]" tar])
  (emmet-mode .
 	     [(20130816 1530)
@@ -3650,7 +3648,7 @@
 		  [(20130410 17)
 		   nil "Some extension for eldoc [wiki]" single])
  (eldoc-eval .
-	     [(20130819 904)
+	     [(20130822 724)
 	      nil "Enable eldoc support when minibuffer is in use. [github]" single])
  (el-x .
        [(20130418 2335)
@@ -3839,7 +3837,7 @@
 		      (0 8 0)))
 		    "Yasnippets for DocBook [github]" tar])
  (dna-mode .
-	   [(20130820 1309)
+	   [(20130821 1105)
 	    nil "a major mode for editing dna sequences [github]" tar])
  (django-theme .
 	       [(20130309 1841)
@@ -4031,7 +4029,7 @@
 	  [(20130817 1552)
 	   nil "Modular in-buffer completion framework [github]" tar])
  (commander .
-	    [(20130820 2304)
+	    [(20130821 2324)
 	     ((s
 	       (1 6 0))
 	      (dash
@@ -4179,7 +4177,7 @@
 	[(20111019 1600)
 	 nil "implementation of a hash table whose key-value pairs expire [github]" single])
  (c-eldoc .
-	  [(20120430 408)
+	  [(20130723 1550)
 	   nil "helpful description of the arguments to C functions [github]" single])
  (button-lock .
 	      [(20121205 1453)
@@ -4494,7 +4492,7 @@
       [(20130328 848)
        nil "Alberto's Emacs interface for Mercurial (Hg) [hg]" single])
  (ag .
-     [(20130814 1146)
+     [(20130821 1750)
       nil "A front-end for ag ('the silver searcher'), the C ack replacement. [github]" single])
  (aes .
       [(20130121 413)
@@ -4563,6 +4561,19 @@
  (abc-mode .
 	   [(20130607 917)
 	    nil "Major mode for editing abc music files [github]" single])
+ (kwin .
+       [(20130207 31)
+	nil "communcate with the KWin window manager [github]" single])
+ (kv .
+     [(20130818 1137)
+      nil "key/value data structure functions [github]" single])
+ (kmacro-decision .
+		  [(20130713 2239)
+		   ((el-x
+		     (1 0))
+		    (jb-misc-macros
+		     (0 2)))
+		   "Add conditional branching to keyboard macros [github]" single])
  (js-comint .
 	    [(20080530 957)
 	     nil "Run javascript in an inferior process window. [svn]" single]))
