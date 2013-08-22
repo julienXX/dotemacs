@@ -115,7 +115,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector [default bold shadow italic underline bold bold-italic bold])
- '(ansi-color-names-vector ["#292929" "#ff3333" "#006400" "#aaeecc" "#aaccff" "#FF1F69" "#104e8b" "#999999"])
+ '(ansi-color-names-vector ["#292929" "#ff3333" "#006400" "#eab700" "#aaccff" "#FF1F69" "#104e8b" "#999999"])
  '(background-color "#202020")
  '(background-mode dark)
  '(column-number-mode t)
