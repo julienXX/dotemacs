@@ -49,6 +49,7 @@
 ;; Only one window on startup
 (add-hook 'emacs-startup-hook
           (lambda () (delete-other-windows)) t)
+(x-focus-frame nil)
 
 ;; Auto refresh buffers
 (global-auto-revert-mode 1)
