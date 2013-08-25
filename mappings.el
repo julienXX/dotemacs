@@ -25,3 +25,4 @@
 (global-set-key (kbd "<C-S-return>") 'open-line-above)
 (global-set-key (kbd "C-x ,")        'helm-projectile)
 (global-set-key (kbd "M-.")          'helm-etags-select)
+(global-set-key (kbd "C-c l")        (lambda() (interactive)(find-file "~/Dropbox/OrgFiles/log.org")))
