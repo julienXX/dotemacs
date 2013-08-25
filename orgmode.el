@@ -1,16 +1,19 @@
-(setq org-directory "~/orgfiles/")
-(setq org-default-notes-file "~/.notes")
+(setq org-directory "~/Dropbox/OrgFiles/")
+(setq org-default-notes-file "~/Dropbox/OrgFiles/.notes")
 (setq remember-annotation-functions '(org-remember-annotation))
 (setq remember-handler-functions '(org-remember-handler))
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
 (define-key global-map "\C-cr" 'org-remember)
 
+;; (setq org-capture-templates
+;;       '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
+;;              "* TODO %?\n  %i\n  %a")
+;;         ("j" "Journal" entry (file+datetree "~/org/journal.org")
+;;              "* %?\nEntered on %U\n  %i\n  %a")))
+
 (setq org-remember-templates
-      '(("Todo" ?t "* TODO %? %^g\n %i\n " "F:/GTD/newgtd.org" "Office")
-        ("Journal" ?j "\n* %^{topic} %T \n%i%?\n" "L:journal.org")
-        ("Book" ?b "\n* %^{Book Title} %t :READING: \n%[l:/booktemp.txt]\n"
-         "L:journal.org")
-        ("Private" ?p "\n* %^{topic} %T \n%i%?\n" "F:/gtd/privnotes.org")
-        ("Contact" ?c "\n* %^{Name} :CONTACT:\n%[l:/contemp.txt]\n"
-         "F:/gtd/privnotes.org")
+      '(("Todo" ?t "* TODO %? %^g\n %i\n " "~/Dropbox/OrgFiles/tasks.org" "Office")
+        ("Journal" ?j "\n* %^{topic} %T \n%i%?\n" "~/Dropbox/OrgFiles/journal.org")
+        ("Log start" ?s "\n* %^{topic} %T :STARTED:" "~/Dropbox/OrgFiles/log.org")
+        ("Log end" ?e "\n* %^{topic} %T :FINISHED:" "~/Dropbox/OrgFiles/log.org")
         ))
