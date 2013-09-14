@@ -93,7 +93,7 @@
 (load "hooks")
 (load "mappings")
 
-(load-theme 'mesa)
+(load-theme 'mesa t)
 
 (load "mode-line")
 
