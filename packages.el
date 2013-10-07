@@ -181,3 +181,6 @@
 ;; projectile
 (projectile-global-mode)
 (setq projectile-globally-ignored-files '("TAGS" ".#*"))
+
+;; Anzu mode
+(global-anzu-mode +1)
