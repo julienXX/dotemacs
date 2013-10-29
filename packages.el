@@ -46,9 +46,6 @@
       '("~/.emacs.d/snippets"))
 (yas-global-mode 1)
 
-;; automatic end insertion
-(require 'ruby-end)
-
 ;; auto-complete
 (require 'auto-complete)
 (global-auto-complete-mode t)
