@@ -1338,9 +1338,6 @@
  (psvn .
        [(20120401 2340)
 	nil "Subversion interface for emacs [github]" single])
- (protobuf-mode .
-		[(20091217 1955)
-		 nil "major mode for editing protocol buffers. [svn]" single])
  (projmake-mode .
 		[(20130614 1235)
 		 nil "Project oriented automatic builder and error highlighter, flymake for projects [github]" tar])
@@ -1348,7 +1345,7 @@
 	    [(20131028 2100)
 	     nil "Lightweight library for managing project/repository-aware shell and command buffers [github]" single])
  (projectile .
-	     [(20131018 1037)
+	     [(20131029 1130)
 	      ((s
 		(1 6 0))
 	       (dash
@@ -2145,7 +2142,7 @@
 	    (0 2 4)))
 	  "mocking framework for emacs [github]" single])
  (mo-vi-ment-mode .
-		  [(20131023 1944)
+		  [(20131029 1203)
 		   nil "Provide vi-like cursor movement that's easy on the fingers [github]" single])
  (mo-git-blame .
 	       [(20131002 1223)
@@ -4067,7 +4064,7 @@
 	  [(20091203 1913)
 	   nil "emacs window session manager [github]" single])
  (es-lib .
-	 [(20131028 940)
+	 [(20131029 807)
 	  ((cl-lib
 	    (0 3)))
 	  "A collection of emacs utilities [github]" tar])
@@ -4091,7 +4088,7 @@
 	 [(20131025 906)
 	  nil "Erlang major mode [github]" tar])
  (ergoemacs-mode .
-		 [(20131026 2312)
+		 [(20131029 27)
 		  nil "Emacs mode based on common modern software interface and ergonomics. [github]" tar])
  (erefactor .
 	    [(20130521 1838)
@@ -4400,7 +4397,7 @@
        [(20131015 1929)
 	nil "a BibTeX database manager [github]" tar])
  (easy-kill .
-	    [(20131028 1456)
+	    [(20131029 1534)
 	     ((emacs
 	       (24)))
 	     "kill things easily [github]" single])
@@ -4661,7 +4658,7 @@
 		     (24)))
 		   "Collection of useful combinators for Emacs Lisp [github]" single])
  (dash-at-point .
-		[(20131027 2313)
+		[(20131028 1417)
 		 nil "Search the word at point with Dash [github]" single])
  (dash .
        [(20130911 1307)
@@ -4909,7 +4906,7 @@
 		     (9)))
 		   "decompilation extension for cider [github]" single])
  (cider .
-	[(20131028 1812)
+	[(20131029 823)
 	 ((clojure-mode
 	   (2 0 0))
 	  (cl-lib
@@ -5163,7 +5160,7 @@
 	       [(20130824 1206)
 		nil "Auto install elisp file [wiki]" single])
  (auto-indent-mode .
-		   [(20131028 2056)
+		   [(20131028 2328)
 		    nil "Auto indent Minor mode [github]" tar])
  (auto-dim-other-buffers .
 			 [(20130429 2026)
@@ -5424,4 +5421,7 @@
 	      (1 2))
 	     (request
 	      (0 2 0)))
-	    "Open and evaluate 4clojure.com questions [github]" single]))
+	    "Open and evaluate 4clojure.com questions [github]" single])
+ (protobuf-mode .
+		[(20091217 1955)
+		 nil "major mode for editing protocol buffers. [svn]" single]))
