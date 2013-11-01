@@ -40,7 +40,7 @@
 	     [(20130501 727)
 	      nil "provide framework about exception like Java for elisp [github]" single])
  (yasnippet .
-	    [(20131026 1440)
+	    [(20131031 628)
 	     nil "Yet another snippet extension for Emacs. [github]" tar])
  (yascroll .
 	   [(20130321 334)
@@ -136,7 +136,7 @@
 	      [(20130224 114)
 	       nil "Move left/right/up/down through your windows. [github]" single])
  (window-end-visible .
-		     [(20131021 953)
+		     [(20131029 1215)
 		      nil "Find the last visible point in a window [github]" single])
  (window+ .
 	  [(20130724 15)
@@ -173,7 +173,7 @@
 		       [(20110901 930)
 			nil "operate on current line if region undefined [github]" single])
  (whitespace-cleanup-mode .
-			  [(20131015 1129)
+			  [(20131031 1405)
 			   nil "Intelligently call whitespace-cleanup on save [github]" single])
  (wgrep-helm .
 	     [(20121201 2230)
@@ -216,7 +216,7 @@
 	       (1 6 8)))
 	     "Weblog maintenance via XML-RPC APIs [bzr]" single])
  (web-mode .
-	   [(20131028 1439)
+	   [(20131030 1743)
 	    nil "major mode for editing html templates [github]" tar])
  (web .
       [(20130827 1312)
@@ -384,7 +384,7 @@
 		     [(20130720 1549)
 		      nil "Ukrainian holidays for Emacs calendar. [github]" single])
  (ujelly-theme .
-	       [(20131028 1523)
+	       [(20131029 1824)
 		nil "Ujelly theme for GNU Emacs 24 (deftheme) [github]" single])
  (ucs-utils .
 	    [(20131022 1150)
@@ -851,7 +851,7 @@
 	   [(20130312 1839)
 	    nil "Support sequential operation which omitted prefix keys. [github]" single])
  (smartparens .
-	      [(20131028 1900)
+	      [(20131031 1625)
 	       ((cl-lib
 		 (0 1))
 		(dash
@@ -884,7 +884,7 @@
 	     [(20130218 1829)
 	      nil "slime extensions for ritz [github]" single])
  (slime .
-	[(20130929 1345)
+	[(20131031 755)
 	 nil "Superior Lisp Interaction Mode for Emacs [github]" tar])
  (slim-mode .
 	    [(20130614 2240)
@@ -944,14 +944,17 @@
  (sicp .
        [(20121014 1314)
 	nil "No description available. [github]" tar])
- (showcss-mode .
-	       [(20130605 1824)
-		nil "No description available. [github]" tar])
+ (shut-up .
+	  [(20131029 1602)
+	   nil "Shut up would you! [github]" single])
  (show-marks .
 	     [(20130805 1549)
 	      ((fm
 		(1 0)))
 	      "Navigate and visualize the mark-ring [github]" single])
+ (show-css .
+	   [(20130605 1824)
+	    nil "Show the css of the html attribute the cursor is on [github]" tar])
  (shorten .
 	  [(20130621 1740)
 	   nil "component-wise string shortener [github]" single])
@@ -1157,8 +1160,10 @@
 	     [(20130924 21)
 	      nil "highlight matching block [wiki]" single])
  (ruby-additional .
-		  [(20131007 1415)
-		   ((ruby-mode
+		  [(20131030 2313)
+		   ((emacs
+		     (24 3))
+		    (ruby-mode
 		     (1 2)))
 		   "ruby-mode extensions yet to be merged into Emacs [svn]" tar])
  (rubocop .
@@ -1178,7 +1183,7 @@
 	   [(20121207 1930)
 	    nil "Roy major mode [github]" single])
  (robe .
-       [(20130730 1120)
+       [(20131101 638)
 	((inf-ruby
 	  (2 3 0)))
 	"Code navigation, documentation lookup and completion for Ruby [github]" tar])
@@ -1229,6 +1234,11 @@
  (repl-toggle .
 	      [(20130614 615)
 	       nil "Switch to/from repl buffer for current major-mode [github]" single])
+ (relax .
+	[(20131029 921)
+	 ((json
+	   (1 2)))
+	 "For browsing and interacting with CouchDB [github]" single])
  (region-bindings-mode .
 		       [(20130430 2107)
 			nil "Enable custom bindings when mark is active. [github]" single])
@@ -1283,7 +1293,7 @@
 	  [(20121017 157)
 	   nil "No description available. [github]" single])
  (quickrun .
-	   [(20131029 1521)
+	   [(20131030 1840)
 	    nil "Run commands quickly [github]" single])
  (quickref .
 	   [(20130113 1700)
@@ -1310,8 +1320,11 @@
 			 (0 3 1)))
 		      "virtualenv API for Emacs Lisp [github]" tar])
  (python-django .
-		[(20131028 218)
+		[(20131030 1317)
 		 nil "A Jazzy package for managing Django projects [github]" single])
+ (python-cell .
+	      [(20131030 16)
+	       nil "Support for MATLAB-like cells in python mode [github]" single])
  (pyregexp .
 	   [(20130531 929)
 	    nil "[deprecated, use visual-regexp/visual-regexp-steroids instead] A Python regexp/replace command for Emacs with interactive visual feedback [github]" tar])
@@ -1338,6 +1351,9 @@
  (psvn .
        [(20120401 2340)
 	nil "Subversion interface for emacs [github]" single])
+ (protobuf-mode .
+		[(20091217 1955)
+		 nil "major mode for editing protocol buffers. [svn]" single])
  (projmake-mode .
 		[(20130614 1235)
 		 nil "Project oriented automatic builder and error highlighter, flymake for projects [github]" tar])
@@ -1354,7 +1370,7 @@
 		(0 1)))
 	      "Manage and navigate projects in Emacs easily [github]" single])
  (project-persist .
-		  [(20131013 935)
+		  [(20131030 1908)
 		   nil "A minor mode to allow loading and saving of project settings. [github]" tar])
  (project-local-variables .
 			  [(20080502 1652)
@@ -1384,8 +1400,8 @@
 		 [(20131013 2047)
 		  nil "Draw tokens as Unicode glyphs. [github]" single])
  (pretty-mode .
-	      [(20130331 1551)
-	       nil "redisplay parts of the buffer as pretty symbols [wiki]" single])
+	      [(20131031 104)
+	       nil "Redisplay parts of the buffer as pretty symbols. [github]" tar])
  (pretty-lambdada .
 		  [(20130723 2216)
 		   nil "Show the word `lambda' as the Greek letter. [wiki]" single])
@@ -1460,15 +1476,20 @@
  (plenv .
 	[(20130707 1516)
 	 nil "A plenv wrapper for Emacs [github]" single])
+ (plantuml-mode .
+		[(20131031 2332)
+		 ((auto-complete
+		   (1 4)))
+		 "Major mode for plantuml [github]" single])
  (pkgbuild-mode .
 		[(20130816 1020)
 		 nil "Interface to the ArchLinux package manager [github]" single])
  (pkg-info .
-	   [(20131020 1746)
+	   [(20131101 1208)
 	    ((dash
 	      (1 6 0))
 	     (epl
-	      (0 1)))
+	      (0 4)))
 	    "Information about packages [github]" single])
  (pivotal-tracker .
 		  [(20130319 2233)
@@ -1490,7 +1511,7 @@
 	   [(20120128 1601)
 	    nil "thin wrapper for Pianobar, a Pandora Radio client [github]" single])
  (php-mode .
-	   [(20130920 1850)
+	   [(20131029 1345)
 	    nil "Major mode for editing PHP code [github]" single])
  (php-eldoc .
 	    [(20130328 1526)
@@ -1631,7 +1652,7 @@
 	      [(20131021 1946)
 	       nil "Minor mode for interacting with Pandoc [github]" tar])
  (pallet .
-	 [(20130926 1940)
+	 [(20131030 1847)
 	  ((cask
 	    (0 4 6)))
 	  "A package management tool for Emacs, using Cask. [github]" tar])
@@ -1785,7 +1806,7 @@
 		 (7)))
 	       "Minimalist presentation minor-mode for Emacs org-mode. [github]" single])
  (org-pomodoro .
-	       [(20130616 2158)
+	       [(20130718 2115)
 		((alert
 		  (0 5 10)))
 		"Pomodoro implementation for org-mode. [github]" tar])
@@ -2058,7 +2079,7 @@
 	      (1 2 0)))
 	    "a mustache templating library in emacs lisp [github]" tar])
  (multiple-cursors .
-		   [(20131016 1120)
+		   [(20131031 2138)
 		    nil "Multiple cursors for Emacs. [github]" tar])
  (multifiles .
 	     [(20130615 2249)
@@ -2168,7 +2189,7 @@
 	  [(20110427 1123)
 	   nil "Minimap sidebar for Emacs [git]" single])
  (minimal-session-saver .
-			[(20131021 1202)
+			[(20131029 1211)
 			 nil "Very lean session saver [github]" single])
  (minibuffer-cua .
 		 [(20130906 2034)
@@ -2288,21 +2309,21 @@
 		 (1 2 0)))
 	       "git method for TRAMP [github]" single])
  (magit-topgit .
-	       [(20131016 2150)
+	       [(20131030 1853)
 		((cl-lib
 		  (0 3))
 		 (magit
 		  (1 3 0)))
 		"topgit plug-in for Magit [github]" single])
  (magit-svn .
-	    [(20131015 2239)
+	    [(20131030 1224)
 	     ((cl-lib
 	       (0 3))
 	      (magit
 	       (1 3 0)))
 	     "git-svn plug-in for Magit [github]" single])
  (magit-stgit .
-	      [(20130927 1732)
+	      [(20131030 1214)
 	       ((cl-lib
 		 (0 3))
 		(magit
@@ -2314,7 +2335,7 @@
 		       (1 3 0)))
 		     "Push remote support for Magit. [github]" tar])
  (magit-log-edit .
-		 [(20131020 1605)
+		 [(20131031 1455)
 		  ((cl-lib
 		    (0 3))
 		   (magit
@@ -2341,7 +2362,7 @@
 			       [(20130730 1032)
 				nil "Advice for magit-log-edit-commit [github]" single])
  (magit .
-	[(20131028 2340)
+	[(20131101 131)
 	 ((cl-lib
 	   (0 3))
 	  (git-commit-mode
@@ -2762,7 +2783,7 @@
 		   (1 1 0)))
 		 "Interval tree data structure for 1D range queries [github]" single])
  (interaction-log .
-		  [(20131025 1650)
+		  [(20131031 1540)
 		   nil "exhaustive log of interactions with Emacs [github]" single])
  (instapaper .
 	     [(20130104 2221)
@@ -2896,7 +2917,7 @@
 	     [(20130921 1436)
 	      nil "Extensions to `icomplete.el'. [wiki]" single])
  (icicles .
-	  [(20131028 1816)
+	  [(20131030 1706)
 	   nil "Minibuffer input completion and cycling. [wiki]" tar])
  (ibuffer-vc .
 	     [(20130924 1408)
@@ -3035,7 +3056,7 @@
 		 (1 0)))
 	       "Color theme selection with helm interface [github]" single])
  (helm-swoop .
-	     [(20131029 238)
+	     [(20131101 1756)
 	      ((helm
 		(1 0))
 	       (emacs
@@ -3129,7 +3150,7 @@
 			(1 5 4)))
 		      "List all helm commands with helm [github]" single])
  (helm-gtags .
-	     [(20131026 18)
+	     [(20131101 1026)
 	      ((helm
 		(1 0)))
 	      "GNU GLOBAL helm interface [github]" single])
@@ -3185,7 +3206,7 @@
 		   (24)))
 		 "CSS/SCSS selector with helm interface [github]" single])
  (helm-cmd-t .
-	     [(20130718 2327)
+	     [(20131030 1541)
 	      nil "cmd-t style completion [github]" tar])
  (helm-c-yasnippet .
 		   [(20120906 28)
@@ -3220,7 +3241,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [github]" single])
  (helm .
-       [(20131028 1637)
+       [(20131031 1743)
 	nil "Helm is an Emacs incremental and narrowing framework [github]" tar])
  (header2 .
 	  [(20130824 1159)
@@ -3292,7 +3313,7 @@
 	[(20130824 1206)
 	 nil "Extensions to standard library `grep.el'. [wiki]" single])
  (grass-mode .
-	     [(20131027 2129)
+	     [(20131031 1753)
 	      ((cl-lib
 		(0 2)))
 	      "Provides Emacs modes for interacting with the GRASS GIS program [hg]" single])
@@ -3303,7 +3324,7 @@
 		    [(20120821 1835)
 		     nil "Mode for the dot-language used by graphviz (att). [github]" single])
  (graphene .
-	   [(20130926 1945)
+	   [(20131030 1903)
 	    ((auto-complete
 	      (20130330))
 	     (smartparens
@@ -3341,7 +3362,7 @@
 		   [(20130614 53)
 		    nil "Emacs interface to Google Translate [github]" single])
  (google-this .
-	      [(20130917 1835)
+	      [(20131031 1015)
 	       nil "A set of functions and bindings to google under point. [github]" tar])
  (google-maps .
 	      [(20130412 1130)
@@ -3369,7 +3390,7 @@
 	  [(20120914 2148)
 	   nil "Paste to play.golang.org [github]" single])
  (go-mode .
-	  [(20131022 1235)
+	  [(20131029 2217)
 	   nil "Major mode for the Go programming language [hg]" tar])
  (go-errcheck .
 	      [(20130308 1757)
@@ -3453,7 +3474,7 @@
 	   [(20130130 2150)
 	    nil "Context-aware git commands such as branch handling [wiki]" single])
  (git-commit-mode .
-		  [(20131013 555)
+		  [(20131031 1351)
 		   nil "Major mode for editing git commit messages [github]" single])
  (git-blame .
 	    [(20110509 1226)
@@ -3782,7 +3803,7 @@
 		   (0 6 0)))
 		 "Cask support in Flycheck [github]" single])
  (flycheck .
-	   [(20131026 1341)
+	   [(20131101 1046)
 	    ((s
 	      (1 6 0))
 	     (dash
@@ -3797,7 +3818,7 @@
 	      (24 1)))
 	    "On-the-fly syntax checking (Flymake done right) [github]" tar])
  (flx-ido .
-	  [(20130814 2156)
+	  [(20131030 1243)
 	   ((flx
 	     (0 1))
 	    (cl-lib
@@ -3825,7 +3846,7 @@
 	       [(20130923 2017)
 		nil "Flash a region [github]" single])
  (fixmee .
-	 [(20131022 1123)
+	 [(20131030 1417)
 	  ((button-lock
 	    (1 0 0))
 	   (nav-flash
@@ -3889,7 +3910,7 @@
 	  [(20120211 1557)
 	   nil "Fast navigation and editing routines. [github]" single])
  (fasm-mode .
-	    [(20131020 1559)
+	    [(20131029 1411)
 	     nil "Fasm major mode [github]" single])
  (fasd .
        [(20130831 1903)
@@ -4069,7 +4090,7 @@
 	    (0 3)))
 	  "A collection of emacs utilities [github]" tar])
  (ert-runner .
-	     [(20131026 1238)
+	     [(20131031 2019)
 	      ((s
 		(1 6 1))
 	       (dash
@@ -4088,7 +4109,7 @@
 	 [(20131025 906)
 	  nil "Erlang major mode [github]" tar])
  (ergoemacs-mode .
-		 [(20131029 27)
+		 [(20131031 27)
 		  nil "Emacs mode based on common modern software interface and ergonomics. [github]" tar])
  (erefactor .
 	    [(20130521 1838)
@@ -4138,6 +4159,19 @@
 	(ctable
 	 (0 1 2)))
        "A RPC stack for the Emacs Lisp [github]" tar])
+ (ensime .
+	 [(20131030 2303)
+	  ((s
+	    (1 3 0))
+	   (dash
+	    (1 0 3))
+	   (popup
+	    (0 5 0))
+	   (auto-complete
+	    (1 4 0))
+	   (scala-mode2
+	    (0 21)))
+	  "ENhanced Scala Interaction Mode for Emacs [github]" tar])
  (enotify .
 	  [(20130407 1548)
 	   nil "A networked notification system for emacs [github]" tar])
@@ -4306,7 +4340,7 @@
 		 [(20091023 1909)
 		  nil "fuzzy symbol completion. [wiki]" single])
  (el-spice .
-	   [(20131028 43)
+	   [(20131031 2138)
 	    ((thingatpt+
 	      (0)))
 	    "Extra spice for emacs lisp programming [github]" tar])
@@ -4376,19 +4410,19 @@
 	  (0 1 1)))
 	"Emacs Database Interface [github]" tar])
  (ecukes .
-	 [(20131028 1430)
+	 [(20131029 1755)
 	  ((f
-	    (0 7 1))
+	    (0 11 0))
 	   (s
-	    (1 6 2))
+	    (1 8 0))
 	   (dash
-	    (2 1 0))
+	    (2 2 0))
 	   (ansi
 	    (0 3 0))
 	   (espuds
 	    (0 2 2))
 	   (commander
-	    (0 4 0)))
+	    (0 5 1)))
 	  "Cucumber for Emacs. [github]" tar])
  (ecb .
       [(20130826 1941)
@@ -4397,7 +4431,7 @@
        [(20131015 1929)
 	nil "a BibTeX database manager [github]" tar])
  (easy-kill .
-	    [(20131029 1534)
+	    [(20131101 933)
 	     ((emacs
 	       (24)))
 	     "kill things easily [github]" single])
@@ -4519,7 +4553,7 @@
 	     (1 6 0)))
 	   "simple text templates [github]" single])
  (docker-mode .
-	      [(20131021 1605)
+	      [(20131029 1019)
 	       nil "Support for Dockerfile editing [github]" single])
  (docbook-snippets .
 		   [(20130717 349)
@@ -4661,7 +4695,7 @@
 		[(20131028 1417)
 		 nil "Search the word at point with Dash [github]" single])
  (dash .
-       [(20130911 1307)
+       [(20131030 2119)
 	nil "A modern list library for Emacs [github]" single])
  (dart-mode .
 	    [(20130902 924)
@@ -4746,7 +4780,7 @@
 	     [(20131005 1021)
 	      nil "TCP-based client connection [github]" single])
  (conkeror-minor-mode .
-		      [(20131026 2222)
+		      [(20131031 2306)
 		       nil "Mode for editing conkeror javascript files. [github]" single])
  (confluence .
 	     [(20130814 735)
@@ -4766,7 +4800,7 @@
 		      (2 2 7)))
 		    "company-mode completion back-end for inf-ruby [github]" single])
  (company .
-	  [(20130929 226)
+	  [(20131101 302)
 	   nil "Modular in-buffer completion framework [github]" tar])
  (commander .
 	    [(20131023 1801)
@@ -4850,7 +4884,7 @@
 		      (0 8 0)))
 		    "Yasnippets for clojure [github]" tar])
  (clojure-mode .
-	       [(20131019 624)
+	       [(20131030 1554)
 		nil "Major mode for Clojure code [github]" single])
  (clojure-cheatsheet .
 		     [(20131022 1505)
@@ -4906,7 +4940,7 @@
 		     (9)))
 		   "decompilation extension for cider [github]" single])
  (cider .
-	[(20131029 823)
+	[(20131031 1711)
 	 ((clojure-mode
 	   (2 0 0))
 	  (cl-lib
@@ -4915,7 +4949,7 @@
 	   (2 1 0))
 	  (pkg-info
 	   (0 3)))
-	 "Clojure IDE and REPL [github]" tar])
+	 "Clojure Integrated Development Environment and REPL [github]" tar])
  (chm-view .
 	   [(20110616 1719)
 	    nil "View CHM file. [wiki]" single])
@@ -5023,7 +5057,7 @@
 		     (0 3 2)))
 		   "Context-sensitive external browse URL or Internet search [github]" single])
  (browse-kill-ring .
-		   [(20131026 1346)
+		   [(20131031 2124)
 		    nil "interactively insert items from kill-ring [github]" single])
  (bpe .
       [(20131027 1221)
@@ -5032,7 +5066,7 @@
 	   [(20081011 2126)
 	    nil "Quote text with a semi-box. [github]" single])
  (bookmark+ .
-	    [(20131007 2334)
+	    [(20131030 1823)
 	     nil "Bookmark+: extensions to standard library `bookmark.el'. [wiki]" tar])
  (bm .
      [(20121212 2224)
@@ -5131,7 +5165,7 @@
 	 [(20130917 1848)
 	  nil "Run AWK interactively on region! [wiki]" single])
  (autopair .
-	   [(20131009 1902)
+	   [(20131101 144)
 	    nil "Automagically pair braces and quotes like TextMate [github]" single])
  (automargin .
 	     [(20130910 40)
@@ -5246,7 +5280,7 @@
       [(20130817 845)
        nil "various useful ways to do `multi-occur' [wiki]" single])
  (anzu .
-       [(20131027 1724)
+       [(20131101 1621)
 	nil "Show number of matches in mode-line while searching [github]" single])
  (anything-git-grep .
 		    [(20130609 1111)
@@ -5325,7 +5359,7 @@
       [(20131016 1642)
        nil "Alberto's Emacs interface for Mercurial (Hg) [hg]" single])
  (ag .
-     [(20130924 1453)
+     [(20131029 1615)
       nil "A front-end for ag ('the silver searcher'), the C ack replacement. [github]" single])
  (aes .
       [(20130121 413)
@@ -5365,7 +5399,7 @@
 	   [(20131005 1126)
 	    nil "An auto-complete source using slime completions [github]" single])
  (ac-nrepl .
-	   [(20131023 755)
+	   [(20131031 1046)
 	    ((cider
 	      (0 1))
 	     (auto-complete
@@ -5421,7 +5455,4 @@
 	      (1 2))
 	     (request
 	      (0 2 0)))
-	    "Open and evaluate 4clojure.com questions [github]" single])
- (protobuf-mode .
-		[(20091217 1955)
-		 nil "major mode for editing protocol buffers. [svn]" single]))
+	    "Open and evaluate 4clojure.com questions [github]" single]))
