@@ -168,3 +168,6 @@
 
 ;; Anzu mode
 (global-anzu-mode +1)
+
+;; smart-scan mode
+(smartscan-mode 1)
