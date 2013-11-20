@@ -20,7 +20,7 @@
               (autopair-mode -1)))
 
 ;; Ruby hooks
-(add-hook 'ruby-mode-hook
+(add-hook 'enh-ruby-mode-hook
   (lambda ()
     (ruby-tools-mode t)))
 
