@@ -5,7 +5,7 @@
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/projectile
 ;; Keywords: project, convenience
-;; Version: 20131116.923
+;; Version: 20131119.1133
 ;; X-Original-Version: 1.0.0-cvs
 ;; Package-Requires: ((s "1.6.0") (dash "1.5.0") (pkg-info "0.4"))
 
@@ -183,6 +183,10 @@ Any function that does not take arguments will do."
   :group 'projectile
   :type 'symbol)
 
+(defcustom projectile-find-dir-includes-top-level nil
+  "If true, add top-level dir to options offered by `projectile-find-dir'."
+  :group 'projectile
+  :type 'boolean)
 
 ;;; Serialization
 (defun projectile-serialize (data filename)
@@ -710,8 +714,11 @@ With a prefix ARG invalidates the cache first."
   (interactive "P")
   (when arg
     (projectile-invalidate-cache nil))
-  (let ((dir (projectile-completing-read "Find dir: "
-                                          (projectile-current-project-dirs))))
+  (let ((dir (projectile-completing-read 
+              "Find dir: "
+              (if projectile-find-dir-includes-top-level 
+                  (append '("./") (projectile-current-project-dirs))
+                (projectile-current-project-dirs)))))
     (dired (expand-file-name dir (projectile-project-root)))
     (run-hooks 'projectile-find-dir-hook)))
 
@@ -759,7 +766,8 @@ With a prefix ARG invalidates the cache first."
 (defvar projectile-ruby-rspec '("Gemfile" "lib" "spec"))
 (defvar projectile-ruby-test '("Gemfile" "lib" "test"))
 (defvar projectile-django '("manage.py"))
-(defvar projectile-python '("setup.py"))
+(defvar projectile-python-pip '("requirements.txt"))
+(defvar projectile-python-egg '("setup.py"))
 (defvar projectile-maven '("pom.xml"))
 (defvar projectile-lein '("project.clj"))
 (defvar projectile-rebar '("rebar"))
@@ -775,7 +783,8 @@ With a prefix ARG invalidates the cache first."
      ((projectile-verify-files projectile-ruby-rspec) 'ruby-rspec)
      ((projectile-verify-files projectile-ruby-test) 'ruby-test)
      ((projectile-verify-files projectile-django) 'django)
-     ((projectile-verify-files projectile-python) 'python)
+     ((projectile-verify-files projectile-python-pip)'python)
+     ((projectile-verify-files projectile-python-egg) 'python)
      ((projectile-verify-files projectile-symfony) 'symfony)
      ((projectile-verify-files projectile-maven) 'maven)
      ((projectile-verify-files projectile-lein) 'lein)

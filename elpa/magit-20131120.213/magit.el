@@ -488,12 +488,6 @@ they are not (due to semantic considerations)."
   :type '(choice (const :tag "tags are the subjects" tag)
                  (const :tag "head is the subject" head)))
 
-(defcustom magit-status-verbose-untracked t
-  "Whether to show the contents of or just the untracked directory."
-  :group 'magit
-  :type '(choice (const :tag "show only directory" nil)
-                 (const :tag "show directory contents" t)))
-
 (defcustom magit-process-popup-time -1
   "Popup the process buffer if a command takes longer than this many seconds."
   :group 'magit
@@ -2300,24 +2294,24 @@ never modify it.")
   "Go to the next sibling section."
   (interactive)
   (let* ((section (magit-current-section))
-         (end (- (magit-section-end section) 1))
-         (parent (magit-section-parent section))
-         (siblings (and parent (magit-section-children parent)))
-         (next-sibling (magit-find-section-after* end siblings)))
-    (if next-sibling
-        (magit-goto-section next-sibling)
+         (parent  (magit-section-parent section))
+         (next    (and parent (magit-find-section-after*
+                               (1- (magit-section-end section))
+                               (magit-section-children parent)))))
+    (if next
+        (magit-goto-section next)
       (magit-goto-next-section))))
 
 (defun magit-goto-previous-sibling-section ()
   "Go to the previous sibling section."
   (interactive)
   (let* ((section (magit-current-section))
-         (beginning (magit-section-beginning section))
-         (parent (magit-section-parent section))
-         (siblings (and parent (magit-section-children parent)))
-         (previous-sibling (magit-find-section-before* beginning siblings)))
-    (if previous-sibling
-        (magit-goto-section previous-sibling)
+         (parent  (magit-section-parent section))
+         (prev    (and parent (magit-find-section-before*
+                               (magit-section-beginning section)
+                               (magit-section-children parent)))))
+    (if prev
+        (magit-goto-section prev)
       (magit-goto-previous-section))))
 
 (defun magit-goto-section (section)
@@ -3458,12 +3452,10 @@ Customize variable `magit-diff-refine-hunk' to change the default mode."
   (magit-wash-sequence #'magit-wash-diff))
 
 (defun magit-wash-diff ()
-  (let (ret)
-    (magit-with-section (section diff (buffer-substring-no-properties
-                                       (line-beginning-position)
-                                       (line-end-position)))
-      (setq ret (magit-wash-diff-section section)))
-    ret))
+  (magit-with-section (section diff (buffer-substring-no-properties
+                                     (line-beginning-position)
+                                     (line-end-position)))
+    (setq section (magit-wash-diff-section section))))
 
 (defvar-local magit-diffstat-cached-sections nil)
 (put 'magit-diffstat-cached-sections 'permanent-local t)
@@ -3530,7 +3522,7 @@ Customize variable `magit-diff-refine-hunk' to change the default mode."
            (insert "\tUnmerged " file "\n")
            (setf (magit-section-diff-status section) 'unmerged)
            (setf (magit-section-info section) file)
-           t))
+           section))
         ((re-search-forward "^diff" nil t)
          (forward-line 0)
          (let ((file (magit-diff-line-file))
@@ -3582,7 +3574,7 @@ Customize variable `magit-diff-refine-hunk' to change the default mode."
                  (funcall set-face 3 'magit-diff-file-header)))
              (goto-char end)
              (magit-wash-sequence #'magit-wash-hunk)))
-         t)))
+         section)))
 
 (defun magit-diff-line-file ()
   (cond ((looking-at "^diff --git \\(\".*\"\\) \\(\".*\"\\)$")
@@ -3635,7 +3627,7 @@ Customize variable `magit-diff-refine-hunk' to change the default mode."
                    (funcall set-line-face 'magit-diff-none))))
           (forward-line))
         (when (eq magit-diff-refine-hunk 'all)
-          (magit-diff-refine-hunk (magit-current-section)))))
+          (magit-diff-refine-hunk section))))
     t))
 
 (defun magit-highlight-line-whitespace ()
@@ -4354,23 +4346,17 @@ when asking for user input."
     "stash" "list"))
 
 (defun magit-insert-untracked-files ()
-  (unless (string= (magit-get "status" "showUntrackedFiles") "no")
-    (magit-git-insert-section (untracked "Untracked files:")
-        #'magit-wash-untracked-files
-      "ls-files" "--others" "-t" "--exclude-standard"
-      (and magit-status-verbose-untracked "--directory"))))
-
-(defun magit-wash-untracked-files ()
-  (magit-wash-sequence
-   (lambda ()
-     (when (looking-at "^? \\(.*\\)$")
-       (let ((file (magit-decode-git-path
-                    (match-string-no-properties 1))))
-         (delete-region (point) (+ (line-end-position) 1))
-         (magit-with-section (section file file)
-           (setf (magit-section-info section) file)
-           (insert "\t" file "\n")))
-       t))))
+  (magit-with-section (section untracked 'untracked "Untracked files:" t)
+    (let ((files (cl-mapcan (lambda (f) (when (eq (aref f 0) ??) (list f)))
+                            (magit-git-lines "status" "--porcelain" "-u"))))
+      (if (not files)
+          (setq section nil)
+        (dolist (file files)
+          (setq file (magit-decode-git-path (substring file 3)))
+          (magit-with-section (section file file)
+            (setf (magit-section-info section) file)
+            (insert "\t" file "\n")))
+        (insert "\n")))))
 
 (defun magit-insert-pending-commits ()
   (let* ((info (magit-read-rewrite-info))
@@ -7011,94 +6997,65 @@ from the parent keymap `magit-mode-map' are also available.")
         (magit-run-git* (list "init"))))))
 
 ;;;###autoload
-(defun magit-show-file-revision ()
-  "Open a new buffer showing the current file in the revision at point."
-  (interactive)
-  (let ((show-file-from-diff
-         (lambda (item)
-           (switch-to-buffer-other-window
-            (magit-show (cdr (magit-section-diff-range item))
-                        (magit-section-title item))))))
-    (magit-section-action (item info "show" t)
-      ((commit)
-       (let ((current-file (or magit-file-log-file
-                               (magit-read-file-from-rev info))))
-         (switch-to-buffer-other-window
-          (magit-show info current-file))))
-      ((hunk) (funcall show-file-from-diff (magit-section-parent item)))
-      ((diff) (funcall show-file-from-diff item)))))
+(defun magit-show (rev file &optional switch-function)
+  "Display and select a buffer containing FILE as stored in REV.
 
-;;;###autoload
-(defun magit-show (commit filename &optional select prefix)
-  "Return a buffer containing the file FILENAME, as stored in COMMIT.
-
-COMMIT may be one of the following:
-- A string with the name of a commit, such as \"HEAD\" or
-  \"dae86e\".  See 'git help revisions' for syntax.
-- The symbol 'index, indicating that you want the version in
-  Git's index or staging area.
-- The symbol 'working, indicating that you want the version in
-  the working directory.  In this case you'll get a buffer
-  visiting the file.  If there's already a buffer visiting that
-  file, you'll get that one.
-
-When called interactively or when SELECT is non-nil, make the
-buffer active, either in another window or (with a prefix
-argument) in the current window."
+Insert the contents of FILE as stored in the revision REV into a
+buffer.  Then select the buffer using `pop-to-buffer' or with a
+prefix argument using `switch-to-buffer'.  Non-interactivity use
+SWITCH-FUNCTION to switch to the buffer, if that is nil simply
+return the buffer, without displaying it."
+  ;; REV may also be one of the symbols `index' or `working' but
+  ;; that is only intended for use by `magit-ediff'.
   (interactive
-   (let* ((revision (magit-read-rev "Retrieve file from revision"))
-          (filename (magit-read-file-from-rev revision)))
-     (list revision filename t current-prefix-arg)))
-  (if (eq commit 'working)
-      (find-file-noselect filename)
-    (let ((buffer (create-file-buffer
-                   (format "%s.%s" filename
-                           (replace-regexp-in-string
-                            ".*/" "" (prin1-to-string commit t))))))
-      (cond
-       ((eq commit 'index)
-        (let ((checkout-string (magit-git-string "checkout-index"
-                                                 "--temp"
-                                                 filename)))
-          (string-match "^\\(.*\\)\t" checkout-string)
-          (with-current-buffer buffer
-            (let ((tmpname (match-string 1 checkout-string)))
-              (with-silent-modifications
-               (insert-file-contents tmpname nil nil nil t))
-              (delete-file tmpname)))))
-       (t
+   (let (rev file section)
+     (magit-section-case (item info)
+       ((commit) (setq file magit-file-log-file rev info))
+       ((hunk)   (setq section (magit-section-parent item)))
+       ((diff)   (setq section item)))
+     (if section
+         (setq rev  (cdr (magit-section-diff-range section))
+               file (magit-section-info section))
+       (setq rev (magit-get-current-branch)))
+     (list (magit-read-rev "Retrieve file from revision" rev)
+           (magit-read-file-from-rev rev file)
+           current-prefix-arg)))
+  (if (eq rev 'working)
+      (find-file-noselect file)
+    (let* ((name (format "%s.%s" file
+                         (if (symbolp rev)
+                             (format "@{%s}" rev)
+                           (replace-regexp-in-string "/" ":" rev))))
+           (buffer (get-buffer name)))
+      (when buffer
         (with-current-buffer buffer
-          (with-silent-modifications
-           (magit-git-insert "cat-file" "-p"
-                             (concat commit ":" filename))))))
-      (with-current-buffer buffer
-        (let ((buffer-file-name
-               (expand-file-name filename (magit-get-top-dir))))
+          (unless (and (equal file magit-file-name)
+                       (equal rev  magit-show-current-version))
+            (setq buffer nil))))
+      (with-current-buffer
+          (or buffer (create-file-buffer name))
+        (with-silent-modifications
+          (if (eq rev 'index)
+              (let ((temp (car (split-string
+                                (magit-git-string "checkout-index"
+                                                  "--temp" file)
+                                "\t"))))
+                (insert-file-contents temp nil nil nil t)
+                (delete-file temp))
+            (magit-git-insert "cat-file" "-p" (concat rev ":" file))))
+        (let ((buffer-file-name (expand-file-name file (magit-get-top-dir))))
           (normal-mode))
-        (setq magit-file-name filename)
-        (setq magit-show-current-version commit)
-        (goto-char (point-min)))
-      (if select
-          (if prefix
-              (switch-to-buffer buffer)
-            (switch-to-buffer-other-window buffer))
-        buffer))))
+        (setq magit-file-name file)
+        (setq magit-show-current-version rev)
+        (goto-char (point-min))
+        (funcall (if (called-interactively-p 'any)
+                     (if switch-function 'switch-to-buffer 'pop-to-buffer)
+                   (or switch-function 'identity))
+                 (current-buffer))))))
 
-;;;###autoload
-(defun magit-grep (pattern)
-  (interactive
-   (list (read-string "git grep: "
-                      (shell-quote-argument (grep-tag-default)))))
-  (with-current-buffer (generate-new-buffer "*Magit Grep*")
-    (setq default-directory (magit-get-top-dir))
-    (insert magit-git-executable " "
-            (mapconcat 'identity magit-git-standard-options " ")
-            " grep -n "
-            (shell-quote-argument pattern) "\n\n")
-    (magit-git-insert "grep" "--line-number" "--color" pattern)
-    (ansi-color-apply-on-region (point-min) (point-max))
-    (grep-mode)
-    (pop-to-buffer (current-buffer))))
+(if (featurep 'vc-git)
+    (defalias 'magit-grep 'vc-git-grep)
+  (defalias 'magit-grep 'lgrep))
 
 ;;;; External Tools
 

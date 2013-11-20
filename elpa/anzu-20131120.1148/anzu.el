@@ -4,8 +4,8 @@
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-anzu
-;; Version: 20131108.1300
-;; X-Original-Version: 0.23
+;; Version: 20131120.1148
+;; X-Original-Version: 0.24
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 ;; for your search query.
 
 ;; To use this package, add following code to your init.el or .emacs
-;;   (require 'anzu)
+;;
 ;;   (global-anzu-mode +1)
 ;;
 
@@ -464,7 +464,7 @@
       (setq anzu--total-matched
             (anzu--count-matched buf symbol-regexp beg end t overlay-limit))
       (force-mode-line-update)
-      symbol)))
+      symbol-regexp)))
 
 (defun anzu--thing-begin (thing)
   (let ((bound (bounds-of-thing-at-point thing)))

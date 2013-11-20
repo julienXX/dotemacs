@@ -285,7 +285,7 @@ With a PREFIX argument, print the result in the current buffer."
 
 (defun cider-symbol-at-point ()
   "Return the name of the symbol at point, otherwise nil."
-  (let ((str (substring-no-properties (thing-at-point 'symbol))))
+  (let ((str (substring-no-properties (or (thing-at-point 'symbol) ""))))
     (and str
          (not (equal str (concat (cider-find-ns) "> ")))
          (not (equal str ""))
@@ -316,7 +316,7 @@ With a PREFIX argument, print the result in the current buffer."
 
 ;;;
 (defun cider-tramp-prefix ()
-  "Top element on `find-tag-marker-ring` used to determine Clojure host."
+  "Top element on `find-tag-marker-ring' used to determine Clojure host."
   (let ((jump-origin (buffer-file-name
                       (marker-buffer
                        (ring-ref find-tag-marker-ring 0)))))
@@ -356,7 +356,8 @@ Removes any leading slash if on Windows."
 
 (defun cider-find-file (filename)
   "Switch to a buffer visiting FILENAME.
-Adjusts for HOME location using `cider-home-prefix-adjustment'.  Uses `find-file'."
+Adjusts for HOME location using `cider-home-prefix-adjustment'.
+Uses `find-file'."
   (find-file (cider-emacs-or-clojure-side-adjustment filename)))
 
 (defun cider-find-resource (resource)

@@ -1,4 +1,4 @@
-This is /home/melpa/melpa/working/magit-20131118.2032/magit.info,
+This is /home/melpa/melpa/working/magit-20131120.213/magit.info,
 produced by makeinfo version 4.13 from
 /home/melpa/melpa/working/magit/magit.texi.
 
@@ -1537,41 +1537,41 @@ permit their use in free software.
 
 
 Tag Table:
-Node: Top803
-Node: Introduction2339
-Node: Acknowledgments3832
-Node: Sections4368
-Node: Status6918
-Node: Untracked files9657
-Node: Staging and Committing10862
-Node: History14978
-Node: Reflogs18160
-Node: Commit Buffer18564
-Node: Diffing19890
-Node: Tagging20877
-Node: Resetting21327
-Node: Stashing22851
-Node: Branches and Remotes23922
-Node: Branches Popup24743
-Node: Remotes Popup26005
-Node: Branches in the Branch Manager26356
-Node: Remotes in the Branch Manager27528
-Node: Wazzup28089
-Node: Merging28882
-Node: Rebasing29932
-Node: Interactive Rebasing30758
-Node: Rewriting32053
-Node: Pushing and Pulling35362
-Node: Submodules37291
-Node: Bisecting37737
-Node: Finding commits not merged upstream38981
-Node: Using Magit Extensions40235
-Node: Activating extensions40506
-Node: Interfacing with Subversion41891
-Node: Interfacing with Topgit42491
-Node: Interfacing with StGit43522
-Node: Using Git Directly44491
-Node: GNU Free Documentation License44879
+Node: Top802
+Node: Introduction2338
+Node: Acknowledgments3831
+Node: Sections4367
+Node: Status6917
+Node: Untracked files9656
+Node: Staging and Committing10861
+Node: History14977
+Node: Reflogs18159
+Node: Commit Buffer18563
+Node: Diffing19889
+Node: Tagging20876
+Node: Resetting21326
+Node: Stashing22850
+Node: Branches and Remotes23921
+Node: Branches Popup24742
+Node: Remotes Popup26004
+Node: Branches in the Branch Manager26355
+Node: Remotes in the Branch Manager27527
+Node: Wazzup28088
+Node: Merging28881
+Node: Rebasing29931
+Node: Interactive Rebasing30757
+Node: Rewriting32052
+Node: Pushing and Pulling35361
+Node: Submodules37290
+Node: Bisecting37736
+Node: Finding commits not merged upstream38980
+Node: Using Magit Extensions40234
+Node: Activating extensions40505
+Node: Interfacing with Subversion41890
+Node: Interfacing with Topgit42490
+Node: Interfacing with StGit43521
+Node: Using Git Directly44490
+Node: GNU Free Documentation License44878
 
 End Tag Table
 

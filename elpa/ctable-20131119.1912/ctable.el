@@ -4,7 +4,7 @@
 
 ;; Author: SAKURAI Masashi <m.sakurai at kiwanami.net>
 ;; URL: https://github.com/kiwanami/emacs-ctable
-;; Version: 20131014.1644
+;; Version: 20131119.1912
 ;; X-Original-Version: 0.1.2
 ;; Keywords: table
 
@@ -110,6 +110,17 @@ top-junction bottom-junction left-junction right-junction cross-junction : +"
   bg-colors vline-colors hline-colors draw-vlines draw-hlines vertical-line horizontal-line
   left-top-corner right-top-corner left-bottom-corner right-bottom-corner
   top-junction bottom-junction left-junction right-junction cross-junction)
+
+(defvar ctbl:completing-read 'completing-read
+  "Customize for completing-read function.
+
+To use `ido-completing-read', put the following sexp into your
+Emacs init file:
+
+(eval-after-load 'ido
+  '(progn
+     (setq ctbl:completing-read 'ido-completing-read)))")
+
 
 (defvar ctbl:default-rendering-param
   (make-ctbl:param
@@ -816,6 +827,25 @@ bug), this function may return nil."
       (ctbl:cp-set-selected-cell cp cell-id)
       (ctbl:cp-fire-click-hooks cp))))
 
+(defun ctbl:navi-jump-to-column ()
+  "Jump to a specified column of the current row."
+  (interactive)
+  (let* ((cp (ctbl:cp-get-component))
+         (cell-id (ctbl:cursor-to-nearest-cell))
+         (row-id (car cell-id))
+         (model (ctbl:cp-get-model cp))
+         (cols (ctbl:model-column-length model))
+         (col-names (mapcar 'ctbl:cmodel-title
+                            (ctbl:model-column-model model)))
+         (col-name (funcall ctbl:completing-read "Column name: "
+                            (with-current-buffer (buffer-name)
+                              col-names))))
+    (when (and cp cell-id)
+      (ctbl:navi-goto-cell
+       (ctbl:cell-id
+        row-id
+        (position col-name col-names :test 'equal))))))
+
 (defun ctbl:action-update-buffer ()
   "Update action for the latest table model."
   (interactive)
@@ -870,6 +900,8 @@ bug), this function may return nil."
      ("n" . ctbl:navi-move-down)
      ("b" . ctbl:navi-move-left)
      ("f" . ctbl:navi-move-right)
+
+     ("c" . ctbl:navi-jump-to-column)
 
      ("e" . ctbl:navi-move-right-most)
      ("a" . ctbl:navi-move-left-most)
