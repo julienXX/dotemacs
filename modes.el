@@ -5,6 +5,7 @@
  (add-to-list 'auto-mode-alist        '("\\.thor$" . enh-ruby-mode))
  (add-to-list 'auto-mode-alist        '("\\.gemspec$" . enh-ruby-mode))
  (add-to-list 'auto-mode-alist        '("\\.ru$" . enh-ruby-mode))
+ (add-to-list 'auto-mode-alist        '("\\.rabl$" . enh-ruby-mode))
  (add-to-list 'auto-mode-alist        '("Rakefile$" . enh-ruby-mode))
  (add-to-list 'auto-mode-alist        '("Thorfile$" . enh-ruby-mode))
  (add-to-list 'auto-mode-alist        '("Gemfile$" . enh-ruby-mode))
