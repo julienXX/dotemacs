@@ -17,3 +17,6 @@
         ("Log start" ?s "\n* %^{topic} %T :STARTED:" "~/Dropbox/OrgFiles/log.org")
         ("Log end" ?e "\n* %^{topic} %T :FINISHED:" "~/Dropbox/OrgFiles/log.org")
         ))
+
+;; org-reveal
+(setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/2.5.0/")
