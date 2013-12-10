@@ -28,17 +28,6 @@
 (require 'smartparens)
 (smartparens-global-mode t)
 
-(require 'paredit)
-(defadvice paredit-mode (around disable-autopairs-around (arg))
-  "Disable autopairs mode if paredit-mode is turned on"
-  ad-do-it
-  (if (null ad-return-value)
-      (autopair-mode 1)
-    (autopair-mode 0)
-    ))
-
-(ad-activate 'paredit-mode)
-
 ;; yasnippet
 (require 'yasnippet)
 (require 'angular-snippets)
