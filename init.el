@@ -61,17 +61,8 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
-;; package stuff
-(require 'package)
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                          ("gnu" . "http://elpa.gnu.org/packages/")
-                          ("MELPA" . "http://melpa.milkbox.net/packages/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize)
-
 ;; load customizations
 (add-to-list 'load-path "~/.emacs.d")
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -86,6 +77,10 @@
 (dolist (project (directory-files "~/.emacs.d/vendor" t "\\w+"))
   (when (file-directory-p project)
     (add-to-list 'load-path project)))
+
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+(require 'pallet)
 
 (load "packages")
 (load "functions")

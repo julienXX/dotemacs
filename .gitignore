@@ -10,3 +10,4 @@ var
 private.el
 *.elc
 projectile-bookmarks.eld
+.cask
