@@ -58,6 +58,7 @@
 (depends-on "go-mode")
 (depends-on "golden-ratio")
 (depends-on "goto-last-change")
+(depends-on "grizzl")
 (depends-on "haml-mode")
 (depends-on "handlebars-mode")
 (depends-on "haskell-mode")
