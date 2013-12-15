@@ -1,4 +1,7 @@
 My emacs config.
 ==========
 
-Clone in .emacs.d and code!
+- Install Cask <https://github.com/cask/cask>
+- Clone in .emacs.d
+- run ```cask install```
+- Enjoy :)
