@@ -113,11 +113,6 @@ Ignores CHAR at point."
           (revert-buffer t t t) )))
     (message "Refreshed open files.") )
 
-(defun jb-ac-tab-noconflict ()
-  (let ((command (key-binding [tab]))) ; remember command
-    (local-unset-key [tab]) ; unset from (kbd "<tab>")
-    (local-set-key (kbd "TAB") command))) ; bind to (kbd "TAB")
-
 (defun move-line-down ()
   (interactive)
   (let ((col (current-column)))
@@ -134,23 +129,6 @@ Ignores CHAR at point."
       (forward-line)
       (transpose-lines -1))
     (move-to-column col)))
-
-(defun rename-current-buffer-file ()
-  "Renames current buffer and file it is visiting."
-  (interactive)
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (error "Buffer '%s' is not visiting a file!" name)
-      (let ((new-name (read-file-name "New name: " filename)))
-        (if (get-buffer new-name)
-            (error "A buffer named '%s' already exists!" new-name)
-          (rename-file filename new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil)
-          (message "File '%s' successfully renamed to '%s'"
-                   name (file-name-nondirectory new-name)))))))
 
 (defun rotate-windows ()
   "Rotate your windows"
