@@ -25,8 +25,13 @@
 (textmate-mode)
 
 ;; smartparens
-(require 'smartparens)
-(smartparens-global-mode t)
+(require 'smartparens-config)
+(require 'smartparens-ruby)
+(smartparens-global-mode)
+(show-smartparens-global-mode t)
+(sp-with-modes '(rhtml-mode)
+  (sp-local-pair "<" ">")
+  (sp-local-pair "<%" "%>"))
 
 ;; yasnippet
 (require 'yasnippet)
@@ -36,8 +41,11 @@
 (yas-global-mode 1)
 
 ;; auto-complete
-(require 'auto-complete)
-(global-auto-complete-mode t)
+(require 'auto-complete-config)
+(ac-config-default)
+(setq ac-ignore-case nil)
+(add-to-list 'ac-modes 'enh-ruby-mode)
+(add-to-list 'ac-modes 'web-mode)
 
 ;; Ack and a half
 (add-to-list 'load-path "/elpa/ack-and-a-half")
@@ -74,10 +82,6 @@
 (require 'gist)
 (setq gist-use-curl t)
 (setq gist-view-gist t)
-
-;; Partially.el
-(require 'partially)
-(setq partially:rails-root-fn 'rinari-root)
 
 ;; ace-jump-mode
 (require 'ace-jump-mode)
@@ -152,14 +156,17 @@
 (setq git-gutter:deleted-sign "-- ")
 
 ;; projectile
+(require 'grizzl)
 (projectile-global-mode)
-(setq projectile-globally-ignored-files '("TAGS" ".#*"))
+(setq projectile-enable-caching t)
+(setq projectile-completion-system 'grizzl)
+;; Press Command-p for fuzzy find in project
+(global-set-key (kbd "M-p") 'projectile-find-file)
+;; Press Command-b for fuzzy switch buffer
+(global-set-key (kbd "M-b") 'projectile-switch-to-buffer)
 
 ;; Anzu mode
 (global-anzu-mode +1)
-
-;; smart-scan mode
-(smartscan-mode 1)
 
 ;; Enhanced ruby-mode (always load last)
 (add-to-list 'load-path "(path-to)/Enhanced-Ruby-Mode") ; must be added after any path containing old ruby-mode
