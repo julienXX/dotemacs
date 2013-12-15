@@ -11,3 +11,4 @@ private.el
 *.elc
 projectile-bookmarks.eld
 .cask
+projectile.cache
