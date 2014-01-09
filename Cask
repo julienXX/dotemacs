@@ -106,6 +106,7 @@
 (depends-on "powerline")
 (depends-on "pretty-lambdada")
 (depends-on "projectile")
+(depends-on "racket-mode")
 (depends-on "rainbow-delimiters")
 (depends-on "rainbow-mode")
 (depends-on "redshank")
