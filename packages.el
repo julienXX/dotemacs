@@ -87,9 +87,6 @@
 (require 'ace-jump-mode)
   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
-;; ruby-end
-(require 'ruby-end)
-
 ;; RSpec mode
 (require 'rspec-mode)
 (setq rspec-use-rake-flag nil)
