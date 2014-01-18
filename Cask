@@ -3,6 +3,7 @@
 (source gnu)
 (source "ELPA" "http://tromey.com/elpa/")
 
+(depends-on "4clojure")
 (depends-on "ace-jump-mode")
 (depends-on "ack-and-a-half")
 (depends-on "angular-snippets")
@@ -137,6 +138,8 @@
 (depends-on "smex")
 (depends-on "smooth-scrolling")
 (depends-on "soft-morning-theme")
+(depends-on "spacegray-theme")
+(depends-on "string-inflection")
 (depends-on "sublime-themes")
 (depends-on "sws-mode")
 (depends-on "tabulated-list")
