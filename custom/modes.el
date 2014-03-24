@@ -40,3 +40,6 @@
 
 ;; Elixir
 (add-to-list 'auto-mode-alist '("\\.exs" . elixir-mode))
+
+;; CoffeeScript
+(add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
