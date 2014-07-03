@@ -35,7 +35,6 @@
 
 ;; yasnippet
 (require 'yasnippet)
-(require 'angular-snippets)
 (setq yas-snippets-dir
       '("~/.emacs.d/snippets"))
 (yas-global-mode 1)

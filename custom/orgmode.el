@@ -20,3 +20,7 @@
 
 ;; org-reveal
 (setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/2.5.0/")
+
+;; org-repo-todo
+(global-set-key (kbd "C-c C-;") 'ort/capture-todo)
+(global-set-key (kbd "C-c C-'") 'ort/goto-todos)
