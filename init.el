@@ -138,7 +138,6 @@
      (ruby-compilation-executable . "rbx")
      (ruby-compilation-executable . "jruby"))))
  '(show-paren-mode t)
- '(smart-cursor-color-mode nil nil (smart-cursor-color))
  '(sml/active-background-color "#34495e")
  '(sml/active-foreground-color "#ecf0f1")
  '(sml/inactive-background-color "#dfe4ea")
