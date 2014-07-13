@@ -84,7 +84,6 @@
 (depends-on "logito")
 (depends-on "lui")
 (depends-on "magit")
-(depends-on "magit-commit-training-wheels")
 (depends-on "mark-multiple")
 (depends-on "markdown-mode")
 (depends-on "memory-usage")

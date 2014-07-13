@@ -70,7 +70,4 @@
 (defadvice git-commit-commit (after delete-window activate)
   (delete-window))
 
-(require 'magit-commit-training-wheels)
-(ad-activate 'magit-log-edit-commit)
-
 (provide 'setup-magit)
