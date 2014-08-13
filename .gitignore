@@ -12,4 +12,5 @@ private.el
 projectile-bookmarks.eld
 .cask
 projectile.cache
-bookmarks
+bookmarksido.last
+ido.last
