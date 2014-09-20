@@ -69,5 +69,4 @@
 
 ;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(define-key haskell-mode-map (kbd "C-x C-s") 'haskell-mode-save-buffer)
 (setq haskell-stylish-on-save t)
