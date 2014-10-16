@@ -84,12 +84,11 @@
 
 ;; ace-jump-mode
 (require 'ace-jump-mode)
-  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+  (define-key global-map (kbd "C-c j") 'ace-jump-mode)
 
 ;; RSpec mode
 (require 'rspec-mode)
 (setq rspec-use-rake-flag nil)
-(define-key rspec-mode-verifiable-keymap (kbd "s") 'rspec-verify-single)
 
 ;; ruby-tools
 (require 'ruby-tools)
