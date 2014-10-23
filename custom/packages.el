@@ -165,3 +165,6 @@
 ;; NeoTree
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
+
+;; WindMove
+(windmove-default-keybindings 'meta)
