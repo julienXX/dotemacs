@@ -6,6 +6,8 @@
 (depends-on "4clojure")
 (depends-on "ace-jump-mode")
 (depends-on "ack-and-a-half")
+(depends-on "aggressive-indent")
+(depends-on "alchemist")
 (depends-on "ample-zen-theme")
 (depends-on "anzu")
 (depends-on "auto-complete")
