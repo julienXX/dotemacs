@@ -66,7 +66,3 @@
                  "\\(?:^\\|\\s-+\\)\\(?:do\\)")
             (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
             (ruby-end-mode +1)))
-
-;; Haskell
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(setq haskell-stylish-on-save t)

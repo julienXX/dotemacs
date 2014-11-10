@@ -86,6 +86,7 @@
 (load "packages")
 (load "functions")
 (load "modes")
+(load "haskell")
 (load "hooks")
 (load "mappings")
 (load "orgmode")
