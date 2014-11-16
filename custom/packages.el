@@ -1,7 +1,3 @@
-;; CL
-;; (require 'cl)
-;; (define-obsolete-variable-alias 'custom-print-functions 'cl-custom-print-functions "24.1")
-
 ;; add ido
 (require 'flx-ido)
 (ido-mode 1)
