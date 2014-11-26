@@ -156,9 +156,5 @@
 (add-to-list 'load-path "(path-to)/Enhanced-Ruby-Mode") ; must be added after any path containing old ruby-mode
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 
-;; NeoTree
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
-
 ;; WindMove
 (windmove-default-keybindings 'meta)
