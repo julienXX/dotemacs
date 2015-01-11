@@ -117,6 +117,11 @@
 
 ;; Golden ration
 (require 'golden-ratio)
+(defun pl/helm-alive-p ()
+  (if (boundp 'helm-alive-p)
+      (symbol-value 'helm-alive-p)))
+
+(add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
 (golden-ratio-mode)
 
 ;; Save point position between sessions
@@ -158,3 +163,17 @@
 
 ;; WindMove
 (windmove-default-keybindings 'meta)
+
+;;; helm config
+(require 'helm-config)
+(require 'helm-projectile)
+
+(helm-mode 1)
+(helm-projectile-toggle 1)
+(helm-autoresize-mode 1)
+
+(setq helm-M-x-fuzzy-match t)
+(setq helm-buffers-fuzzy-matching t)
+(setq helm-recentf-fuzzy-match t)
+
+(setq helm-candidate-number-limit 100)
