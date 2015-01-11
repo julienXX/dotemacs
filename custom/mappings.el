@@ -28,5 +28,6 @@
 (global-set-key (kbd "M-.")          'helm-etags-select)
 (global-set-key (kbd "M-p")          'previous-multiframe-window)
 (global-set-key (kbd "M-n")          'other-window)
+(global-set-key (kbd "C-:")          'mark-all-like-this)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
