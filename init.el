@@ -174,7 +174,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(helm-candidate-number ((t (:foreground "black"))))
- '(helm-selection ((t (:background "#E9B629" :weight bold))))
+ '(helm-candidate-number ((t nil)))
+ '(helm-header ((t nil)))
+ '(helm-selection ((t (:background "#dd6767" :foreground "#eeeeee"))))
  '(helm-source-header ((t (:background "#A9C5C3" :foreground "black" :weight bold :height 1.3 :family "Sans Serif"))))
  '(show-paren-match ((t (:background "yellow")))))
