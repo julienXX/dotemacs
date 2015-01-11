@@ -1,4 +1,5 @@
 (global-set-key (kbd "M-x")          'helm-M-x)
+(global-set-key (kbd "C-x b")        'helm-buffers-list)
 (global-set-key (kbd "C-c s")        'shell)
 (global-set-key (kbd "C-x C-v")      'ido-find-file-other-window)
 (global-set-key (kbd "C-c c")        'switch-to-previous-buffer)
@@ -24,8 +25,8 @@
 (global-set-key (kbd "<C-S-up>")     'move-line-up)
 (global-set-key (kbd "<C-return>")   'open-line-below)
 (global-set-key (kbd "<C-S-return>") 'open-line-above)
-(global-set-key (kbd "C-x ,")        'helm-projectile)
 (global-set-key (kbd "M-.")          'helm-etags-select)
-(global-set-key (kbd "C-c l")        (lambda() (interactive)(find-file "~/Dropbox/OrgFiles/log.org")))
+(global-set-key (kbd "M-p")          'previous-multiframe-window)
+(global-set-key (kbd "M-n")          'other-window)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
