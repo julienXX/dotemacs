@@ -1,3 +1,4 @@
+(global-set-key (kbd "M-x")          'helm-M-x)
 (global-set-key (kbd "C-c s")        'shell)
 (global-set-key (kbd "C-x C-v")      'ido-find-file-other-window)
 (global-set-key (kbd "C-c c")        'switch-to-previous-buffer)
