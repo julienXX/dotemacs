@@ -149,10 +149,6 @@
 ;; projectile
 (projectile-global-mode)
 (setq projectile-enable-caching t)
-;; Press Command-p for fuzzy find in project
-(global-set-key (kbd "M-p") 'projectile-find-file)
-;; Press Command-b for fuzzy switch buffer
-(global-set-key (kbd "M-b") 'projectile-switch-to-buffer)
 
 ;; Anzu mode
 (global-anzu-mode +1)
@@ -160,9 +156,6 @@
 ;; Enhanced ruby-mode (always load last)
 (add-to-list 'load-path "(path-to)/Enhanced-Ruby-Mode") ; must be added after any path containing old ruby-mode
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
-
-;; WindMove
-(windmove-default-keybindings 'meta)
 
 ;;; helm config
 (require 'helm-config)
