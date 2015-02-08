@@ -122,7 +122,7 @@
  '(fci-rule-character-color "#192028")
  '(fci-rule-color "#073642")
  '(foreground-color "#cccccc")
- '(fringe-mode (quote (4 . 4)) nil (fringe))
+ '(fringe-mode nil)
  '(hl-paren-background-colors (quote ("#2492db" "#95a5a6" nil)))
  '(hl-paren-colors (quote ("#ecf0f1" "#ecf0f1" "#c0392b")))
  '(indicate-buffer-boundaries (quote right))

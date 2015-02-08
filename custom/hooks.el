@@ -69,3 +69,6 @@
 
 ;; Clojure
 (add-hook 'clojure-mode-hook 'paredit-mode)
+
+;; Company mode
+(add-hook 'after-init-hook 'global-company-mode)
