@@ -1,13 +1,16 @@
-(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
-  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
-  (add-to-list 'exec-path my-cabal-path))
-
 (autoload 'ghc-init "ghc" nil t)
 (autoload 'ghc-debug "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'structured-haskell-mode)
 
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(setq haskell-stylish-on-save t)
+(eval-after-load 'haskell-mode
+  '(define-key haskell-mode-map [f8] 'haskell-navigate-imports))
+
+(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
+  (add-to-list 'exec-path my-cabal-path))
+(custom-set-variables '(haskell-tags-on-save t))
 
 (custom-set-variables
   '(haskell-process-suggest-remove-import-lines t)
@@ -28,3 +31,12 @@
   (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
 
 (custom-set-variables '(haskell-process-type 'cabal-repl))
+
+(eval-after-load 'haskell-mode
+  '(define-key haskell-mode-map (kbd "C-c C-o") 'haskell-compile))
+(eval-after-load 'haskell-cabal
+  '(define-key haskell-cabal-mode-map (kbd "C-c C-o") 'haskell-compile))
+
+(autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
