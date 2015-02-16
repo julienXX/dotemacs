@@ -22,7 +22,6 @@
 ;; Ruby hooks
 (add-hook 'enh-ruby-mode-hook
   (lambda ()
-    (ruby-end-mode t)
     (ruby-tools-mode t)))
 
 ;; HAML hooks
