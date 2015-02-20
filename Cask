@@ -144,7 +144,6 @@
 (depends-on "rspec-mode")
 (depends-on "rubocop")
 (depends-on "ruby-compilation")
-(depends-on "ruby-end")
 (depends-on "ruby-hash-syntax")
 (depends-on "ruby-refactor")
 (depends-on "ruby-tools")
