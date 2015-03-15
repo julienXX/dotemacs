@@ -57,6 +57,7 @@
 (depends-on "flycheck-rust")
 (depends-on "full-ack")
 (depends-on "gh")
+(depends-on "gh-md")
 (depends-on "ghc")
 (depends-on "ghci-completion")
 (depends-on "gist")
