@@ -165,6 +165,7 @@
 (depends-on "textmate")
 (depends-on "tracking")
 (depends-on "undo-tree")
+(depends-on "unkillable-scratch")
 (depends-on "visual-regexp")
 (depends-on "web-mode")
 (depends-on "wrap-region")
