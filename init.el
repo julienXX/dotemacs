@@ -5,27 +5,6 @@
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-(setq-default tab-width 2)
-(setq-default indent-tabs-mode nil)
-(setq inhibit-startup-message t)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(delete-selection-mode t)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(blink-cursor-mode t)
-(show-paren-mode t)
-(column-number-mode t)
-(set-fringe-style -1)
-(tooltip-mode -1)
-(setq ring-bell-function (lambda () (message "*beep*")))
-
-;; initial frame size
-(add-to-list 'default-frame-alist '(left . 0))
-(add-to-list 'default-frame-alist '(top . 0))
-(add-to-list 'default-frame-alist '(height . 40))
-(add-to-list 'default-frame-alist '(width . 130))
 
 ;; Free up the option key for special characters
 (setq ns-alternate-modifier 'none)
@@ -37,12 +16,6 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
-
-;; aesthetics
-(setq ns-use-srgb-colorspace t)
-(set-default-font
-  "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(setq linum-format " %3d ")
 
 ;; stop opening a new frame (window) for each file
 (setq ns-pop-up-frames nil)
@@ -63,16 +36,10 @@
 (setq auto-revert-verbose nil)
 
 ;; load customizations
-(add-to-list 'load-path "~/.emacs.d/custom")
+(add-to-list 'load-path "~/.emacs.d/modules")
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-
-;; Set Frame title with file path
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
 
 ;; Add external projects to load path
 (dolist (project (directory-files "~/.emacs.d/vendor" t "\\w+"))
@@ -84,16 +51,20 @@
 (require 'pallet)
 (pallet-mode t)
 
-(load "packages")
-(load "functions")
-(load "modes")
-(load "haskell")
-(load "hooks")
-(load "mappings")
-(load "orgmode")
-(load "mode-line")
+(load "jxx-libs")
+(load "jxx-editing")
+(load "jxx-appearance")
+(load "jxx-packages")
+(load "jxx-functions")
+(load "jxx-modes")
+(load "jxx-mappings")
+(load "jxx-hooks")
+(load "jxx-ruby")
+(load "jxx-haskell")
+(load "jxx-orgmode")
+(load "jxx-mode-line")
 
-(eval-after-load 'magit '(require 'setup-magit))
+(eval-after-load 'magit '(require 'jxx-magit))
 
 ;; Shell variables on OSX
 (when (memq window-system '(mac ns))

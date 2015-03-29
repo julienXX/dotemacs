@@ -1,3 +1,25 @@
+;;; -*- lexical-binding: t -*-
+;;; jxx-hooks.el --- Various hooks
+
+;; Copyright (C) 2015 Julien Blanchard
+
+;; Author: Julien Blanchard <julien@sideburns.eu>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Code:
+
 ;; Line numbers
 (add-hook 'eshell-mode-hook
   '(lambda () (linum-mode 0)))
@@ -18,19 +40,6 @@
 (add-hook 'sldb-mode-hook
           #'(lambda ()
               (autopair-mode -1)))
-
-;; Ruby hooks
-(add-hook 'enh-ruby-mode-hook
-  (lambda ()
-    (ruby-tools-mode t)))
-
-;; HAML hooks
-(add-hook 'haml-mode-hook
-  (lambda ()
-    (ruby-tools-mode t)
-    (setq indent-tabs-mode nil)
-    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
-
 
 ;; Delete trailing whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -69,3 +78,6 @@
 
 ;; Clojure
 (add-hook 'clojure-mode-hook 'paredit-mode)
+
+(provide 'jxx-hooks)
+;;; jxx-hooks.el ends here

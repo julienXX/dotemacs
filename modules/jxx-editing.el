@@ -1,6 +1,52 @@
-(defun switch-to-previous-buffer ()
-      (interactive)
-      (switch-to-buffer (other-buffer (current-buffer) 1)))
+;;; -*- lexical-binding: t -*-
+;;; jxx-editing.el --- Editing functions
+
+;; Copyright (C) 2015 Julien Blanchard
+
+;; Author: Julien Blanchard <julien@sideburns.eu>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;; Code:
+
+;;; multiple-cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; Save point position between sessions
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file (expand-file-name ".places" user-emacs-directory))
+
+;; Expand region
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+;; Wrap region
+(require 'wrap-region)
+(wrap-region-global-mode)
+
+;; Hit C-c <tab> to auto-indent the entire buffer you're in.
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+(global-set-key (kbd "C-c <tab>") 'indent-buffer)
 
 (defun duplicate-line (arg)
   "Duplicate current line, leaving point in lower line."
@@ -94,25 +140,6 @@ Ignores CHAR at point."
                      (backward-char direction))
                    (point)))))
 
-(defun ruby-open-spec-other-buffer ()
-  (interactive)
-  (when (featurep 'rspec-mode)
-    (let ((source-buffer (current-buffer))
-          (other-buffer (progn
-                          (rspec-toggle-spec-and-target)
-                          (current-buffer))))
-      (switch-to-buffer source-buffer)
-      (pop-to-buffer other-buffer))))
-
-(defun revert-all-buffers ()
-    "Refreshes all open buffers from their respective files."
-    (interactive)
-    (dolist (buf (buffer-list))
-      (with-current-buffer buf
-        (when (and (buffer-file-name) (not (buffer-modified-p)))
-          (revert-buffer t t t) )))
-    (message "Refreshed open files.") )
-
 (defun move-line-down ()
   (interactive)
   (let ((col (current-column)))
@@ -155,64 +182,6 @@ Ignores CHAR at point."
              (set-window-start w2 s1)
              (setq i (1+ i)))))))
 
-(defun jxx-markdown-preview ()
-  (interactive)
-  (save-buffer)
-  (call-process "open" nil nil nil "-a" "Marked.app" (buffer-file-name)))
 
-(defun jxx-show-ruby-tags ()
-  (interactive)
-  (occur "^\\s-*\\\(class \\\|module \\\|def \\\|[^:]include \\\|private\\b\\\|protected\\b\\\)"))
-
-(define-key ruby-mode-map (kbd "C-c t") 'jxx-show-ruby-tags)
-
-(defun rename-file-and-buffer ()
-  "Rename the current buffer and file it is visiting."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (message "Buffer is not visiting a file!")
-      (let ((new-name (read-file-name "New name: " filename)))
-        (cond
-         ((vc-backend filename) (vc-rename-file filename new-name))
-         (t
-          (rename-file filename new-name t)
-          (set-visited-file-name new-name t t)))))))
-
-(global-set-key (kbd "C-c r")  'rename-file-and-buffer)
-
-(defun delete-file-and-buffer ()
-  "Kill the current buffer and deletes the file it is visiting."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (when filename
-      (if (vc-backend filename)
-          (vc-delete-file filename)
-        (progn
-          (delete-file filename)
-          (message "Deleted file %s" filename)
-          (kill-buffer))))))
-
-(define-key isearch-mode-map (kbd "C-d")
-  'fc/isearch-yank-symbol)
-(defun fc/isearch-yank-symbol ()
-  "Yank the symbol at point into the isearch minibuffer.
-
-C-w does something similar in isearch, but it only looks for
-the rest of the word. I want to look for the whole string. And
-symbol, not word, as I need this for programming the most."
-  (interactive)
-  (isearch-yank-string
-   (save-excursion
-     (when (and (not isearch-forward)
-                isearch-other-end)
-       (goto-char isearch-other-end))
-     (thing-at-point 'symbol))))
-
-(defun my-create-non-existent-directory ()
-  (let ((parent-directory (file-name-directory buffer-file-name)))
-    (when (and (not (file-exists-p parent-directory))
-               (y-or-n-p (format "Directory `%s' does not exist! Create it?" parent-directory)))
-      (make-directory parent-directory t))))
-
-(add-to-list 'find-file-not-found-functions #'my-create-non-existent-directory)
+(provide 'jxx-editing)
+;;; jxx-editing.el ends here

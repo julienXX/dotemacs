@@ -1,3 +1,25 @@
+;;; -*- lexical-binding: t -*-
+;;; jxx-packages.el --- Generic Packages config
+
+;; Copyright (C) 2015 Julien Blanchard
+
+;; Author: Julien Blanchard <julien@sideburns.eu>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Code:
+
 ;; add ido
 (require 'flx-ido)
 (ido-mode 1)
@@ -55,22 +77,10 @@
 (defalias 'ack-find-file 'ack-and-a-half-find-file)
 (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
 
-;; Expand region
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
-
-;; Wrap region
-(require 'wrap-region)
-(wrap-region-global-mode)
-
 ;; CTags
 (require 'ctags-update)
 (autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
 (add-hook 'prog-mode-hook  'turn-on-ctags-auto-update-mode)
-
-;; YAML
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; Gists
 (require 'eieio)
@@ -81,13 +91,6 @@
 ;; ace-jump-mode
 (require 'ace-jump-mode)
   (define-key global-map (kbd "C-c j") 'ace-jump-mode)
-
-;; RSpec mode
-(require 'rspec-mode)
-(setq rspec-use-rake-flag nil)
-
-;; ruby-tools
-(require 'ruby-tools)
 
 ;; multi-term
 (require 'multi-term)
@@ -109,12 +112,6 @@
     )
   )
 
-;; SCSS
-(setq scss-compile-at-save nil)
-
-;; Rinari
-(require 'rinari)
-
 ;; Golden ration
 (require 'golden-ratio)
 (defun pl/helm-alive-p ()
@@ -123,11 +120,6 @@
 
 (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
 (golden-ratio-mode)
-
-;; Save point position between sessions
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
 ;; Make dired less verbose
 (require 'dired-details)
@@ -153,30 +145,8 @@
 ;; Anzu mode
 (global-anzu-mode +1)
 
-;; Enhanced ruby-mode (always load last)
-(add-to-list 'load-path "(path-to)/Enhanced-Ruby-Mode") ; must be added after any path containing old ruby-mode
-(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
-
-;;; helm config
-(require 'helm-config)
-(require 'helm-projectile)
-
-(helm-mode 1)
-(helm-projectile-toggle 1)
-(helm-autoresize-mode 1)
-
-(setq helm-M-x-fuzzy-match t)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-recentf-fuzzy-match t)
-
-(setq helm-candidate-number-limit 100)
-
-;;; multiple-cursors
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
 ;;; unkillable scratch buffer
 (unkillable-scratch 1)
+
+(provide 'jxx-packages)
+;;; jxx-packages.el ends here
