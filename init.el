@@ -59,6 +59,7 @@
 (load "jxx-modes")
 (load "jxx-mappings")
 (load "jxx-hooks")
+(load "jxx-helm")
 (load "jxx-ruby")
 (load "jxx-clojure")
 (load "jxx-haskell")
