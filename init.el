@@ -60,6 +60,7 @@
 (load "jxx-mappings")
 (load "jxx-hooks")
 (load "jxx-ruby")
+(load "jxx-clojure")
 (load "jxx-haskell")
 (load "jxx-orgmode")
 (load "jxx-mode-line")

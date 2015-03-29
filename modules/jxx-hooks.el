@@ -76,8 +76,5 @@
             (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
             (ruby-end-mode +1)))
 
-;; Clojure
-(add-hook 'clojure-mode-hook 'paredit-mode)
-
 (provide 'jxx-hooks)
 ;;; jxx-hooks.el ends here
