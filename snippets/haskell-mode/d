@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-#name: debug
-# --
-trace (show $0) undefined
