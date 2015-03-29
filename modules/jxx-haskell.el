@@ -48,7 +48,14 @@
   ;; Insert the inferred type of the function at point into the code.
   (define-key haskell-mode-map (kbd "C-c C-s") (lambda () (interactive) (haskell-process-do-type t)))
   ;; Run `cabal test' in a compile buffer.
-  (define-key haskell-mode-map (kbd "C-c C-,") 'ohai-haskell/run-test-suite))
+  (define-key haskell-mode-map (kbd "C-c C-,") 'jxx-haskell/run-test-suite))
+
+;; A function for launching a compile buffer with `cabal test'.
+(defun jxx-haskell/run-test-suite ()
+  (interactive)
+  (require 'compile)
+  (projectile-with-default-dir (projectile-project-root)
+    (compile "cabal test")))
 
 (provide 'jxx-haskell)
 ;;; jxx-haskell.el ends here
