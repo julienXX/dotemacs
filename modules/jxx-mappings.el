@@ -20,12 +20,9 @@
 
 ;;; Code:
 
-(global-set-key (kbd "M-x")          'helm-M-x)
-(global-set-key (kbd "C-x b")        'helm-buffers-list)
 (global-set-key (kbd "C-c s")        'shell)
 (global-set-key (kbd "C-x C-v")      'ido-find-file-other-window)
 (global-set-key (kbd "C-c c")        'switch-to-previous-buffer)
-(global-set-key (kbd "M-t")          'helm-projectile-find-file)
 (global-set-key (kbd "M-T")          'textmate-goto-symbol)
 (global-set-key (kbd "C-c d")        'duplicate-line)
 (global-set-key (kbd "M-]")          'textmate-shift-right)
@@ -41,7 +38,6 @@
 (global-set-key (kbd "M-z")          'zap-up-to-char)
 (global-set-key (kbd "C-x -")        'toggle-windows-split)
 (global-set-key (kbd "<f12>")        'multi-term-dedicated-toggle)
-(global-set-key (kbd "C-c p")        'partially/visit-partial)
 (global-set-key (kbd "C-c ,,")       'ruby-open-spec-other-buffer)
 (global-set-key (kbd "<C-S-down>")   'move-line-down)
 (global-set-key (kbd "<C-S-up>")     'move-line-up)

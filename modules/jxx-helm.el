@@ -28,9 +28,11 @@
 (helm-autoresize-mode 1)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-t") 'helm-projectile-find-file)
 (global-set-key (kbd "C-x C-g") 'helm-do-grep)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x c g") 'helm-google-suggest)
+(global-set-key (kbd "M-.") 'helm-etags-select)
 
 (setq-default helm-M-x-fuzzy-match t
               helm-buffers-fuzzy-matching t
