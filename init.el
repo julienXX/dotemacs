@@ -61,14 +61,7 @@
 
 ;; load customizations
 (add-to-list 'load-path "~/.emacs.d/modules")
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor"))
-
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-
-;; Add external projects to load path
-(dolist (project (directory-files "~/.emacs.d/vendor" t "\\w+"))
-  (when (file-directory-p project)
-    (add-to-list 'load-path project)))
 
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
