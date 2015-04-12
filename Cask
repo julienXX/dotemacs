@@ -96,6 +96,7 @@
 (depends-on "json-mode")
 (depends-on "json-reformat")
 (depends-on "json-snatcher")
+(depends-on "key-combo")
 (depends-on "know-your-http-well")
 (depends-on "lcs")
 (depends-on "less-css-mode")
