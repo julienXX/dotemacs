@@ -1,5 +1,5 @@
 (source "ELPA" "http://tromey.com/elpa/")
-(source "MELPA" "http://melpa.milkbox.net/packages/")
+(source "MELPA" "http://melpa.org/packages/")
 (source gnu)
 (source marmalade)
 
