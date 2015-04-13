@@ -83,7 +83,6 @@
 (depends-on "helm-ls-git")
 (depends-on "helm-open-github")
 (depends-on "helm-projectile")
-(depends-on "helm-projectile-all")
 (depends-on "helm-rails")
 (depends-on "helm-themes")
 (depends-on "hi2")
