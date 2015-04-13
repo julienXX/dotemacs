@@ -170,6 +170,7 @@
 (depends-on "visual-regexp")
 (depends-on "web-mode")
 (depends-on "wrap-region")
+(depends-on "yafolding")
 (depends-on "yaml-mode")
 (depends-on "yari")
 (depends-on "yasnippet")
