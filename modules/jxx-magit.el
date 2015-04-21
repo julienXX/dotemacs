@@ -91,5 +91,7 @@
 (defadvice git-commit-commit (after delete-window activate)
   (delete-window))
 
+(setq magit-last-seen-setup-instructions "1.4.0")
+
 (provide 'jxx-magit)
 ;;; jxx-magit.el ends here
