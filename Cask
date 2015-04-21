@@ -75,6 +75,7 @@
 (depends-on "helm")
 (depends-on "helm-ack")
 (depends-on "helm-ag")
+(depends-on "helm-bundle-show")
 (depends-on "helm-cmd-t")
 (depends-on "helm-dash")
 (depends-on "helm-google")
