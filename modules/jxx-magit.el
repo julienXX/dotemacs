@@ -72,5 +72,7 @@
 (defadvice git-commit-commit (after delete-window activate)
   (delete-window))
 
+(setq magit-push-always-verify nil)
+
 (provide 'jxx-magit)
 ;;; jxx-magit.el ends here
