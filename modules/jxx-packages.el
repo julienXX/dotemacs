@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-packages.el --- Generic Packages config
 
 ;; Copyright (C) 2015 Julien Blanchard
@@ -77,10 +76,9 @@
 (defalias 'ack-find-file 'ack-and-a-half-find-file)
 (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
 
-;; CTags
-(require 'ctags-update)
-(autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
-(add-hook 'prog-mode-hook  'turn-on-ctags-auto-update-mode)
+;; GTags
+(require 'ggtags)
+(ggtags-mode)
 
 ;; Gists
 (require 'eieio)

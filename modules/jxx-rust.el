@@ -1,4 +1,4 @@
-;;; jxx-clojure.el --- Clojure setup
+;;; jxx-rust.el --- Clojure setup
 
 ;; Copyright (C) 2015 Julien Blanchard
 
@@ -21,8 +21,12 @@
 
 ;;; Code:
 
-(require 'cider)
-(add-hook 'clojure-mode-hook 'paredit-mode)
+(setq racer-cmd "/usr/local/bin/racer")
+(setq racer-rust-src-path "/Users/julien/Code/rust/src")
 
-(provide 'jxx-clojure)
-;;; jxx-clojure.el ends here
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(provide 'jxx-rust)
+;;; jxx-rust.el ends here

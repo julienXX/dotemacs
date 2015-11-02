@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-ruby.el --- Ruby stuff
 
 ;; Copyright (C) 2015 Julien Blanchard
@@ -61,17 +60,53 @@
 
 (define-key ruby-mode-map (kbd "C-c t") 'jxx-show-ruby-tags)
 
+(defun goto-match-paren (arg)
+  "Go to the matching  if on (){}[], similar to vi style of % "
+  (interactive "p")
+  ;; first, check for "outside of bracket" positions expected by forward-sexp, etc
+  (cond ((looking-at "[\[\(\{]") (forward-sexp))
+        ((looking-back "[\]\)\}]" 1) (backward-sexp))
+        ;; now, try to succeed from inside of a bracket
+        ((looking-at "[\]\)\}]") (forward-char) (backward-sexp))
+        ((looking-back "[\[\(\{]" 1) (backward-char) (forward-sexp))
+        (t nil)))
+
+(defun goto-matching-ruby-block (arg)
+  (cond
+   ;; are we at an end keyword?
+   ((equal (current-word) "end")
+    (ruby-beginning-of-block))
+
+   ;; or are we at a keyword itself?
+   ((string-match (current-word) "\\(for\\|while\\|until\\|if\\|class\\|module\\|case\\|unless\\|def\\|begin\\|do\\|context\\|describe\\it\\)")
+    (ruby-end-of-block))))
+
+(defun dispatch-goto-matching (arg)
+  (interactive "p")
+
+  (if (or
+       (looking-at "[\[\(\{]")
+       (looking-at "[\]\)\}]")
+       (looking-back "[\[\(\{]" 1)
+       (looking-back "[\]\)\}]" 1))
+
+      (goto-match-paren arg)
+
+    (when (eq major-mode 'enh-ruby-mode)
+      (goto-matching-ruby-block arg))))
+
+(global-set-key "\M--" 'dispatch-goto-matching)
 
 ;; HOOKS
 (add-hook 'enh-ruby-mode-hook
-  (lambda ()
-    (ruby-tools-mode t)))
+          (lambda ()
+            (ruby-tools-mode t)))
 
 (add-hook 'haml-mode-hook
-  (lambda ()
-    (ruby-tools-mode t)
-    (setq indent-tabs-mode nil)
-    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+          (lambda ()
+            (ruby-tools-mode t)
+            (setq indent-tabs-mode nil)
+            (define-key haml-mode-map "\C-m" 'newline-and-indent)))
 
 
 ;; MODES

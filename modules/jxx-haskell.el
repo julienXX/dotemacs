@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-haskell.el --- Haskell
 
 ;; Copyright (C) 2015 Julien Blanchard

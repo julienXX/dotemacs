@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-magit.el --- Magit stuff
 
 ;; Copyright (C) 2015 Julien Blanchard

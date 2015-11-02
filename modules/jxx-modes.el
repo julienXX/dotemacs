@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-modes.el --- Modes config
 
 ;; Copyright (C) 2015 Julien Blanchard

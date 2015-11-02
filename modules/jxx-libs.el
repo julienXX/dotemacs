@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-libs.el --- Base functions
 
 ;; Copyright (C) 2015 Julien Blanchard

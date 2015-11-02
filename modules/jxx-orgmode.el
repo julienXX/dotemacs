@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-orgmode.el --- OrgMode config
 
 ;; Copyright (C) 2015 Julien Blanchard

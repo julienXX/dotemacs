@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-helm.el --- Helm config
 
 ;; Copyright (C) 2015 Julien Blanchard

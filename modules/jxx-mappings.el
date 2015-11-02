@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-mappings.el --- Keyboard mapping
 
 ;; Copyright (C) 2015 Julien Blanchard

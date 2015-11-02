@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-appearance.el --- Emacs look
 
 ;; Copyright (C) 2015 Julien Blanchard

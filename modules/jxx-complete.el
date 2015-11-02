@@ -1,4 +1,4 @@
-;;; jxx-clojure.el --- Clojure setup
+;;; jxx-complete.el --- Clojure setup
 
 ;; Copyright (C) 2015 Julien Blanchard
 
@@ -21,8 +21,11 @@
 
 ;;; Code:
 
-(require 'cider)
-(add-hook 'clojure-mode-hook 'paredit-mode)
+(require 'company)
+(global-company-mode)
 
-(provide 'jxx-clojure)
-;;; jxx-clojure.el ends here
+;; Except when you're in term-mode.
+(setq company-global-modes '(not term-mode))
+
+(provide 'jxx-complete)
+;;; jxx-complete.el ends here

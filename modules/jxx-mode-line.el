@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-mode-line.el --- Beautiful modeline
 
 ;; Copyright (C) 2015 Julien Blanchard

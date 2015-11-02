@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-editing.el --- Editing functions
 
 ;; Copyright (C) 2015 Julien Blanchard

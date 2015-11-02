@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-functions.el --- Cool and helping functions
 
 ;; Copyright (C) 2015 Julien Blanchard

@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 ;;; jxx-hooks.el --- Various hooks
 
 ;; Copyright (C) 2015 Julien Blanchard
