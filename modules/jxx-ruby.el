@@ -38,10 +38,6 @@
 ;; Rinari
 (require 'rinari)
 
-;; Enhanced ruby-mode (always load last)
-(add-to-list 'load-path "(path-to)/Enhanced-Ruby-Mode") ; must be added after any path containing old ruby-mode
-(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
-
 
 ;;; FUNCTIONS
 (defun ruby-open-spec-other-buffer ()
@@ -92,13 +88,13 @@
 
       (goto-match-paren arg)
 
-    (when (eq major-mode 'enh-ruby-mode)
+    (when (eq major-mode 'ruby-mode)
       (goto-matching-ruby-block arg))))
 
 (global-set-key "\M--" 'dispatch-goto-matching)
 
 ;; HOOKS
-(add-hook 'enh-ruby-mode-hook
+(add-hook 'ruby-mode-hook
           (lambda ()
             (ruby-tools-mode t)))
 
@@ -111,19 +107,19 @@
 
 ;; MODES
 ;; Rake files are ruby, too, so are gemspecs, rackup files, etc.
-(add-to-list 'auto-mode-alist        '("\\.rb$" . enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.rake$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.thor$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.gemspec$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.ru$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.rabl$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("Rakefile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("Thorfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("Gemfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("Procfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("Capfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist        '("Vagrantfile$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist        '("\\.rb$" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("\\.thor$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("\\.gemspec$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("\\.ru$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("\\.rabl$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("Thorfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("Procfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("Capfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist        '("Vagrantfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist        (cons "\\.erb$" #'rhtml-mode))
 
 (provide 'jxx-ruby)

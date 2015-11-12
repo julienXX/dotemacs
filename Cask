@@ -33,7 +33,6 @@
 (depends-on "elixir-mode")
 (depends-on "elixir-yasnippets")
 (depends-on "emr")
-(depends-on "enh-ruby-mode")
 (depends-on "epl")
 (depends-on "erlang")
 (depends-on "etags-select")
