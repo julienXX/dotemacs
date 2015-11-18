@@ -43,9 +43,16 @@
 (add-to-list 'default-frame-alist '(height . 40))
 (add-to-list 'default-frame-alist '(width . 130))
 
+;; set proper language (fixes cyrillic letters in ansi-term)
+(setenv "LANG" "fr_FR.UTF-8")
+
 (setq ns-use-srgb-colorspace t)
 (set-default-font
-  "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+ "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+
+;; font for all unicode characters
+(set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
+
 (setq linum-format " %3d ")
 
 ;; Set Frame title with file path
