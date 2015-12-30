@@ -132,6 +132,7 @@
 (depends-on "pcache")
 (depends-on "pkg-info")
 (depends-on "popup")
+(depends-on "popwin")
 (depends-on "pretty-lambdada")
 (depends-on "projectile")
 (depends-on "queue")

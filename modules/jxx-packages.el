@@ -146,5 +146,9 @@
 ;;; unkillable scratch buffer
 (unkillable-scratch 1)
 
+;;; popwin
+(require 'popwin)
+(popwin-mode 1)
+
 (provide 'jxx-packages)
 ;;; jxx-packages.el ends here
