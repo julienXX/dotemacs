@@ -58,6 +58,7 @@
 (depends-on "flycheck-pos-tip")
 (depends-on "flycheck-rust")
 (depends-on "full-ack")
+(depends-on "ggtags")
 (depends-on "gh")
 (depends-on "gh-md")
 (depends-on "ghc")
