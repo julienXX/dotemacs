@@ -106,7 +106,6 @@
 (depends-on "lcs")
 (depends-on "less-css-mode")
 (depends-on "let-alist")
-(depends-on "leuven-theme")
 (depends-on "levenshtein")
 (depends-on "list-utils")
 (depends-on "logito")
