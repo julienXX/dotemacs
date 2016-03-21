@@ -118,6 +118,7 @@
 (depends-on "merlin")
 (depends-on "mode-compile")
 (depends-on "move-text")
+(depends-on "multi-compile")
 (depends-on "multi-term")
 (depends-on "multiple-cursors")
 (depends-on "mustache-mode")
