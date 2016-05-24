@@ -40,6 +40,9 @@
 ;; Javascript
 (add-to-list 'auto-mode-alist '("\\.js" . js2-mode))
 
+;; JSON
+(add-to-list 'auto-mode-alist '("\\.json" . json-mode))
+
 ;; RESTClient
 (add-to-list 'auto-mode-alist '("\\.http" . restclient-mode))
 
