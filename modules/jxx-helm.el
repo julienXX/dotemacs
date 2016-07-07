@@ -37,7 +37,9 @@
               helm-buffers-fuzzy-matching t
               helm-recentf-fuzzy-match t
               helm-apropos-fuzzy-match t
-              helm-candidate-number-limit 100)
+              helm-candidate-number-limit 100
+              helm-ff-skip-boring-files t
+              helm-locate-command "mdfind -name %s %s")
 
 (provide 'jxx-helm)
 ;;; jxx-helm.el ends here
