@@ -1,6 +1,6 @@
-;;; jxx-rust.el --- Clojure setup
+;;; jxx-rust.el --- Rust setup
 
-;; Copyright (C) 2015 Julien Blanchard
+;; Copyright (C) 2016 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -21,12 +21,20 @@
 
 ;;; Code:
 
-(setq racer-cmd "/usr/local/bin/racer")
+(setq racer-cmd "~/.cargo/bin/racer")
 (setq racer-rust-src-path "/Users/julien/Code/rust/src")
 
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
+
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
+
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
 
 (provide 'jxx-rust)
 ;;; jxx-rust.el ends here
