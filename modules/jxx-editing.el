@@ -1,6 +1,6 @@
 ;;; jxx-editing.el --- Editing functions
 
-;; Copyright (C) 2015 Julien Blanchard
+;; Copyright (C) 2017 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -21,25 +21,29 @@
 
 ;;; Code:
 
-;;; multiple-cursors
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
 
-;; Save point position between sessions
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file (expand-file-name ".places" user-emacs-directory))
+(use-package saveplace
+  :ensure t
+  :config
+  (setq-default save-place t)
+  (setq save-place-file (expand-file-name ".places" user-emacs-directory)))
 
-;; Expand region
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
+(use-package expand-region
+  :ensure t
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
 
-;; Wrap region
-(require 'wrap-region)
-(wrap-region-global-mode)
+(use-package wrap-region
+  :ensure t
+  :config
+  (wrap-region-global-mode))
 
 ;; Hit C-c <tab> to auto-indent the entire buffer you're in.
 (defun indent-buffer ()
@@ -101,7 +105,7 @@
 (global-linum-mode -1)
 
 (defun goto-line-with-feedback (&optional line)
-  "Show line numbers temporarily, while prompting for the line number input"
+  "Show line numbers temporarily, while prompting for the LINE number input."
   (interactive "P")
   (if line
       (goto-line line)

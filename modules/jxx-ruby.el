@@ -1,6 +1,6 @@
 ;;; jxx-ruby.el --- Ruby stuff
 
-;; Copyright (C) 2015 Julien Blanchard
+;; Copyright (C) 2017 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -21,23 +21,42 @@
 
 ;;; PACKAGES
 
-;; YAML
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(require 'use-package)
 
-;; RSpec mode
-(require 'rspec-mode)
-(setq rspec-use-rake-flag nil)
+(use-package ruby-mode
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (ruby-tools-mode t)))
+  (add-to-list 'auto-mode-alist        '("\\.rb$" . ruby-mode))
+  (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("\\.rake$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("\\.thor$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("\\.gemspec$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("\\.ru$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("\\.rabl$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("Rakefile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("Thorfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("Gemfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("Procfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("Capfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        '("Vagrantfile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist        (cons "\\.erb$" #'rhtml-mode))
+  (define-key ruby-mode-map (kbd "C-c t") 'jxx-show-ruby-tags))
 
-;; ruby-tools
-(require 'ruby-tools)
+(use-package yaml-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
-;; SCSS
-(setq scss-compile-at-save nil)
+(use-package rspec-mode
+  :ensure t
+  :config
+  (setq rspec-use-rake-when-possible nil))
 
-;; Rinari
-(require 'rinari)
-
+(use-package ruby-tools
+  :ensure t)
 
 ;;; FUNCTIONS
 (defun ruby-open-spec-other-buffer ()
@@ -53,8 +72,6 @@
 (defun jxx-show-ruby-tags ()
   (interactive)
   (occur "^\\s-*\\\(class \\\|module \\\|def \\\|[^:]include \\\|private\\b\\\|protected\\b\\\)"))
-
-(define-key ruby-mode-map (kbd "C-c t") 'jxx-show-ruby-tags)
 
 (defun goto-match-paren (arg)
   "Go to the matching  if on (){}[], similar to vi style of % "
@@ -93,34 +110,6 @@
 
 (global-set-key "\M--" 'dispatch-goto-matching)
 
-;; HOOKS
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (ruby-tools-mode t)))
-
-(add-hook 'haml-mode-hook
-          (lambda ()
-            (ruby-tools-mode t)
-            (setq indent-tabs-mode nil)
-            (define-key haml-mode-map "\C-m" 'newline-and-indent)))
-
-
-;; MODES
-;; Rake files are ruby, too, so are gemspecs, rackup files, etc.
-(add-to-list 'auto-mode-alist        '("\\.rb$" . ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.rake$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.thor$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.gemspec$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.ru$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("\\.rabl$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("Rakefile$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("Thorfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("Gemfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("Procfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("Capfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist        '("Vagrantfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist        (cons "\\.erb$" #'rhtml-mode))
 
 (provide 'jxx-ruby)
 ;;; jxx-ruby.el ends here

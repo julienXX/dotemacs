@@ -70,28 +70,29 @@
 (add-to-list 'load-path "~/.emacs.d/modules")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-(require 'cask "~/.cask/cask.el")
+(require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
 
-(load "jxx-libs")
-(load "jxx-editing")
-(load "jxx-complete")
-(load "jxx-appearance")
-(load "jxx-packages")
-(load "jxx-functions")
-(load "jxx-modes")
-(load "jxx-hooks")
-(load "jxx-ruby")
-(load "jxx-clojure")
-(load "jxx-haskell")
-(load "jxx-rust")
-(load "jxx-orgmode")
-(load "jxx-ivy")
-(load "jxx-mappings")
-(load "jxx-mode-line")
+(unless package-archive-contents (package-refresh-contents))
 
+(let ((pkg 'use-package))
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
+
+(defun load-directory (dir)
+  "`load' all elisp libraries in directory DIR which are not already loaded."
+  (interactive "D")
+  (let ((libraries-loaded (mapcar #'file-name-sans-extension
+                                  (delq nil (mapcar #'car load-history)))))
+    (dolist (file (directory-files dir t ".+\\.elc?$"))
+      (let ((library (file-name-sans-extension file)))
+        (unless (member library libraries-loaded)
+          (load library nil t)
+          (push library libraries-loaded))))))
+
+(load-directory "~/.emacs.d/modules/")
 (eval-after-load 'magit '(require 'jxx-magit))
 
 ;; Shell variables on OSX
@@ -154,7 +155,10 @@
      (sldb-mode :stick t)
      (slime-repl-mode)
      (slime-connection-list-mode))))
+ '(powerline-color1 "#3d3d68")
  '(powerline-color2 "#292945")
+ '(rspec-spec-command "bin/rspec")
+ '(rspec-use-spring-when-possible nil)
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)

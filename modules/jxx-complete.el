@@ -21,11 +21,14 @@
 
 ;;; Code:
 
-(require 'company)
-(global-company-mode)
-
-;; Except when you're in term-mode.
-(setq company-global-modes '(not term-mode))
+(require 'use-package)
+(use-package company
+  :ensure t
+  :defer t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  ;; Except when you're in term-mode.
+  (setq company-global-modes '(not term-mode)))
 
 (provide 'jxx-complete)
 ;;; jxx-complete.el ends here

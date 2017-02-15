@@ -1,6 +1,6 @@
-;;; jxx-rust.el --- Rust setup
+;;; jxx-flycheck.el --- Flycheck setup
 
-;; Copyright (C) 2016 Julien Blanchard
+;; Copyright (C) 2017 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -22,25 +22,11 @@
 ;;; Code:
 
 (require 'use-package)
-
-(use-package rust-mode
-  :mode ("\\.rs\\'" . rust-mode)
+(use-package flycheck
   :ensure t
   :config
-  (require 'racer)
-  (require 'cargo)
-  (require 'flycheck-rust)
-  (setq racer-cmd "~/.cargo/bin/racer")
-  (setq racer-rust-src-path "/Users/julien/Code/rust/src")
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'rust-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
-  (add-hook 'rust-mode-hook 'cargo-minor-mode))
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 
-(provide 'jxx-rust)
-;;; jxx-rust.el ends here
+(provide 'jxx-flycheck)
+;;; jxx-flycheck.el ends here

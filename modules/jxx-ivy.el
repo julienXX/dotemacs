@@ -19,13 +19,16 @@
 
 ;;; Code:
 
-(require 'ivy)
-(require 'counsel)
+(require 'use-package)
+(use-package ivy
+  :ensure t
+  :config
+  (require 'counsel)
+  (ivy-mode 1)
+  (counsel-projectile-on)
+  (setq ivy-use-virtual-buffers t)
+  (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
-(ivy-mode 1)
-(counsel-projectile-on)
-(setq ivy-use-virtual-buffers t)
-(define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
 
 (provide 'jxx-ivy)
 ;;; jxx-ivy.el ends here

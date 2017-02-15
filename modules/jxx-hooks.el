@@ -1,6 +1,6 @@
 ;;; jxx-hooks.el --- Various hooks
 
-;; Copyright (C) 2015 Julien Blanchard
+;; Copyright (C) 2017 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -21,19 +21,19 @@
 
 ;; Line numbers
 (add-hook 'eshell-mode-hook
-  '(lambda () (linum-mode 0)))
+          '(lambda () (linum-mode 0)))
 
 (add-hook 'compilation-mode-hook
-  '(lambda () (linum-mode 0)))
+          '(lambda () (linum-mode 0)))
 
 (add-hook 'dired-mode-hook
-  '(lambda () (linum-mode 0)))
+          '(lambda () (linum-mode 0)))
 
 (add-hook 'shell-mode-hook
-  '(lambda () (linum-mode 0)))
+          '(lambda () (linum-mode 0)))
 
 (add-hook 'magit-mode-hook
-  '(lambda () (linum-mode 0)))
+          '(lambda () (linum-mode 0)))
 
 ;; SLIME hooks
 (add-hook 'sldb-mode-hook
@@ -74,6 +74,7 @@
                  "\\(?:^\\|\\s-+\\)\\(?:do\\)")
             (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
             (ruby-end-mode +1)))
+
 
 (provide 'jxx-hooks)
 ;;; jxx-hooks.el ends here

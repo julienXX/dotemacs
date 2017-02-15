@@ -1,6 +1,6 @@
 ;;; jxx-modes.el --- Modes config
 
-;; Copyright (C) 2015 Julien Blanchard
+;; Copyright (C) 2017 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -51,6 +51,7 @@
 
 ;; CoffeeScript
 (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
+
 
 (provide 'jxx-modes)
 ;;; jxx-modes.el ends here

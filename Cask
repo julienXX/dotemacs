@@ -192,6 +192,7 @@
 (depends-on "tuareg")
 (depends-on "undo-tree")
 (depends-on "unkillable-scratch")
+(depends-on "use-package")
 (depends-on "utop")
 (depends-on "visual-regexp")
 (depends-on "web-mode")

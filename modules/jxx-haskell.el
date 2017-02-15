@@ -1,6 +1,6 @@
 ;;; jxx-haskell.el --- Haskell
 
-;; Copyright (C) 2015 Julien Blanchard
+;; Copyright (C) 2017 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -19,8 +19,11 @@
 
 ;;; Code:
 
-(require 'intero)
-(add-hook 'haskell-mode-hook 'intero-mode)
+(require 'use-package)
+(use-package intero
+  :ensure t
+  :config
+  (add-hook 'haskell-mode-hook 'intero-mode))
 
 (provide 'jxx-haskell)
 ;;; jxx-haskell.el ends here

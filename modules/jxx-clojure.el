@@ -21,8 +21,11 @@
 
 ;;; Code:
 
-(require 'cider)
-(add-hook 'clojure-mode-hook 'paredit-mode)
+(require 'use-package)
+(use-package cider
+  :ensure t
+  :config
+  (add-hook 'clojure-mode-hook 'paredit-mode))
 
 (provide 'jxx-clojure)
 ;;; jxx-clojure.el ends here

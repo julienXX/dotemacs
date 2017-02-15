@@ -1,6 +1,6 @@
-;;; jxx-rust.el --- Rust setup
+;;; jxx-javascript.el --- JS stuff
 
-;; Copyright (C) 2016 Julien Blanchard
+;; Copyright (C) 2017 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -17,30 +17,18 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
 ;;; Code:
 
 (require 'use-package)
-
-(use-package rust-mode
-  :mode ("\\.rs\\'" . rust-mode)
-  :ensure t
+(use-package js2-mode
+  :mode ("\\.js$" . js2-mode)
+  :ensure js2-mode
   :config
-  (require 'racer)
-  (require 'cargo)
-  (require 'flycheck-rust)
-  (setq racer-cmd "~/.cargo/bin/racer")
-  (setq racer-rust-src-path "/Users/julien/Code/rust/src")
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'rust-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
-  (add-hook 'rust-mode-hook 'cargo-minor-mode))
+  (setq js2-highlight-level 3)
+  (defvar js-indent-level
+    (setq js-indent-level 2))
+  (setq js2-basic-offset 2))
 
 
-(provide 'jxx-rust)
-;;; jxx-rust.el ends here
+(provide 'jxx-javascript)
+;;; jxx-javascript.el ends here
