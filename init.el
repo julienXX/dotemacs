@@ -88,8 +88,8 @@
 (load "jxx-haskell")
 (load "jxx-rust")
 (load "jxx-orgmode")
+(load "jxx-ivy")
 (load "jxx-mappings")
-(load "jxx-helm")
 (load "jxx-mode-line")
 
 (eval-after-load 'magit '(require 'jxx-magit))

@@ -46,6 +46,16 @@
 (global-set-key (kbd "M-p")          'previous-multiframe-window)
 (global-set-key (kbd "M-n")          'other-window)
 (global-set-key (kbd "C-ù")          'mark-all-words-like-this)
+(global-set-key "\C-s"               'swiper)
+(global-set-key (kbd "C-c C-r")      'ivy-resume)
+(global-set-key (kbd "<f6>")         'ivy-resume)
+(global-set-key (kbd "M-x")          'counsel-M-x)
+(global-set-key (kbd "M-t")          'counsel-projectile-find-file)
+(global-set-key (kbd "C-x C-f")      'counsel-find-file)
+(global-set-key (kbd "C-x b")        'counsel-projectile-switch-to-buffer)
+(global-set-key (kbd "C-c j")        'counsel-git-grep)
+(global-set-key (kbd "C-c k")        'counsel-ag)
+(global-set-key (kbd "M-y")          'counsel-yank-pop)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
