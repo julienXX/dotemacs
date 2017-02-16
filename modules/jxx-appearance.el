@@ -47,7 +47,7 @@
 (setenv "LANG" "fr_FR.UTF-8")
 
 (setq ns-use-srgb-colorspace t)
-(set-default-font
+(set-frame-font
  "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
 ;; font for all unicode characters
