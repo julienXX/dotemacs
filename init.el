@@ -91,12 +91,6 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-;; Setting rbenv path
-(setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
-(setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
-
-;; (setq magit-last-seen-setup-instructions "1.4.0")
-
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
