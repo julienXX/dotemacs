@@ -20,7 +20,7 @@
 ;;; Code:
 
 (require 'use-package)
-(use-package cider
+(use-package org
   :ensure t
   :defer t
   :config
