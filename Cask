@@ -185,6 +185,7 @@
 (depends-on "utop")
 (depends-on "visual-regexp")
 (depends-on "web-mode")
+(depends-on "wgrep")
 (depends-on "with-editor")
 (depends-on "wrap-region")
 (depends-on "yafolding")
