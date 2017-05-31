@@ -61,6 +61,9 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
+;; ivy icons
+(use-package all-the-icons)
+(all-the-icons-ivy-setup)
 
 (provide 'jxx-appearance)
 ;;; jxx-appearance.el ends here
