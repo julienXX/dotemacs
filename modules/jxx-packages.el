@@ -117,7 +117,7 @@
   :config
   (set-terminal-coding-system 'utf-8-unix)
   (setq multi-term-dedicated-select-after-open-p t)
-  (setq multi-term-program "/usr/local/bin/zsh")
+  (setq multi-term-program "/Users/julien/.nix-profile/bin/zsh")
   (setq multi-term-buffer-name "Terminal")
 
   (defun it-multi-term-dedicated-toggle ()
@@ -143,7 +143,7 @@
   :config
   (setq-default dired-details-hidden-string "--- ")
   (dired-details-install)
-  (setq insert-directory-program "gls" dired-use-ls-dired t))
+  (setq insert-directory-program "ls" dired-use-ls-dired t))
 
 (use-package markdown-mode
   :ensure t
