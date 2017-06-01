@@ -136,6 +136,7 @@
 (depends-on "multiple-cursors")
 (depends-on "mustache-mode")
 (depends-on "names")
+(depends-on "nix-mode")
 (depends-on "oauth2")
 (depends-on "omnisharp")
 (depends-on "org")
