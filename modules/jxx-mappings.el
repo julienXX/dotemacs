@@ -62,7 +62,7 @@
 (define-key swiper-map (kbd "C-s")
   (lambda () (interactive) (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'symbol))))))
 (define-key swiper-map (kbd "M-s")
-  (lambda () (interactive) (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'word)))))))
+  (lambda () (interactive) (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'word))))))
 
 (provide 'jxx-mappings)
 ;;; jxx-mappings.el ends here
