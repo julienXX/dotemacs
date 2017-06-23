@@ -52,6 +52,9 @@
 ;; CoffeeScript
 (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
 
+;; .NET
+(add-to-list 'auto-mode-alist '("\\.fsproj" . fsharp-mode))
+
 
 (provide 'jxx-modes)
 ;;; jxx-modes.el ends here

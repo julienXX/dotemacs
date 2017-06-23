@@ -25,7 +25,7 @@
 (use-package fsharp-mode
   :ensure t)
 
-(use-package omnisharp-mode
+(use-package omnisharp
   :ensure t
   :config
   (setq omnisharp-server-executable-path "/usr/local/bin/omnisharp")
