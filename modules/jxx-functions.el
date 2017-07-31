@@ -90,5 +90,49 @@ symbol, not word, as I need this for programming the most."
 
 (add-to-list 'find-file-not-found-functions #'my-create-non-existent-directory)
 
+;; Select line
+(defun textmate-select-line ()
+  "If the mark is not active, select the current line.
+Otherwise, expand the current region to select the lines the region touches."
+  (interactive)
+  (if mark-active ;; expand the selection to select lines
+      (let ((top (= (point) (region-beginning)))
+            (p1 (region-beginning))
+            (p2 (region-end)))
+        (goto-char p1)
+        (beginning-of-line)
+        (push-mark (point))
+        (goto-char p2)
+        (unless (looking-back "\n")
+          (progn
+            (end-of-line)
+            (if (< (point) (point-max)) (forward-char))))
+        (setq mark-active t
+              transient-mark-mode t)
+        (if top (exchange-point-and-mark)))
+    (progn
+      (beginning-of-line)
+      (push-mark (point))
+      (end-of-line)
+      (if (< (point) (point-max)) (forward-char))
+      (setq mark-active t
+            transient-mark-mode t))))
+
+;; Shift selection
+(defun textmate-shift-right (&optional arg)
+  "Shift the line or region to the ARG places to the right.
+A place is considered `tab-width' character columns."
+  (interactive)
+  (let ((deactivate-mark nil)
+        (beg (or (and mark-active (region-beginning))
+                 (line-beginning-position)))
+        (end (or (and mark-active (region-end)) (line-end-position))))
+    (indent-rigidly beg end (* (or arg 1) tab-width))))
+
+(defun textmate-shift-left (&optional arg)
+  "Shift the line or region to the ARG places to the left."
+  (interactive)
+  (textmate-shift-right (* -1 (or arg 1))))
+
 (provide 'jxx-functions)
 ;;; jxx-functions.el ends here

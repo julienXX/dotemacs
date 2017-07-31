@@ -192,7 +192,6 @@
 (depends-on "swiper")
 (depends-on "sws-mode")
 (depends-on "terraform-mode")
-(depends-on "textmate")
 (depends-on "togetherly")
 (depends-on "toml-mode")
 (depends-on "tracking")
