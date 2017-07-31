@@ -27,6 +27,7 @@
   :defer t
   :config
   (add-hook 'after-init-hook 'global-company-mode)
+  (add-to-list 'company-backends 'company-omnisharp)
   ;; Except when you're in term-mode.
   (setq company-global-modes '(not term-mode)))
 
