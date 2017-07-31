@@ -48,7 +48,7 @@
 
 (setq ns-use-srgb-colorspace t)
 (set-frame-font
- "-*-Source Code Pro-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+ "-*-Fira Code-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
 ;; font for all unicode characters
 (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
@@ -64,6 +64,9 @@
 ;; ivy icons
 (use-package all-the-icons)
 (all-the-icons-ivy-setup)
+
+;; Fira Code
+(mac-auto-operator-composition-mode)
 
 (provide 'jxx-appearance)
 ;;; jxx-appearance.el ends here
