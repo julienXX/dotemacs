@@ -22,6 +22,9 @@
 ;;; Code:
 
 (require 'use-package)
+(use-package dotnet
+  :ensure t)
+
 (use-package fsharp-mode
   :ensure t)
 
@@ -31,9 +34,7 @@
 (use-package omnisharp
   :ensure t
   :config
-  (setq omnisharp-server-executable-path "/usr/local/bin/omnisharp")
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'fsharp-mode-hook 'omnisharp-mode)
   (define-key omnisharp-mode-map (kbd "<C-tab>") 'omnisharp-auto-complete)
   (define-key omnisharp-mode-map "." 'omnisharp-add-dot-and-auto-complete)
   (setq-local company-backends '(company-omnisharp)))
