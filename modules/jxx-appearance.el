@@ -48,7 +48,7 @@
 
 (setq ns-use-srgb-colorspace t)
 (set-frame-font
- "-*-Fira Code-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+ "-*-Hasklig-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
 ;; font for all unicode characters
 (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
