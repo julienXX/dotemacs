@@ -23,7 +23,10 @@
 
 (require 'use-package)
 (use-package dotnet
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'csharp-mode-hook 'dotnet-mode)
+  (add-hook 'fsharp-mode-hook 'dotnet-mode))
 
 (use-package fsharp-mode
   :ensure t)
