@@ -13,6 +13,7 @@
 (depends-on "async")
 (depends-on "auto-complete")
 (depends-on "autopair")
+(depends-on "avy")
 (depends-on "browse-kill-ring")
 (depends-on "bundler")
 (depends-on "caml")

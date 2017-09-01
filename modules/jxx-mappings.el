@@ -56,6 +56,7 @@
 (global-set-key (kbd "C-c j")        'counsel-git-grep)
 (global-set-key (kbd "C-c k")        'counsel-ripgrep)
 (global-set-key (kbd "M-y")          'counsel-yank-pop)
+(global-set-key (kbd "M-SPC")        'avy-goto-char)
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
