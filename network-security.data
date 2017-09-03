@@ -1,6 +1,7 @@
 (
  (:id "sha1:85457c729378cc93c732b6a3941c8e4f9c2e60f3" :fingerprint "sha1:ab:a6:d7:6a:b3:d3:63:fa:19:0d:65:41:60:23:6e:ef:d3:2a:46:dc" :host "marmalade-repo.org:443" :conditions (:insecure :unknown-ca :invalid))
- (:id "sha1:6d4eb958390599243ba9f5035cb671fa8dd6a93a" :fingerprint "sha1:71:97:cd:a2:46:81:11:72:ad:47:e9:59:c6:bf:1c:48:94:a7:6a:eb" :host "elpa.gnu.org:443" :conditions (:insecure :unknown-ca :invalid))
- (:id "sha1:85b31c268009209a8d3c5387033b219264f7e62b" :fingerprint "sha1:b6:4e:ba:f4:04:69:07:a6:35:71:5c:42:48:4e:5e:24:d5:2f:6d:8d" :host "melpa.org:443" :conditions (:insecure :unknown-ca :invalid))
- (:id "sha1:69645b1420b39d18df757210d4e51c7d6c605ac6" :fingerprint "sha1:11:5b:fe:64:d8:08:bc:8c:aa:8c:11:3b:e5:49:75:38:a8:11:cd:63" :host "org.smartmusic.com:443" :conditions (:unknown-ca :invalid))
+ (:id "sha1:5cce342a9a99ff6632dc081a41f5f4a28e8e10fc" :fingerprint "sha1:c9:4f:05:0e:50:48:da:fd:71:ee:ca:36:bf:ab:10:0a:52:70:16:99" :host "raw.githubusercontent.com:443" :conditions (:unknown-ca :invalid))
+ (:id "sha1:379522f41fcdf5d279b33c30780e7512c9348430" :fingerprint "sha1:d4:ee:9d:2a:67:12:b3:61:4c:27:2d:15:8b:04:fc:c8:ca:08:a0:b6" :host "github.com:443" :conditions (:unknown-ca :invalid))
+ (:id "sha1:6d4eb958390599243ba9f5035cb671fa8dd6a93a" :fingerprint "sha1:71:97:cd:a2:46:81:11:72:ad:47:e9:59:c6:bf:1c:48:94:a7:6a:eb" :host "elpa.gnu.org:443" :conditions (:unknown-ca :invalid))
+ (:id "sha1:85b31c268009209a8d3c5387033b219264f7e62b" :fingerprint "sha1:b6:4e:ba:f4:04:69:07:a6:35:71:5c:42:48:4e:5e:24:d5:2f:6d:8d" :host "melpa.org:443" :conditions (:unknown-ca :invalid))
 )
