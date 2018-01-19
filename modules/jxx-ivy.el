@@ -25,7 +25,7 @@
   :config
   (require 'counsel)
   (ivy-mode 1)
-  (counsel-projectile-on)
+  (counsel-projectile-mode)
   (setq ivy-use-virtual-buffers t)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
