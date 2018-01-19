@@ -23,7 +23,9 @@
 (use-package intero
   :ensure t
   :config
-  (add-hook 'haskell-mode-hook 'intero-mode))
+  (add-hook 'haskell-mode-hook 'intero-mode)
+  (custom-set-variables
+   '(haskell-stylish-on-save t)))
 
 (provide 'jxx-haskell)
 ;;; jxx-haskell.el ends here
