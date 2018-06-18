@@ -21,19 +21,19 @@
 
 ;; Line numbers
 (add-hook 'eshell-mode-hook
-          '(lambda () (linum-mode 0)))
+          '(lambda () (display-line-numbers-mode -1)))
 
 (add-hook 'compilation-mode-hook
-          '(lambda () (linum-mode 0)))
+          '(lambda () (display-line-numbers-mode -1)))
 
 (add-hook 'dired-mode-hook
-          '(lambda () (linum-mode 0)))
+          '(lambda () (display-line-numbers-mode -1)))
 
 (add-hook 'shell-mode-hook
-          '(lambda () (linum-mode 0)))
+          '(lambda () (display-line-numbers-mode -1)))
 
 (add-hook 'magit-mode-hook
-          '(lambda () (linum-mode 0)))
+          '(lambda () (display-line-numbers-mode -1)))
 
 ;; SLIME hooks
 (add-hook 'sldb-mode-hook

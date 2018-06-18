@@ -102,7 +102,7 @@
 
 ;; custom goto-line
 ;; turn line numbers off by default
-(global-linum-mode -1)
+(display-line-numbers-mode -1)
 
 (defun goto-line-with-feedback (&optional line)
   "Show line numbers temporarily, while prompting for the LINE number input."
@@ -111,9 +111,9 @@
       (goto-line line)
     (unwind-protect
         (progn
-          (linum-mode 1)
+          (display-line-numbers-mode 1)
           (goto-line (read-number "Goto line: ")))
-      (linum-mode -1))))
+      (display-line-numbers-mode -1))))
 
 ;; Toggle between split windows and a single window
 (defun toggle-windows-split()
