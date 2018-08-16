@@ -157,8 +157,9 @@
 (use-package projectile
   :ensure t
   :config
-  (projectile-global-mode)
-  (setq projectile-enable-caching t))
+  (projectile-mode)
+  (setq projectile-enable-caching t)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package anzu
   :ensure t
