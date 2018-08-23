@@ -62,7 +62,7 @@
 (add-to-list 'load-path "~/.emacs.d/modules")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-(require 'cask "/Users/julien/.cask/cask.el")
+(require 'cask "/home/julien/.cask/cask.el")
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)

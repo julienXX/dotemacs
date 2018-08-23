@@ -30,6 +30,7 @@
 (delete-selection-mode t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (blink-cursor-mode t)
 (show-paren-mode t)
 (column-number-mode t)
@@ -46,12 +47,18 @@
 ;; set proper language (fixes cyrillic letters in ansi-term)
 (setenv "LANG" "fr_FR.UTF-8")
 
-(setq ns-use-srgb-colorspace t)
-(set-frame-font
- "-*-Hasklig-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; Fringes
+(fringe-mode '(20 . 20))
+
+;; Set default font
+(set-face-attribute 'default nil
+                    :family "Source Code Pro"
+                    :height 125
+                    :weight 'normal
+                    :width 'normal)
 
 ;; font for all unicode characters
-(set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
+;;(set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
 
 (setq linum-format " %3d ")
 
@@ -61,12 +68,12 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
+;; Vertical splits by default
+(setq split-width-threshold 1)
+
 ;; ivy icons
 (use-package all-the-icons)
 (all-the-icons-ivy-setup)
-
-;; Fira Code
-(mac-auto-operator-composition-mode)
 
 (provide 'jxx-appearance)
 ;;; jxx-appearance.el ends here
