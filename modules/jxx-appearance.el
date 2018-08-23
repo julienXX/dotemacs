@@ -60,8 +60,6 @@
 ;; font for all unicode characters
 ;;(set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
 
-(setq linum-format " %3d ")
-
 ;; Set Frame title with file path
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
