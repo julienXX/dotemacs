@@ -138,7 +138,7 @@
   :config
   (setq-default dired-details-hidden-string "--- ")
   (dired-details-install)
-  (setq insert-directory-program "/usr/local/bin/gls" dired-use-ls-dired t))
+  (setq insert-directory-program "/bin/ls" dired-use-ls-dired t))
 
 (use-package markdown-mode
   :ensure t
