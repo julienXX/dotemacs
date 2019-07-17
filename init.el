@@ -73,6 +73,9 @@
   (unless (package-installed-p pkg)
     (package-install pkg)))
 
+(require 'direnv)
+(direnv-mode)
+
 (defun load-directory (dir)
   "`load' all elisp libraries in directory DIR which are not already loaded."
   (interactive "D")

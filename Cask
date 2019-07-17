@@ -38,7 +38,7 @@
 (depends-on "dash-at-point")
 (depends-on "dash-functional")
 (depends-on "dired-details")
-(depends-on "dockerfile-mode")
+(depends-on "direnv")
 (depends-on "dotnet")
 (depends-on "dumb-jump")
 (depends-on "elein")
