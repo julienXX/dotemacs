@@ -1,6 +1,6 @@
 ;;; jxx-appearance.el --- Emacs look
 
-;; Copyright (C) 2015 Julien Blanchard
+;; Copyright (C) 2019 Julien Blanchard
 
 ;; Author: Julien Blanchard <julien@sideburns.eu>
 
@@ -48,12 +48,12 @@
 (setenv "LANG" "fr_FR.UTF-8")
 
 ;; Fringes
-(fringe-mode '(20 . 20))
+(fringe-mode '(10 . 10))
 
 ;; Set default font
 (set-face-attribute 'default nil
                     :family "Source Code Pro"
-                    :height 125
+                    :height 110
                     :weight 'normal
                     :width 'normal)
 

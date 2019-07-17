@@ -31,7 +31,7 @@
   (require 'cargo)
   (require 'flycheck-rust)
   (setq racer-cmd "~/.cargo/bin/racer")
-  (setq racer-rust-src-path "/home/julien/Code/rust/src")
+  (setq racer-rust-src-path "/home/julien/src/rust/src")
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
   (add-hook 'racer-mode-hook #'company-mode)
