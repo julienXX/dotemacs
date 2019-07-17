@@ -21,7 +21,7 @@
 
 ;;; Code:
 
-(package-initialize)
+;; (when (version< emacs-version "27.0") (package-initialize))
 
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq exec-path (append exec-path `("/usr/local/bin")))
@@ -29,19 +29,11 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-;; Free up the option key for special characters
-(setq ns-alternate-modifier 'none)
-(setq ns-command-modifier 'meta)
-(setq ns-function-modifier 'super)
-
 ;; Save temp file in /tmp
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
-
-;; stop opening a new frame (window) for each file
-(setq ns-pop-up-frames nil)
 
 ;; Only one window on startup
 (add-hook 'emacs-startup-hook
@@ -89,10 +81,6 @@
 
 (load-directory "~/.emacs.d/modules/")
 (eval-after-load 'magit '(require 'jxx-magit))
-
-;; Shell variables on OSX
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
