@@ -27,3 +27,8 @@ GTAGS
 smex-items
 custom.el
 .cache
+.lsp-session-v1
+notes.org
+transient
+forge-database.sqlite
+bookmarks
