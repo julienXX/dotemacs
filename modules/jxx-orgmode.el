@@ -24,31 +24,21 @@
   :ensure t
   :defer t
   :config
-  (setq org-directory "~/Dropbox/OrgFiles/")
-  (setq org-default-notes-file "~/Dropbox/OrgFiles/.notes")
-  (setq remember-annotation-functions '(org-remember-annotation))
-  (setq remember-handler-functions '(org-remember-handler))
-  (add-hook 'remember-mode-hook 'org-remember-apply-template)
-  (define-key global-map "\C-cr" 'org-remember)
+  (setq org-reverse-note-order t)
 
-  ;; (setq org-capture-templates
-  ;;       '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
-  ;;              "* TODO %?\n  %i\n  %a")
-  ;;         ("j" "Journal" entry (file+datetree "~/org/journal.org")
-  ;;              "* %?\nEntered on %U\n  %i\n  %a")))
-
-  (setq org-remember-templates
-        '(("Todo" ?t "* TODO %? %^g\n %i\n " "~/Dropbox/OrgFiles/tasks.org" "Office")
-          ("Journal" ?j "\n* %^{topic} %T \n%i%?\n" "~/Dropbox/OrgFiles/journal.org")
-          ("Log start" ?s "\n* %^{topic} %T :STARTED:" "~/Dropbox/OrgFiles/log.org")
-          ("Log end" ?e "\n* %^{topic} %T :FINISHED:" "~/Dropbox/OrgFiles/log.org")
-          ))
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/todo.org" "Tasks")
+           "* TODO %?" :prepend t)
+          ("l" "Todo with link" entry (file+headline "~/todo.org" "Tasks")
+           "* TODO %?\n  %i\n  %a" :prepend t)
+          ("j" "Journal" entry (file+datetree "~/journal.org")
+               "* %?\nEntered on %U\n  %i\n  %a")))
 
   ;; org-reveal
   (setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/2.5.0/")
 
   ;; org-repo-todo
-  (global-set-key (kbd "C-c C-;") 'ort/capture-todo)
+  (global-set-key (kbd "C-c t") 'counsel-org-capture)
   (global-set-key (kbd "C-c C-'") 'ort/goto-todos))
 
 (provide 'jxx-orgmode)
