@@ -89,11 +89,11 @@
   (yas-global-mode 1))
 
 ;; auto-complete
-(require 'auto-complete-config)
-(ac-config-default)
-(setq ac-ignore-case nil)
-(add-to-list 'ac-modes 'enh-ruby-mode)
-(add-to-list 'ac-modes 'web-mode)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (setq ac-ignore-case nil)
+;; (add-to-list 'ac-modes 'enh-ruby-mode)
+;; (add-to-list 'ac-modes 'web-mode)
 
 (use-package gist
   :ensure t
