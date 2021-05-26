@@ -34,13 +34,5 @@
 (use-package csharp-mode
   :ensure t)
 
-(use-package omnisharp
-  :ensure t
-  :config
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (define-key omnisharp-mode-map (kbd "<C-tab>") 'omnisharp-auto-complete)
-  (define-key omnisharp-mode-map "." 'omnisharp-add-dot-and-auto-complete)
-  (setq-local company-backends '(company-omnisharp)))
-
 (provide 'jxx-dotnet)
 ;;; jxx-dotnet.el ends here

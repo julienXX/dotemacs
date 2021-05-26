@@ -177,12 +177,5 @@
   :config
   (popwin-mode 1))
 
-(use-package twittering-mode
-  :ensure t
-  :defer t
-  :config
-  (setq twittering-use-master-password t)
-  (setq twittering-icon-mode t))
-
 (provide 'jxx-packages)
 ;;; jxx-packages.el ends here

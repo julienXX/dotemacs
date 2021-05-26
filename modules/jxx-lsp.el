@@ -22,6 +22,7 @@
 ;;; Code:
 
 (require 'use-package)
+(require 'dash)
 
 (use-package lsp-mode
   :ensure t
@@ -34,12 +35,6 @@
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode
-  :init
-  )
-
 (use-package company
   :ensure t
   :config
@@ -51,12 +46,7 @@
   :commands yas-minor-mode
   :hook (go-mode . yas-minor-mode))
 
-(setq lsp-ui-doc-enable nil
-      lsp-ui-peek-enable t
-      lsp-ui-sideline-enable t
-      lsp-ui-imenu-enable t
-      lsp-ui-flycheck-enable t
-      lsp-gopls-staticcheck t
+(setq lsp-gopls-staticcheck t
       lsp-eldoc-render-all t
       lsp-gopls-complete-unimported t
       read-process-output-max (* 1024 1024))

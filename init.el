@@ -21,11 +21,6 @@
 
 ;;; Code:
 
-;; (when (version< emacs-version "27.0") (package-initialize))
-
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-(setq exec-path (append exec-path `("/usr/local/bin")))
-
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
@@ -85,6 +80,7 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+(exec-path-from-shell-initialize)
 
 (provide 'init)
 ;;; init.el ends here

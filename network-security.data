@@ -1,4 +1,5 @@
 (
+ (:id "sha1:1dbb7e8cb4a3a2102810e07a0f663df6e05437b0" :fingerprint "sha1:63:32:f7:71:dd:b8:b6:38:11:f3:80:61:38:a8:45:d4:51:41:d4:7e" :host "orbitalfox.eu:563" :conditions (:unknown-ca :invalid))
  (:id "sha1:85457c729378cc93c732b6a3941c8e4f9c2e60f3" :fingerprint "sha1:ab:a6:d7:6a:b3:d3:63:fa:19:0d:65:41:60:23:6e:ef:d3:2a:46:dc" :host "marmalade-repo.org:443" :conditions (:expired :unknown-ca :invalid))
  (:id "sha1:5cce342a9a99ff6632dc081a41f5f4a28e8e10fc" :fingerprint "sha1:c9:4f:05:0e:50:48:da:fd:71:ee:ca:36:bf:ab:10:0a:52:70:16:99" :host "raw.githubusercontent.com:443" :conditions (:unknown-ca :invalid))
  (:id "sha1:379522f41fcdf5d279b33c30780e7512c9348430" :fingerprint "sha1:d4:ee:9d:2a:67:12:b3:61:4c:27:2d:15:8b:04:fc:c8:ca:08:a0:b6" :host "github.com:443" :conditions (:unknown-ca :invalid))
