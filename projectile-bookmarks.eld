@@ -1,0 +1,1 @@
+("~/src/content/" "~/src/uml/" "~/src/asuka/" "~/.emacs.d/elpa/org-9.4.6/" "~/dotfiles/")

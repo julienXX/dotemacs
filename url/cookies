@@ -1,0 +1,17 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '(("plantuml.com"
+  [url-cookie "active_template::173770" "pub_site.1622711587" "Sat, 05 Jun 2021 09:13:07 UTC" "/" "plantuml.com" nil]
+  [url-cookie "ezepvv" "141" "Fri, 04 Jun 2021 09:13:07 UTC" "/" "plantuml.com" nil]
+  [url-cookie "ezovuuidtime_173770" "1622711587" "Sat, 05 Jun 2021 09:13:07 UTC" "/" "plantuml.com" nil]
+  [url-cookie "ezCMPCCS" "true" "Fri, 03 Jun 2022 09:13:07 GMT" "/" "plantuml.com" nil]))
+)
+(setq url-cookie-secure-storage
+ 'nil)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:

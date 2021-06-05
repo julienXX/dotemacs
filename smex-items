@@ -1,0 +1,21 @@
+
+;; ----- smex-history -----
+(
+ describe-key
+ eval-buffer
+ rspec-mode
+ dired
+ alchemist-mix-test-at-point
+ package-install
+ cd
+)
+
+;; ----- smex-data -----
+(
+ (dired . 4)
+ (eval-buffer . 12)
+ (package-install . 1)
+ (alchemist-mix-test-at-point . 1)
+ (rspec-mode . 2)
+ (describe-key . 2)
+)
