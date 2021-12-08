@@ -1,0 +1,13 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("gemini://typed-hole.org/"
+ (position . 1)
+ (location . "gemini://typed-hole.org/")
+ (handler . elpher-bookmark-jump))
+("TypedHole phlog roll"
+ (position . 270)
+ (location . "gopher://typed-hole.org/1/roll")
+ (handler . elpher-bookmark-jump))
+)
