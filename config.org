@@ -1521,3 +1521,35 @@ Open gopher and gemini links in elpher
            (elpher-go url))
           (t (funcall original url new-window))))
 #+end_src
+
+* RSS
+
+#+begin_src emacs-lisp
+  (use-package elfeed
+    :ensure t
+    :commands (elfeed)
+    :config
+    (setq elfeed-db-directory "~/.elfeed")
+    (setq elfeed-enclosure-default-dir (expand-file-name "~/Downloads"))
+    (advice-add #'elfeed-insert-html
+                :around
+                (lambda (fun &rest r)
+                  (let ((shr-use-fonts nil))
+                    (apply fun r)))))
+
+  ;; curl recommend
+  (setq elfeed-use-curl t)
+  (elfeed-set-timeout 36000)
+  (setq elfeed-curl-extra-arguments '("--insecure")) ;necessary for https without a trust certificate
+
+  ;; setup extra protocol feeds
+  (setq elfeed-feeds (list
+                      (list "fever+https://julien@typed-hole.org"
+                            :api-url "http://typed-hole.org/api/fever.php"
+                            :password (auth-source-search
+                                       :host "http://typed-hole.org/api/fever.php"
+                                       :user "julien"))))
+
+  ;; enable elfeed-protocol
+  (elfeed-protocol-enable)
+#+end_src
