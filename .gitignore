@@ -6,3 +6,7 @@ auto-save-list
 /mastodon.plstore
 /smex-items
 /projectile-bookmarks.eld
+/session*.*
+/url/
+/transient/
+/recentf
