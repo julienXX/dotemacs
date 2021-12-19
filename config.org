@@ -106,18 +106,16 @@ your GNU Emacs.
     :config
     (setq org-reverse-note-order t
           org-support-shift-select t))
+#+end_src
 
+Prettier org-mode.
+
+#+begin_src emacs-lisp
   (use-package org-superstar
     :config
     (setq org-superstar-special-todo-items t)
     (add-hook 'org-mode-hook (lambda ()
                                (org-superstar-mode 1))))
-#+end_src
-
-** org-repo-todo
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c t") 'counsel-org-capture)
-  (global-set-key (kbd "C-c C-'") 'ort/goto-todos)
 #+end_src
 
 ** org-roam
@@ -165,15 +163,42 @@ your GNU Emacs.
 #+end_src
 * Email
 
+Load mu4e.
+
 #+begin_src emacs-lisp
   (use-package mu4e
     :ensure nil
     :load-path "/usr/share/emacs/site-lisp/mu4e/")
+#+end_src
 
+Add some notifications.
+
+#+begin_src emacs-lisp
+  (use-package alert
+    :ensure t)
   (use-package mu4e-alert
     :ensure t
-    :init (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display))
+    :init
+    (setq mu4e-alert-set-default-style 'libnotify)
+    (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
+    (add-hook 'after-init-hook #'mu4e-alert-enable-notifications))
+#+end_src
 
+Make it prettier.
+
+#+begin_src emacs-lisp
+  (use-package mu4e-column-faces
+    :ensure t
+    :after mu4e
+    :config (mu4e-column-faces-mode))
+
+  (use-package mu4e-marker-icons
+    :ensure t
+    :after mu4e
+    :init (mu4e-marker-icons-mode 1))
+#+end_src
+
+#+begin_src emacs-lisp
   (require 'smtpmail)
   (require 'org-mu4e)
 
@@ -218,6 +243,13 @@ your GNU Emacs.
         ;; Use 'helm' to for mailbox selection completion
         mu4e-completing-read-function 'completing-read
 
+        ;; Disale colors in html mails
+        shr-use-colors t
+
+        ;; Always display plain-text version
+        mu4e-view-prefer-html nil
+        mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
+
         ;; Context switch policy
         mu4e-context-policy 'ask
         mu4e-compose-context-policy nil)
@@ -226,6 +258,11 @@ your GNU Emacs.
   ;; `aV` in view to activate
   (add-to-list 'mu4e-view-actions
                '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+
+  (with-eval-after-load "mm-decode"
+    (add-to-list 'mm-discouraged-alternatives "text/html")
+    (add-to-list 'mm-discouraged-alternatives "text/richtext"))
 
   ;; Mu4e contexts
 
