@@ -1525,6 +1525,11 @@ Open gopher and gemini links in elpher
 * RSS
 
 #+begin_src emacs-lisp
+  (use-package elfeed-protocol
+    :ensure t)
+#+end_src
+
+#+begin_src emacs-lisp
   (use-package elfeed
     :ensure t
     :commands (elfeed)
