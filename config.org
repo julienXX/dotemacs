@@ -1558,3 +1558,10 @@ Open gopher and gemini links in elpher
   ;; enable elfeed-protocol
   (elfeed-protocol-enable)
 #+end_src
+
+* Pocket
+
+#+begin_src emacs-lisp
+  (use-package pocket-reader
+    :ensure t)
+#+end_src
