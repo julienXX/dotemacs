@@ -24,6 +24,12 @@ your GNU Emacs.
   (load custom-file)
 #+end_src
 
+Require netrc to read secrets from ~/.netrc
+
+#+begin_src emacs-lisp
+  (require 'netrc)
+#+end_src
+
 * Packages config
 
 #+begin_src emacs-lisp
@@ -610,10 +616,12 @@ Make it prettier.
 
 * Various functions
 
-Open all web links in eww.
+Extract value from .netrc
 
 #+begin_src emacs-lisp
-  (setq browse-url-browser-function 'eww-browse-url)
+  (defun jxx-netrc-get (machine key)
+    (netrc-get (netrc-machine (netrc-parse "~/.netrc") machine) key))
+
 #+end_src
 
 #+begin_src emacs-lisp
@@ -629,11 +637,6 @@ Open all web links in eww.
         (when (and (buffer-file-name) (not (buffer-modified-p)))
           (revert-buffer t t t) )))
     (message "Refreshed open files.") )
-
-  (defun jxx-markdown-preview ()
-    (interactive)
-    (save-buffer)
-    (call-process "open" nil nil nil "-a" "Marked.app" (buffer-file-name)))
 
   ;; File and buffers
   (defun rename-file-and-buffer ()
@@ -1547,13 +1550,12 @@ Open gopher and gemini links in elpher
   (elfeed-set-timeout 36000)
   (setq elfeed-curl-extra-arguments '("--insecure")) ;necessary for https without a trust certificate
 
-  ;; setup extra protocol feeds
-  (setq elfeed-feeds (list
-                      (list "fever+https://julien@typed-hole.org"
-                            :api-url "http://typed-hole.org/api/fever.php"
-                            :password (auth-source-search
-                                       :host "http://typed-hole.org/api/fever.php"
-                                       :user "julien"))))
+  ;; declare my freshrss server using the fever protocol
+  (let ((freshrss-url "http://typed-hole.org/api/fever.php"))
+    (setq elfeed-feeds (list
+                        (list "fever+https://julien@typed-hole.org"
+                              :api-url freshrss-url
+                              :password (jxx-netrc-get freshrss-url "password")))))
 
   ;; enable elfeed-protocol
   (elfeed-protocol-enable)
