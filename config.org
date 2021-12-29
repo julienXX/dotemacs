@@ -383,6 +383,18 @@ Make it prettier.
   (mu4e-alert-enable-notifications)
 #+end_src
 
+Use G to open link in firefox rather than eww
+
+#+begin_src emacs-lisp
+  (defun jxx/mu4e-view-go-to-url-gui ()
+    "Wrapper for mu4e-view-go-to-url to use gui browser instead of eww"
+    (interactive)
+    (let ((browse-url-browser-function 'browse-url-default-browser))
+      (mu4e-view-go-to-url)))
+  ;; bind it
+  (define-key mu4e-view-mode-map (kbd "G") 'jxx/mu4e-view-go-to-url-gui)
+#+end_src
+
 * Ivy
 
 #+begin_src emacs-lisp
@@ -1559,6 +1571,18 @@ Open gopher and gemini links in elpher
 
   ;; enable elfeed-protocol
   (elfeed-protocol-enable)
+#+end_src
+
+Use B to browse article in gui browser instead of eww.
+
+#+begin_src emacs-lisp
+  (defun jxx/elfeed-show-visit-gui ()
+    "Wrapper for elfeed-show-visit to use gui browser instead of eww"
+    (interactive)
+    (let ((browse-url-generic-program "/usr/bin/xdg-open"))
+      (elfeed-show-visit t)))
+
+  (define-key elfeed-show-mode-map (kbd "B") 'jxx/elfeed-show-visit-gui)
 #+end_src
 
 * Pocket
