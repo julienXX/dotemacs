@@ -120,8 +120,22 @@ Prettier org-mode.
   (use-package org-superstar
     :config
     (setq org-superstar-special-todo-items t)
+    (setq org-superstar-todo-bullet-alist
+          '(("TODO" . ?☐)
+            ("DOING" . ?🞛)
+            ("MEETING" . ?⧖)
+            ("POSTPONED" . ?→)
+            ("DONE" . ?☑)))
     (add-hook 'org-mode-hook (lambda ()
                                (org-superstar-mode 1))))
+
+#+end_src
+
+org-todo states
+
+#+begin_src emacs-lisp
+  (setq org-todo-keywords
+        '((sequence "TODO" "DOING" "MEETING" "|" "DONE" "|" "POSTPONED")))
 #+end_src
 
 ** org-roam
@@ -931,8 +945,8 @@ Extract value from .netrc
           gnus-sum-thread-tree-vertical "┃"
           gnus-sum-thread-tree-single-leaf "┗━━❯ "))
 
-  (romildo-unicode-threads)
-  ;; (oxy-unicode-threads-heavy)
+  ;; (romildo-unicode-threads)
+  (dan-unicode-threads)
 
 
 
@@ -1085,6 +1099,9 @@ Extract value from .netrc
   ;; close popup when commiting
   (defadvice git-commit-commit (after delete-window activate)
     (delete-window))
+
+  (use-package forge
+    :after magit)
 #+end_src
 
 * Mappings
@@ -1143,7 +1160,8 @@ Extract value from .netrc
 
   (use-package doom-modeline
     :ensure t
-    :init (doom-modeline-mode 1))
+    :init (doom-modeline-mode 1)
+    (setq doom-modeline-env-version t))
 #+end_src
 
 * Navigation
@@ -1559,7 +1577,7 @@ Open gopher and gemini links in elpher
 
   ;; curl recommend
   (setq elfeed-use-curl t)
-  (elfeed-set-timeout 36000)
+  (elfeed-set-timeout 3600)
   (setq elfeed-curl-extra-arguments '("--insecure")) ;necessary for https without a trust certificate
 
   ;; declare my freshrss server using the fever protocol
