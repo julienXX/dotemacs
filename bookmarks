@@ -1,8 +1,21 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("gemini://typed-hole.org/"
+(("org-capture-last-stored"
+ (filename . "~/documents/org-roam/20220731112856-jack.org")
+ (front-context-string . "\n* Start\njackd -")
+ (rear-context-string . ":\n#+title: jack\n")
+ (position . 82))
+("Antenna"
+ (position . 1)
+ (location . "gemini://warmedal.se/~antenna/")
+ (handler . elpher-bookmark-jump))
+("TypedHole Guestbook"
+ (position . 7552)
+ (location . "gemini://typed-hole.org/guestbook")
+ (handler . elpher-bookmark-jump))
+("gemini://typed-hole.org/"
  (position . 1)
  (location . "gemini://typed-hole.org/")
  (handler . elpher-bookmark-jump))
