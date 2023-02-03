@@ -23,3 +23,4 @@
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 10 1000 1000))
 ;; (defun org-clocking-buffer (&rest _))
+(put 'downcase-region 'disabled nil)

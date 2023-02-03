@@ -230,6 +230,17 @@ Extract value from .netrc
     "Shift the line or region to the ARG places to the left."
     (interactive)
     (textmate-shift-right (* -1 (or arg 1))))
+
+  (defun sort-words (reverse beg end)
+    "Sort words in region alphabetically, in REVERSE if negative.
+    Prefixed with negative \\[universal-argument], sorts in reverse.
+
+    The variable `sort-fold-case' determines whether alphabetic case
+    affects the sort order.
+
+    See `sort-regexp-fields'."
+    (interactive "*P\nr")
+    (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+end_src
 * Org
 
@@ -319,27 +330,28 @@ Extract value from .netrc
     ("C-c n s" . deft))
 #+end_src
 
-** org-gcal
+** org-caldav
 #+begin_src emacs-lisp
-  (use-package org-gcal
-    :after org
-    :config
-    (let ((gcal-id "46186299930-ds57euqsh3vuol1j9qobrhg4jfuu5ikg.apps.googleusercontent.com"))
-      (setq org-gcal-client-id gcal-id
-            org-gcal-client-secret (jxx-netrc-get gcal-id "password")
-            org-gcal-file-alist '(("jblanchard@makemusic.com" . "~/Documents/calendar.org"))
-            org-gcal-auto-archive nil
-            org-gcal-notify-p nil)
+  (use-package oauth2 :ensure t)
 
-      (add-hook 'org-agenda-mode-hook 'org-gcal-fetch)
-      (add-hook 'org-capture-after-finalize-hook 'org-gcal-fetch)))
+  (use-package org-caldav
+    :ensure t
+    :after (org oauth2)
+    :custom
+    (org-caldav-oauth2-client-id "46186299930-ds57euqsh3vuol1j9qobrhg4jfuu5ikg.apps.googleusercontent.com")
+    (org-caldav-oauth2-client-secret "4/1AdQt8qjZg0I__OSV7ucg1FT5J1TqfCti0sRysS4YSxDgUHlHNIpNSNoyoos")
+    (org-caldav-url 'google)
+    (org-caldav-calendar-id "amJsYW5jaGFyZEBtYWtlbXVzaWMuY29t@group.calendar.google.com")
+    (org-caldav-inbox "~/Documents/gcal.org")
+    (org-icalendar-timezone "Europe/Paris")
+    (plstore-cache-passphrase-for-symmetric-encryption t))
 #+end_src
 
 ** org-agenda
 #+begin_src emacs-lisp
   (setq org-agenda-files (list "~/Documents/calendar.org"))
 
-  ;;(setq org-capture-templates
+                                          ;(setq org-capture-templates
   ;;'(("a" "Appointment" entry (file  "~/Dropbox/orgfiles/calendar.org" )
   ;;"* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n"))
 #+end_src
@@ -382,190 +394,199 @@ Make it prettier.
 #+end_src
 
 #+begin_src emacs-lisp
-  (require 'smtpmail)
-  (require 'org-mu4e)
+        (require 'smtpmail)
+        (require 'org-mu4e)
 
-  ;; Mu4e general settings
-  (setq mail-user-agent 'mu4e-user-agent ;; Use mu4e as default Emacs mail agent
-        mu4e-maildir "~/Maildir"
+        ;; Mu4e general settings
+        (setq mail-user-agent 'mu4e-user-agent ;; Use mu4e as default Emacs mail agent
+              mu4e-maildir "~/Maildir"
 
-        ;; Use mbsync for mail sync
-        mu4e-get-mail-command "mbsync -a"
-        mu4e-change-filenames-when-moving t
-        mu4e-update-interval 120
+              ;; Use mbsync for mail sync
+              mu4e-get-mail-command "mbsync -a"
+              mu4e-change-filenames-when-moving t
+              mu4e-update-interval 120
 
-        ;; Don't save message to Sent Messages, Gmail/IMAP takes care of this
-        ;; Override in context switching for other type of mailboxes
-        ;; mu4e-sent-messages-behavior 'delete
-        message-kill-buffer-on-exit t
+              ;; Don't save message to Sent Messages, Gmail/IMAP takes care of this
+              ;; Override in context switching for other type of mailboxes
+              ;; mu4e-sent-messages-behavior 'delete
+              message-kill-buffer-on-exit t
 
-        ;; This fixes the error 'mbsync error: UID is x beyond highest assigned UID x'
-        mu4e-change-filenames-when-moving t
+              ;; This fixes the error 'mbsync error: UID is x beyond highest assigned UID x'
+              mu4e-change-filenames-when-moving t
 
-        ;; Eye candies & attachment handling
-        ;; mu4e-use-fancy-chars t
-        mu4e-view-show-images t
-        mu4e-headers-skip-duplicates t
-        mu4e-attachment-dir "~/Downloads"
+              ;; Eye candies & attachment handling
+              ;; mu4e-use-fancy-chars t
+              mu4e-view-show-images t
+              ;; mu4e-headers-skip-duplicates t
+              mu4e-attachment-dir "~/Downloads"
 
-        ;; Store link to message if in header view, not to header query
-        mu4e-org-link-query-in-headers-mode nil
+              ;; Store link to message if in header view, not to header query
+              ;; mu4e-org-link-query-in-headers-mode nil
 
-        ;; This helps when using a dark theme (shr)
-        ;; shr-color-visible-luminance-min 80
+              ;; This helps when using a dark theme (shr)
+              ;; shr-color-visible-luminance-min 80
 
-        ;; Citation format
-        message-citation-line-format "On %a, %b %d %Y, %N wrote:"
-        message-citation-line-function 'message-insert-formatted-citation-line
+              ;; Citation format
+              message-citation-line-format "On %a, %b %d %Y, %N wrote:"
+              message-citation-line-function 'message-insert-formatted-citation-line
 
-        ;; Always use 587 for sending emails
-        message-send-mail-function 'smtpmail-send-it
-        starttls-use-gnutls t
-        smtpmail-smtp-service 587
+              ;; Always use 587 for sending emails
+              message-send-mail-function 'smtpmail-send-it
+              starttls-use-gnutls t
+              smtpmail-smtp-service 587
 
-        ;; Use 'helm' to for mailbox selection completion
-        mu4e-completing-read-function 'completing-read
+              ;; Use 'helm' to for mailbox selection completion
+              mu4e-completing-read-function 'completing-read
 
-        ;; Disale colors in html mails
-        shr-use-colors t
+              ;; Disale colors in html mails
+              shr-use-colors t
 
-        ;; Always display plain-text version
-        mu4e-view-prefer-html nil
-        mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
+              ;; Always display plain-text version
+              mu4e-view-prefer-html nil
+              mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
 
-        ;; Context switch policy
-        mu4e-context-policy 'ask
-        mu4e-compose-context-policy nil)
+              ;; Context switch policy
+              mu4e-context-policy 'ask
+              mu4e-compose-context-policy nil)
 
-  ;; Add option to view html message in a browser
-  ;; `aV` in view to activate
-  (add-to-list 'mu4e-view-actions
-               '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+        ;; Add option to view html message in a browser
+        ;; `aV` in view to activate
+        (add-to-list 'mu4e-view-actions
+                     '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 
 
-  (with-eval-after-load "mm-decode"
-    (add-to-list 'mm-discouraged-alternatives "text/html")
-    (add-to-list 'mm-discouraged-alternatives "text/richtext"))
+        (with-eval-after-load "mm-decode"
+          (add-to-list 'mm-discouraged-alternatives "text/html")
+          (add-to-list 'mm-discouraged-alternatives "text/richtext"))
 
-  ;; Mu4e contexts
+        ;; Mu4e contexts
 
-  ;; This will ensure the right 'sent from' address and email sign off etc. be
-  ;; picked up when replying to emails.
-  (setq mu4e-contexts
-        `(
-          ,(make-mu4e-context
-            :name "typedhole"
-            :enter-func (lambda () (mu4e-message "Entering TypedHole account context"))
-            :leave-func (lambda () (mu4e-message "Leaving TypedHole account context"))
-            ;; We match based on the contact-fields of the message
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg :to "julien@typed-hole.org")))
-            :vars '((user-mail-address . "julien@typed-hole.org")
-                    (user-full-name . "Julien Blanchard")
-                    (mu4e-drafts-folder . "/TypedHole/Drafts")
-                    (mu4e-sent-folder . "/TypedHole/Sent")
-                    (mu4e-trash-folder . "/TypedHole/Trash")
-                    (mu4e-refile-folder . "/TypedHole/Archive")
-                    (smtpmail-smtp-server . "mail.typed-hole.org")
-                    (smtpmail-smtp-user . "julien")
-                    (smtpmail-starttls-credentials . '(("mail.typed-hole.org" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("mail.typed-hole.org" 587 "julien" nil)))
-                    (smtpmail-default-smtp-server . "mail.typed-hole.org")))
+        ;; This will ensure the right 'sent from' address and email sign off etc. be
+        ;; picked up when replying to emails.
+        (setq mu4e-contexts
+              `(
+                ,(make-mu4e-context
+                  :name "typedhole"
+                  :enter-func (lambda () (mu4e-message "Entering TypedHole account context"))
+                  :leave-func (lambda () (mu4e-message "Leaving TypedHole account context"))
+                  ;; We match based on the contact-fields of the message
+                  :match-func (lambda (msg)
+                                (when msg
+                                  (mu4e-message-contact-field-matches msg :to "julien@typed-hole.org")))
+                  :vars '((user-mail-address . "julien@typed-hole.org")
+                          (user-full-name . "Julien Blanchard")
+                          (mu4e-drafts-folder . "/TypedHole/Drafts")
+                          (mu4e-sent-folder . "/TypedHole/Sent")
+                          (mu4e-trash-folder . "/TypedHole/Trash")
+                          (mu4e-refile-folder . "/TypedHole/Archive")
+                          (smtpmail-smtp-server . "mail.typed-hole.org")
+                          (smtpmail-smtp-user . "julien")
+                          (smtpmail-starttls-credentials . '(("mail.typed-hole.org" 587 nil nil)))
+                          (smtpmail-auth-credentials . '(("mail.typed-hole.org" 587 "julien" nil)))
+                          (smtpmail-default-smtp-server . "mail.typed-hole.org")))
 
-          ,(make-mu4e-context
-            :name "sideburns"
-            :enter-func (lambda () (mu4e-message "Entering Sideburns account context"))
-            :leave-func (lambda () (mu4e-message "Leaving Sideburns account context"))
-            ;; We match based on the contact-fields of the message
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg :to "julien@sideburns.eu")))
-            :vars '((user-mail-address . "julien@sideburns.eu")
-                    (user-full-name . "Julien Blanchard")
-                    (mu4e-drafts-folder . "/Sideburns/Drafts")
-                    (mu4e-sent-folder . "/Sideburns/Sent")
-                    (mu4e-trash-folder . "/Sideburns/Trash")
-                    (mu4e-refile-folder . "/Sideburns/Archive")
-                    (smtpmail-smtp-server . "smtp.fastmail.com")
-                    (smtpmail-smtp-user . "julienblanchard@fastmail.fm")
-                    (smtpmail-starttls-credentials . '(("smtp.fastmail.com" 465 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.fastmail.com" 465 "julienblanchard@fastmail.fm" nil)))
-                    (smtpmail-default-smtp-server . "smtp.fastmail.com")))
+                ,(make-mu4e-context
+                  :name "sideburns"
+                  :enter-func (lambda () (mu4e-message "Entering Sideburns account context"))
+                  :leave-func (lambda () (mu4e-message "Leaving Sideburns account context"))
+                  ;; We match based on the contact-fields of the message
+                  :match-func (lambda (msg)
+                                (when msg
+                                  (mu4e-message-contact-field-matches msg :to "julien@sideburns.eu")))
+                  :vars '((user-mail-address . "julien@sideburns.eu")
+                          (user-full-name . "Julien Blanchard")
+                          (mu4e-drafts-folder . "/Sideburns/Drafts")
+                          (mu4e-sent-folder . "/Sideburns/Sent")
+                          (mu4e-trash-folder . "/Sideburns/Trash")
+                          (mu4e-refile-folder . "/Sideburns/Archive")
+                          (smtpmail-smtp-server . "smtp.fastmail.com")
+                          (smtpmail-smtp-user . "julienblanchard@fastmail.fm")
+                          (smtpmail-starttls-credentials . '(("smtp.fastmail.com" 465 nil nil)))
+                          (smtpmail-auth-credentials . '(("smtp.fastmail.com" 465 "julienblanchard@fastmail.fm" nil)))
+                          (smtpmail-default-smtp-server . "smtp.fastmail.com")))
 
-          ,(make-mu4e-context
-            :name "gmail"
-            :enter-func (lambda () (mu4e-message "Entering Gmail context"))
-            :leave-func (lambda () (mu4e-message "Leaving Gmail context"))
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg :to "julien.blanchard75@gmail.com")))
-            :vars '((user-mail-address . "julien.blanchard75@gmail.com")
-                    (user-full-name . "Julien Blanchard")
-                    (mu4e-compose-signature . (concat "Liwen Knight-Zhang | +44 (0)7894 222 323\n"))
-                    (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
-                    (mu4e-sent-folder . "/Gmail/[Gmail]/Sent Mail")
-                    (mu4e-trash-folder . "/Gmail/[Gmail]/Trash")
-                    (mu4e-refile-folder . "/Gmail/[Gmail]/All Mail")
-                    (smtpmail-smtp-server . "smtp.gmail.com")
-                    (smtpmail-smtp-user . "julien.blanchard75@gmail.com")
-                    (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))))
+                ,(make-mu4e-context
+                  :name "gmail"
+                  :enter-func (lambda () (mu4e-message "Entering Gmail context"))
+                  :leave-func (lambda () (mu4e-message "Leaving Gmail context"))
+                  :match-func (lambda (msg)
+                                (when msg
+                                  (mu4e-message-contact-field-matches msg :to "julien.blanchard75@gmail.com")))
+                  :vars '((user-mail-address . "julien.blanchard75@gmail.com")
+                          (user-full-name . "Julien Blanchard")
+                          (mu4e-compose-signature . (concat "Liwen Knight-Zhang | +44 (0)7894 222 323\n"))
+                          (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
+                          (mu4e-sent-folder . "/Gmail/[Gmail]/Sent Mail")
+                          (mu4e-trash-folder . "/Gmail/[Gmail]/Trash")
+                          (mu4e-refile-folder . "/Gmail/[Gmail]/All Mail")
+                          (smtpmail-smtp-server . "smtp.gmail.com")
+                          (smtpmail-smtp-user . "julien.blanchard75@gmail.com")
+                          (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
+                          (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))))
 
-          ,(make-mu4e-context
-            :name "makemusic"
-            :enter-func (lambda () (mu4e-message "Entering Makemusic context"))
-            :leave-func (lambda () (mu4e-message "Leaving Makemusic context"))
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg :to "jblanchard@makemusic.com")))
-            :vars '((user-mail-address . "jblanchard@makemusic.com")
-                    (user-full-name . "Julien Blanchard")
-                    (mu4e-compose-signature . (concat "Julien Blanchard | +33 (0)673273156\n "))
-                    (mu4e-drafts-folder . "/Makemusic/[Gmail]/Drafts")
-                    (mu4e-sent-folder . "/Makemusic/[Gmail]/Sent Mail")
-                    (mu4e-trash-folder . "/Makemusic/[Gmail]/Trash")
-                    (mu4e-refile-folder . "/Makemusic/[Gmail]/All Mail")
-                    (smtpmail-smtp-server . "smtp.gmail.com")
-                    (smtpmail-smtp-user . "jblanchard@makemusic.com")
-                    (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "jblanchard@makemusic.com" nil)))))))
+                ,(make-mu4e-context
+                  :name "makemusic"
+                  :enter-func (lambda () (mu4e-message "Entering Makemusic context"))
+                  :leave-func (lambda () (mu4e-message "Leaving Makemusic context"))
+                  :match-func (lambda (msg)
+                                (when msg
+                                  (mu4e-message-contact-field-matches msg :to "jblanchard@makemusic.com")))
+                  :vars '((user-mail-address . "jblanchard@makemusic.com")
+                          (user-full-name . "Julien Blanchard")
+                          (mu4e-compose-signature . (concat "Julien Blanchard | +33 (0)673273156\n "))
+                          (mu4e-drafts-folder . "/Makemusic/[Gmail]/Drafts")
+                          (mu4e-sent-folder . "/Makemusic/[Gmail]/Sent Mail")
+                          (mu4e-trash-folder . "/Makemusic/[Gmail]/Trash")
+                          (mu4e-refile-folder . "/Makemusic/[Gmail]/All Mail")
+                          (smtpmail-smtp-server . "smtp.gmail.com")
+                          (smtpmail-smtp-user . "jblanchard@makemusic.com")
+                          (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
+                          (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "jblanchard@makemusic.com" nil)))))))
 
-  (add-to-list 'mu4e-bookmarks
-               '( :name  "Inbox"
-                  :query "m:/Gmail/Inbox OR m:/Sideburns/INBOX OR m:/Typedhole/INBOX"
-                  :key   ?i))
+        (add-to-list 'mu4e-bookmarks
+                     '( :name  "Inbox"
+                        :query "m:/Gmail/Inbox OR m:/Sideburns/INBOX OR m:/Typedhole/INBOX"
+                        :key   ?i))
 
-  (add-to-list 'mu4e-bookmarks
-               '( :name  "Work"
-                  :query "m:/Makemusic/Inbox"
-                  :key   ?w))
+        (add-to-list 'mu4e-bookmarks
+                     '( :name  "Work"
+                        :query "m:/Makemusic/Inbox"
+                        :key   ?w))
 
-  (set-face-underline 'mu4e-header-highlight-face nil)
+        (add-to-list 'mu4e-bookmarks
+                     '("flag:unread AND NOT flag:trashed \
+                                    AND NOT (maildir:/Gmail/[Gmail]/All Mail \
+                                             OR maildir:/Gmail/All Mail \
+                                             OR maildir:/Makemusic/[Gmail]/All Mail) \
+                                             OR maildir:/Makemusic/All Mail)"
+                       "Unread messages"
+                       ?m))
 
-  ;; headers
-  (setq mu4e-headers-fields '((:human-date . 12)
-                              (:from . 22)
-                              (:subject)))
+        (set-face-underline 'mu4e-header-highlight-face nil)
 
-  ;; Use imagemagick, if available
-  (when (fboundp 'imagemagick-register-types)
-    (imagemagick-register-types))
+        ;; headers
+        (setq mu4e-headers-fields '((:human-date . 12)
+                                    (:from . 22)
+                                    (:subject)))
 
-  ;; Emulate shr key bindings
-  (add-hook 'mu4e-view-mode-hook
-            (lambda()
-              ;; try to emulate some of the eww key-bindings
-              (local-set-key (kbd "<tab>") 'shr-next-link)
-              (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+        ;; Use imagemagick, if available
+        (when (fboundp 'imagemagick-register-types)
+          (imagemagick-register-types))
 
-  (setq mu4e-alert-set-default-style 'libnotify)
-  (setq mu4e-alert-email-notification-types '(count))
+        ;; Emulate shr key bindings
+        (add-hook 'mu4e-view-mode-hook
+                  (lambda()
+                    ;; try to emulate some of the eww key-bindings
+                    (local-set-key (kbd "<tab>") 'shr-next-link)
+                    (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
-  (mu4e-alert-enable-notifications)
+        (setq mu4e-alert-set-default-style 'libnotify)
+        (setq mu4e-alert-email-notification-types '(count))
+
+        (mu4e-alert-enable-notifications)
 #+end_src
 
-Use G to open link in firefox rather than eww
+Use B to open link in firefox rather than eww
 
 #+begin_src emacs-lisp
   (defun jxx/mu4e-view-go-to-url-gui ()
@@ -574,7 +595,7 @@ Use G to open link in firefox rather than eww
     (let ((browse-url-browser-function 'browse-url-default-browser))
       (mu4e-view-go-to-url)))
   ;; bind it
-  (define-key mu4e-view-mode-map (kbd "G") 'jxx/mu4e-view-go-to-url-gui)
+  (define-key mu4e-view-mode-map (kbd "B") 'jxx/mu4e-view-go-to-url-gui)
 #+end_src
 
 * Ivy
@@ -648,6 +669,8 @@ Use G to open link in firefox rather than eww
 * Editing
 
 #+begin_src emacs-lisp
+  (global-tree-sitter-mode)
+
   (use-package expand-region
     :ensure t
     :config
@@ -855,6 +878,9 @@ Use G to open link in firefox rather than eww
 
   ;; FlyCheck
   (add-hook 'after-init-hook #'global-flycheck-mode)
+
+  ;; tabs size 8 for Go
+  (add-hook 'go-mode-hook (lambda () (setq tab-width 8)))
 #+end_src
 
 * GNUS
@@ -863,13 +889,15 @@ Use G to open link in firefox rather than eww
   (require 'gnus)
 
   (setq user-mail-address	"julien@typed-hole.org"
-        user-full-name	"Julien Blanchard")
+        user-full-name	"Julien")
 
-  (setq gnus-select-method
-        '(nntp "news.tilde.club"
-               (nntp-port-number 119)))
+  (setq gnus-select-method '(nntp "news.tilde.club" (nntp-port-number 119)))
 
-  ;; (add-to-list 'gnus-secondary-select-methods '(nntp "news.tilde.club"))
+  (add-to-list 'gnus-secondary-select-methods '(nntp "news.eternal-september.org" (nntp-port-number 119)))
+
+  (setq send-mail-function		     'smtpmail-send-it
+        message-send-mail-function 'smtpmail-send-it
+        smtpmail-smtp-server		   "mail.typed-hole.org")
 
   ;; http://groups.google.com/group/gnu.emacs.gnus/browse_thread/thread/a673a74356e7141f
   (when window-system
@@ -1041,9 +1069,6 @@ Use G to open link in firefox rather than eww
   ;; close popup when commiting
   (defadvice git-commit-commit (after delete-window activate)
     (delete-window))
-
-  (use-package forge
-    :after magit)
 #+end_src
 
 * Mappings
@@ -1262,6 +1287,7 @@ Use G to open link in firefox rather than eww
     :commands (lsp lsp-deferred)
     :hook ((go-mode . lsp-deferred)
            (c-mode . lsp-deferred)
+           (ruby-mode . lsp-deferred)
            (rust-mode . lsp-deferred)
            (rustic-mode . lsp-deferred)
            (elixir-mode . lsp-deferred))
@@ -1514,15 +1540,13 @@ Use G to open link in firefox rather than eww
 #+end_src
 
 * Mastodon
-
-Using mooseyboots fork of mastodon.el which works better for now https://github.com/mooseyboots/mastodon.el
-
 #+begin_src emacs-lisp
-  (add-to-list 'load-path "~/src/mastodon.el/lisp")
-  (require 'mastodon)
-  (setq mastodon-instance-url "https://fedi.9til.de"
-        mastodon-active-user "julienxx"
-        mastodon-auth-source-file "~/.netrc")
+  (use-package mastodon
+    :ensure t
+    :config
+    (setq mastodon-instance-url "https://fedi.9til.de"
+          mastodon-active-user "julienxx"
+          mastodon-auth-source-file "~/.netrc"))
 #+end_src
 
 * Browsing the web and gopher/gemini
@@ -1536,7 +1560,7 @@ Use elpher for all things gopher/gemini
 Browse everything with EWW
 
 #+begin_src emacs-lisp
-  (setq browse-url-browser-function 'eww-browse-url)
+  ;; (setq browse-url-browser-function 'eww-browse-url)
 #+end_src
 
 Open gopher and gemini links in elpher
@@ -1584,6 +1608,7 @@ Open gopher and gemini links in elpher
                               :api-url freshrss-url
                               :password (jxx-netrc-get freshrss-url "password")))))
 
+  (setq-default elfeed-search-filter "+unread ")
   ;; enable elfeed-protocol
   (elfeed-protocol-enable)
 #+end_src
@@ -1605,4 +1630,14 @@ Use B to browse article in gui browser instead of eww.
 #+begin_src emacs-lisp
   (use-package pocket-reader
     :ensure t)
+#+end_src
+
+* PlantUML
+
+#+begin_src emacs-lisp
+    (use-package plantuml-mode
+      :ensure t
+      :config
+      (setq plantuml-executable-path "/usr/bin/plantuml")
+      (setq plantuml-default-exec-mode 'executable))
 #+end_src
