@@ -108,16 +108,47 @@ Require netrc to read secrets from ~/.netrc
   ;; ivy icons
   (use-package all-the-icons-ivy
     :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
+
+  ;; indent-bars
+  (use-package indent-bars
+    :load-path "~/.emacs.d/source/indent-bars"
+    :hook ((programming-mode yaml-mode) . indent-bars-mode))
+#+end_src
+
+** Emojis
+#+begin_src emacs-lisp
+  (use-package emojify
+    :hook (after-init . global-emojify-mode))
+  (set-fontset-font t '(#x1f300 . #x1fad0) (font-spec :family "Noto Color Emoji"))
+#+end_src
+
+** Focus mode
+#+begin_src emacs-lisp
+  (use-package focus
+    :ensure t)
+    ;; :hook
+    ;; (prog-mode . focus-mode)
+    ;; (text-mode . focus-mode))
 #+end_src
 
 * Various functions
+
+Edit this file
+
+#+begin_src emacs-lisp
+  (defun find-config ()
+    "Edit config.org"
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+
+  (global-set-key (kbd "C-c I") 'find-config)
+#+end_src
 
 Extract value from .netrc
 
 #+begin_src emacs-lisp
   (defun jxx-netrc-get (machine key)
     (netrc-get (netrc-machine (netrc-parse "~/.netrc") machine) key))
-
 #+end_src
 
 #+begin_src emacs-lisp
@@ -613,6 +644,13 @@ Use B to open link in firefox rather than eww
     (counsel-projectile-mode)
     (setq ivy-use-virtual-buffers t)
     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
+
+  (use-package prescient)
+  (use-package ivy-prescient
+    :config
+    (ivy-prescient-mode t))
+
+  (use-package ivy-hydra)
 #+end_src
 
 * Autocomplete
@@ -1270,6 +1308,16 @@ Use B to open link in firefox rather than eww
     :defer t
     :config
     (popwin-mode 1))
+
+  (use-package which-key
+    :config
+    (add-hook 'after-init-hook 'which-key-mode))
+
+  (use-package undo-tree
+    :defer 5
+    :config
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+    (global-undo-tree-mode 1))
 #+end_src
 
 * LSP
@@ -1503,6 +1551,26 @@ Use B to open link in firefox rather than eww
     (setq js2-basic-offset 2))
 #+end_src
 
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+    :ensure t
+    :mode
+    (("\\.ts\\'" . tsx-ts-mode)
+     ("\\.tsx\\'" . tsx-ts-mode))
+
+    :interpreter "ts-node"
+
+    :custom
+    (js-indent-level 2)
+    (js-jsx-indent-level 2)
+    (evil-shift-width 2)
+    (truncate-lines t)
+    (add-node-modules-path)
+
+    :hook
+    (tsx-ts-mode . (lambda () (indent-tabs-mode -1))))
+#+end_src
+
 * Clojure
 
 #+begin_src emacs-lisp
@@ -1635,9 +1703,38 @@ Use B to browse article in gui browser instead of eww.
 * PlantUML
 
 #+begin_src emacs-lisp
-    (use-package plantuml-mode
-      :ensure t
-      :config
-      (setq plantuml-executable-path "/usr/bin/plantuml")
-      (setq plantuml-default-exec-mode 'executable))
+  (use-package plantuml-mode
+    :ensure t
+    :config
+    (setq plantuml-executable-path "/usr/bin/plantuml")
+    (setq plantuml-default-exec-mode 'executable))
+#+end_src
+
+* ChatGPT
+
+#+begin_src emacs-lisp
+  (use-package chatgpt-shell
+    :load-path "lib/chatgpt-shell"
+    :init
+    (setq chatgpt-shell-openai-key
+          (plist-get (car (auth-source-search :host "openai.com"))
+                     :secret)))
+#+end_src
+
+* Dotnet
+
+#+begin_src emacs-lisp
+  (use-package sharper
+    :demand t
+    :bind
+    ("C-c N" . sharper-main-transient))
+#+end_src
+
+* EditorConfig
+
+#+begin_src emacs-lisp
+  (use-package editorconfig
+    :ensure t
+    :config
+    (editorconfig-mode 1))
 #+end_src
