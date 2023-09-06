@@ -43,13 +43,18 @@ Require netrc to read secrets from ~/.netrc
   (use-package use-package-ensure-system-package :ensure t)
 #+end_src
 
-* Appearance
+* Path
+
+Use exec-path-from-shell
 
 #+begin_src emacs-lisp
-  (use-package emojify
-    :hook (after-init . global-emojify-mode))
-  (set-fontset-font t '(#x1f300 . #x1fad0) (font-spec :family "Noto Color Emoji"))
+  (use-package exec-path-from-shell
+    :ensure t)
+
+  (exec-path-from-shell-initialize)
 #+end_src
+
+* Appearance
 
 #+begin_src emacs-lisp
   (setq-default tab-width 2)
@@ -71,10 +76,10 @@ Require netrc to read secrets from ~/.netrc
   (setq ring-bell-function (lambda () (message "*beep*")))
 
   ;; initial frame size
-  (add-to-list 'default-frame-alist '(left . 0))
-  (add-to-list 'default-frame-alist '(top . 0))
-  (add-to-list 'default-frame-alist '(height . 40))
-  (add-to-list 'default-frame-alist '(width . 130))
+  (add-to-list 'default-frame-alist '(left . 10))
+  (add-to-list 'default-frame-alist '(top . 10))
+  (add-to-list 'default-frame-alist '(height . 50))
+  (add-to-list 'default-frame-alist '(width . 160))
 
   ;; set proper language (fixes cyrillic letters in ansi-term)
   (setenv "LANG" "fr_FR.UTF-8")
@@ -194,7 +199,7 @@ Extract value from .netrc
             (kill-buffer))))))
 
   (define-key isearch-mode-map (kbd "C-d")
-    'fc/isearch-yank-symbol)
+              'fc/isearch-yank-symbol)
   (defun fc/isearch-yank-symbol ()
     "Yank the symbol at point into the isearch minibuffer.
 
@@ -272,7 +277,12 @@ Extract value from .netrc
     See `sort-regexp-fields'."
     (interactive "*P\nr")
     (sort-regexp-fields reverse "\\w+" "\\&" beg end))
+
+  ;; Smart move to begining of line
+  (use-package crux
+    :bind (("C-a" . crux-move-beginning-of-line)))
 #+end_src
+
 * Org
 
 #+begin_src emacs-lisp
@@ -908,7 +918,7 @@ Use B to open link in firefox rather than eww
   (add-hook 'shell-mode-hook
             (lambda ()
               (define-key shell-mode-map
-                (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+                          (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
 
   (add-hook 'markdown-mode-hook
             (lambda ()
@@ -1153,9 +1163,9 @@ Use B to open link in firefox rather than eww
   (define-key global-map (kbd "RET") 'newline-and-indent)
 
   (define-key swiper-map (kbd "C-s")
-    (lambda () (interactive) (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'symbol))))))
+              (lambda () (interactive) (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'symbol))))))
   (define-key swiper-map (kbd "M-s")
-    (lambda () (interactive) (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'word))))))
+              (lambda () (interactive) (insert (format "\\<%s\\>" (with-ivy-window (thing-at-point 'word))))))
 #+end_src
 
 * Modeline
@@ -1566,7 +1576,7 @@ Use B to open link in firefox rather than eww
   (use-package mastodon
     :ensure t
     :config
-    (setq mastodon-instance-url "https://fedi.9til.de"
+    (setq mastodon-instance-url "https://nein.club"
           mastodon-active-user "julienxx"
           mastodon-auth-source-file "~/.netrc"))
 #+end_src
