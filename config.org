@@ -1325,48 +1325,9 @@ Use B to open link in firefox rather than eww
 #+begin_src emacs-lisp
   (require 'dash)
 
-  ;; (use-package lsp-mode
-  ;;   :commands (lsp lsp-deferred)
-  ;;   :init (add-to-list 'exec-path "/home/julien/src/elixir-ls")
-  ;;   (add-to-list 'exec-path "/home/julien/go/bin"))
-
-  (use-package lsp-mode
-    :ensure
-    :commands (lsp lsp-deferred)
-    :hook ((go-mode . lsp-deferred)
-           (c-mode . lsp-deferred)
-           (ruby-mode . lsp-deferred)
-           (rust-mode . lsp-deferred)
-           (rustic-mode . lsp-deferred)
-           (elixir-mode . lsp-deferred))
-    :custom
-    ;; what to use when checking on-save. "check" is default, I prefer clippy
-    (lsp-rust-analyzer-cargo-watch-command "clippy")
-    (lsp-eldoc-render-all t)
-    (lsp-idle-delay 0.6)
-    ;; enable / disable the hints as you prefer:
-    (lsp-rust-analyzer-server-display-inlay-hints t)
-    (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-    (lsp-rust-analyzer-display-chaining-hints t)
-    (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-    (lsp-rust-analyzer-display-closure-return-type-hints t)
-    (lsp-rust-analyzer-display-parameter-hints nil)
-    (lsp-rust-analyzer-display-reborrow-hints nil)
-    :config
-    (add-hook 'lsp-mode-hook 'lsp-ui-mode))
-
-  (use-package lsp-ui
-    :ensure
-    :commands lsp-ui-mode
-    :custom
-    (lsp-ui-peek-always-show t)
-    (lsp-ui-sideline-show-hover t)
-    (lsp-ui-doc-enable nil))
-
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (use-package eglot
+    :commands eglot
+    :hook ((prog-mode . eglot-ensure)))
 
   (use-package company
     :config
@@ -1376,13 +1337,6 @@ Use B to open link in firefox rather than eww
   (use-package yasnippet
     :commands yas-minor-mode
     :hook (go-mode . yas-minor-mode))
-
-  (setq lsp-gopls-staticcheck t
-        lsp-eldoc-render-all t
-        lsp-gopls-complete-unimported t
-        read-process-output-max (* 1024 1024))
-
-  (setq lsp-rust-server 'rust-analyzer)
 #+end_src
 
 * Ruby
