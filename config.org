@@ -397,6 +397,11 @@ Extract value from .netrc
   ;;"* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n"))
 #+end_src
 
+** org-download
+#+begin_src emacs-lisp
+  (use-package org-download :ensure t)
+#+end_src
+
 * Email
 
 Load mu4e.
@@ -1182,6 +1187,15 @@ Use B to open link in firefox rather than eww
     (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
 #+end_src
 
+** backward-forward, use C-Left or C-Right
+
+#+begin_src emacs-lisp
+  (use-package backward-forward
+    :ensure t
+    :config
+    (backward-forward-mode t))
+#+end_src
+
 * Other Packages
 
 #+begin_src emacs-lisp
@@ -1454,33 +1468,9 @@ Use B to open link in firefox rather than eww
   (use-package cargo)
   (use-package flycheck-rust)
 
-  ;; (use-package rust-mode
-  ;;   :mode ("\\.rs\\'" . rust-mode)
-  ;;   :ensure t
-  ;;   :config
-  ;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  ;;   (add-hook 'rust-mode-hook
-  ;;             (lambda ()
-  ;;               (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
-  ;;   (add-hook 'rust-mode-hook 'cargo-minor-mode))
-
   (use-package rustic
     :ensure
-    :bind (:map rustic-mode-map
-                ("M-j" . lsp-ui-imenu)
-                ("M-?" . lsp-find-references)
-                ("C-c C-c l" . flycheck-list-errors)
-                ("C-c C-c a" . lsp-execute-code-action)
-                ("C-c C-c r" . lsp-rename)
-                ("C-c C-c q" . lsp-workspace-restart)
-                ("C-c C-c Q" . lsp-workspace-shutdown)
-                ("C-c C-c s" . lsp-rust-analyzer-status))
     :config
-    ;; uncomment for less flashiness
-    ;; (setq lsp-eldoc-hook nil)
-    ;; (setq lsp-enable-symbol-highlighting nil)
-    ;; (setq lsp-signature-auto-activate nil)
-
     ;; comment to disable rustfmt on save
     (setq rustic-format-on-save t)
     (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
@@ -1549,6 +1539,12 @@ Use B to open link in firefox rather than eww
 * Dotnet
 
 #+begin_src emacs-lisp
+  (use-package sharper
+    :ensure t
+    :demand t
+    :bind
+    ("C-c N" . sharper-main-transient))
+
   (use-package dotnet
     :ensure t
     :config
