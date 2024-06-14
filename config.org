@@ -1338,20 +1338,27 @@ Use B to open link in firefox rather than eww
 * LSP
 
 #+begin_src emacs-lisp
-  (require 'dash)
+  (use-package lsp-mode
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :hook ((csharp-mode . lsp)
+           (ruby-mode . lsp)
+           (javascript-mode . lsp)
+           (typescript-mode . lsp)
+           (golang-mode . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
 
-  (use-package eglot
-    :commands eglot
-    :hook ((prog-mode . eglot-ensure)))
+  (use-package lsp-ui :commands lsp-ui-mode)
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+  (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-  (use-package company
-    :config
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 1))
+  (use-package dap-mode)
+  (require 'dap-netcore)
 
-  (use-package yasnippet
-    :commands yas-minor-mode
-    :hook (go-mode . yas-minor-mode))
+  (use-package which-key
+      :config
+      (which-key-mode))
 #+end_src
 
 * Ruby
