@@ -1644,15 +1644,99 @@ Use B to browse article in gui browser instead of eww.
     (setq plantuml-default-exec-mode 'executable))
 #+end_src
 
-* ChatGPT
+* LLM
 
 #+begin_src emacs-lisp
-  (use-package chatgpt-shell
-    :load-path "lib/chatgpt-shell"
+  (use-package copilot-chat)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package minuet
+    :bind
+    (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
+     ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
+
+     :map minuet-active-mode-map
+     ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
+     ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
+     ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
+     ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
+     ;; Accept the first line of completion, or N lines with a numeric-prefix:
+     ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
+     ("M-a" . #'minuet-accept-suggestion-line)
+     ("M-e" . #'minuet-dismiss-suggestion))
+
     :init
-    (setq chatgpt-shell-openai-key
-          (plist-get (car (auth-source-search :host "openai.com"))
-                     :secret)))
+    ;; if you want to enable auto suggestion.
+    ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
+    ;; (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
+
+    :config
+    (setq minuet-provider 'openai-fim-compatible)
+    (setq minuet-n-completions 1) ; recommended for Local LLM for resource saving
+    ;; I recommend beginning with a small context window size and incrementally
+    ;; expanding it, depending on your local computing power. A context window
+    ;; of 512, serves as an good starting point to estimate your computing
+    ;; power. Once you have a reliable estimate of your local computing power,
+    ;; you should adjust the context window to a larger value.
+    (setq minuet-context-window 512)
+    (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+    ;; an arbitrary non-null environment variable as placeholder
+    (plist-put minuet-openai-fim-compatible-options :name "Ollama")
+    (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+    (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder:7b")
+
+    (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package ellama
+    :bind ("C-c e" . ellama-transient-main-menu)
+    :init
+    ;; setup key bindings
+    ;; (setopt ellama-keymap-prefix "C-c e")
+    ;; language you want ellama to translate to
+    (setopt ellama-language "French")
+    ;; could be llm-openai for example
+    (require 'llm-ollama)
+    (setopt ellama-provider
+            (make-llm-ollama
+             ;; this model should be pulled to use it
+             ;; value should be the same as you print in terminal during pull
+             :chat-model "llama3:8b"
+             :embedding-model "nomic-embed-text"
+             :default-chat-non-standard-params '(("num_ctx" . 16384))))
+    (setopt ellama-coding-provider
+            (make-llm-ollama
+             :chat-model "qwen2.5-coder:7b"
+             :embedding-model "nomic-embed-text"
+             :default-chat-non-standard-params '(("num_ctx" . 32768))))
+    (setopt ellama-summarization-provider
+            (make-llm-ollama
+             :chat-model "llama3:8b"
+             :embedding-model "nomic-embed-text"
+             :default-chat-non-standard-params '(("num_ctx" . 32768))))
+    ;; Naming new sessions with llm
+    (setopt ellama-naming-provider
+            (make-llm-ollama
+             :chat-model "llama3:8b"
+             :embedding-model "nomic-embed-text"
+             :default-chat-non-standard-params '(("stop" . ("\n")))))
+    (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+    ;; Translation llm provider
+    (setopt ellama-translation-provider
+            (make-llm-ollama
+             :chat-model "qwen2.5:3b"
+             :embedding-model "nomic-embed-text"
+             :default-chat-non-standard-params
+             '(("num_ctx" . 32768))))
+    ;; customize display buffer behaviour
+    ;; see ~(info "(elisp) Buffer Display Action Functions")~
+    (setopt ellama-chat-display-action-function #'display-buffer-full-frame)
+    (setopt ellama-instant-display-action-function #'display-buffer-at-bottom)
+    :config
+    ;; send last message in chat buffer with C-c C-c
+    (add-hook 'org-ctrl-c-ctrl-c-hook #'ellama-chat-send-last-message))
 #+end_src
 
 * Dotnet
