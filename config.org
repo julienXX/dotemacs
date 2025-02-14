@@ -78,7 +78,7 @@ Use exec-path-from-shell
   ;; initial frame size
   (add-to-list 'default-frame-alist '(left . 10))
   (add-to-list 'default-frame-alist '(top . 10))
-  (add-to-list 'default-frame-alist '(height . 50))
+  (add-to-list 'default-frame-alist '(height . 46))
   (add-to-list 'default-frame-alist '(width . 160))
 
   ;; set proper language (fixes cyrillic letters in ansi-term)
@@ -90,7 +90,7 @@ Use exec-path-from-shell
   ;; Set default font
   (set-face-attribute 'default nil
                       :family "Source Code Pro"
-                      :height 130
+                      :height 100
                       :weight 'normal
                       :width 'normal)
 
@@ -114,10 +114,8 @@ Use exec-path-from-shell
   (use-package all-the-icons-ivy
     :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
 
-  ;; indent-bars
-  (use-package indent-bars
-    :load-path "~/.emacs.d/source/indent-bars"
-    :hook ((programming-mode yaml-mode) . indent-bars-mode))
+  (delete-selection-mode 1)
+  (visual-line-mode 1)
 #+end_src
 
 ** Emojis
