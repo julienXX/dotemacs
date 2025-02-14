@@ -1602,13 +1602,15 @@ Open gopher and gemini links in elpher
   (setq elfeed-curl-extra-arguments '("--insecure")) ;necessary for https without a trust certificate
 
   ;; declare my freshrss server using the fever protocol
-  (let ((freshrss-url "http://rss.typed-hole.org/api/fever.php"))
-    (setq elfeed-feeds (list
-                        (list "fever+https://julien@rss.typed-hole.org"
-                              :api-url freshrss-url
-                              :password (jxx-netrc-get freshrss-url "password")))))
+  (let ((freshrss-url "https://rss.typed-hole.org/p/api/fever.php"))
+    (setq elfeed-protocol-feeds (list
+                                 (list "fever+https://julien@rss.typed-hole.org"
+                                       :api-url freshrss-url
+                                       :password (jxx-netrc-get freshrss-url "password")))))
 
+  (setq elfeed-protocol-fever-update-unread-only t)
   (setq-default elfeed-search-filter "+unread ")
+
   ;; enable elfeed-protocol
   (elfeed-protocol-enable)
 #+end_src
