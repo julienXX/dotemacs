@@ -1544,7 +1544,7 @@ Use B to open link in firefox rather than eww
   (use-package mastodon
     :ensure t
     :config
-    (setq mastodon-instance-url "https://nein.club"
+    (setq mastodon-instance-url "https://snac.nein.club"
           mastodon-active-user "julienxx"
           mastodon-auth-source-file "~/.netrc"))
 #+end_src
