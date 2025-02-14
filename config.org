@@ -439,7 +439,7 @@ Make it prettier.
 
 #+begin_src emacs-lisp
   (require 'smtpmail)
-  (require 'org-mu4e)
+  (require 'mu4e-org)
 
   ;; Mu4e general settings
   (setq mail-user-agent 'mu4e-user-agent ;; Use mu4e as default Emacs mail agent
@@ -566,36 +566,12 @@ Make it prettier.
                     (smtpmail-smtp-server . "smtp.gmail.com")
                     (smtpmail-smtp-user . "julien.blanchard75@gmail.com")
                     (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))))
-
-          ,(make-mu4e-context
-            :name "makemusic"
-            :enter-func (lambda () (mu4e-message "Entering Makemusic context"))
-            :leave-func (lambda () (mu4e-message "Leaving Makemusic context"))
-            :match-func (lambda (msg)
-                          (when msg
-                            (mu4e-message-contact-field-matches msg :to "jblanchard@makemusic.com")))
-            :vars '((user-mail-address . "jblanchard@makemusic.com")
-                    (user-full-name . "Julien Blanchard")
-                    (mu4e-compose-signature . (concat "Julien Blanchard | +33 (0)673273156\n "))
-                    (mu4e-drafts-folder . "/Makemusic/[Gmail]/Drafts")
-                    (mu4e-sent-folder . "/Makemusic/[Gmail]/Sent Mail")
-                    (mu4e-trash-folder . "/Makemusic/[Gmail]/Trash")
-                    (mu4e-refile-folder . "/Makemusic/[Gmail]/All Mail")
-                    (smtpmail-smtp-server . "smtp.gmail.com")
-                    (smtpmail-smtp-user . "jblanchard@makemusic.com")
-                    (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "jblanchard@makemusic.com" nil)))))))
+                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))))))
 
   (add-to-list 'mu4e-bookmarks
                '( :name  "Inbox"
                   :query "m:/Gmail/Inbox OR m:/Sideburns/INBOX OR m:/Typedhole/INBOX"
                   :key   ?i))
-
-  (add-to-list 'mu4e-bookmarks
-               '( :name  "Work"
-                  :query "m:/Makemusic/Inbox"
-                  :key   ?w))
 
   (set-face-underline 'mu4e-header-highlight-face nil)
 
