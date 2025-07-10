@@ -40,7 +40,6 @@ Require netrc to read secrets from ~/.netrc
   (setq use-package-always-ensure t)
 
   (use-package delight :ensure t)
-  (use-package use-package-ensure-system-package :ensure t)
 #+end_src
 
 * Path
@@ -106,9 +105,9 @@ Use exec-path-from-shell
   ;; Soft morning theme
   (use-package soft-morning-theme
     :ensure t
-    :config
-    (load-theme 'soft-morning t)
-    )
+    :defer t
+    :init
+    (load-theme 'soft-morning t))
 
   ;; ivy icons
   (use-package all-the-icons-ivy
@@ -121,7 +120,8 @@ Use exec-path-from-shell
 ** Emojis
 #+begin_src emacs-lisp
   (use-package emojify
-    :hook (after-init . global-emojify-mode))
+    :hook (after-init . global-emojify-mode)
+    :defer t)
   (set-fontset-font t '(#x1f300 . #x1fad0) (font-spec :family "Noto Color Emoji"))
 #+end_src
 
@@ -129,9 +129,6 @@ Use exec-path-from-shell
 #+begin_src emacs-lisp
   (use-package focus
     :ensure t)
-    ;; :hook
-    ;; (prog-mode . focus-mode)
-    ;; (text-mode . focus-mode))
 #+end_src
 
 * Various functions
@@ -369,32 +366,6 @@ Extract value from .netrc
     ("C-c n s" . deft))
 #+end_src
 
-** org-caldav
-#+begin_src emacs-lisp
-  (use-package oauth2 :ensure t)
-
-  (use-package org-caldav
-    :ensure t
-    :after (org oauth2)
-    :custom
-    (org-caldav-oauth2-client-id "46186299930-ds57euqsh3vuol1j9qobrhg4jfuu5ikg.apps.googleusercontent.com")
-    (org-caldav-oauth2-client-secret "4/1AdQt8qjZg0I__OSV7ucg1FT5J1TqfCti0sRysS4YSxDgUHlHNIpNSNoyoos")
-    (org-caldav-url 'google)
-    (org-caldav-calendar-id "amJsYW5jaGFyZEBtYWtlbXVzaWMuY29t@group.calendar.google.com")
-    (org-caldav-inbox "~/Documents/gcal.org")
-    (org-icalendar-timezone "Europe/Paris")
-    (plstore-cache-passphrase-for-symmetric-encryption t))
-#+end_src
-
-** org-agenda
-#+begin_src emacs-lisp
-  (setq org-agenda-files (list "~/Documents/calendar.org"))
-
-                                          ;(setq org-capture-templates
-  ;;'(("a" "Appointment" entry (file  "~/Dropbox/orgfiles/calendar.org" )
-  ;;"* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n"))
-#+end_src
-
 ** org-download
 #+begin_src emacs-lisp
   (use-package org-download :ensure t)
@@ -407,7 +378,8 @@ Load mu4e.
 #+begin_src emacs-lisp
   (use-package mu4e
     :ensure nil
-    :load-path "/usr/local/share/emacs/site-lisp/mu4e/")
+    :defer t
+    :load-path "/usr/share/emacs/site-lisp/mu4e")
 #+end_src
 
 Add some notifications.
@@ -430,11 +402,6 @@ Make it prettier.
     :ensure t
     :after mu4e
     :config (mu4e-column-faces-mode))
-
-  ;; (use-package mu4e-marker-icons
-  ;;   :ensure t
-  ;;   :after mu4e
-  ;;   :init (mu4e-marker-icons-mode 1))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -687,8 +654,6 @@ Use B to open link in firefox rather than eww
 * Editing
 
 #+begin_src emacs-lisp
-  (global-tree-sitter-mode)
-
   (use-package expand-region
     :ensure t
     :config
@@ -1145,8 +1110,10 @@ Use B to open link in firefox rather than eww
 
   (use-package doom-modeline
     :ensure t
+    :defer t
     :init (doom-modeline-mode 1)
-    (setq doom-modeline-env-version t))
+    (setq doom-modeline-env-version nil)
+    (setq doom-modeline-major-mode-color-icon t))
 #+end_src
 
 * Navigation
@@ -1279,7 +1246,7 @@ Use B to open link in firefox rather than eww
     :ensure t
     :config
     (projectile-mode)
-    (setq projectile-enable-caching t)
+    (setq projectile-enable-caching 'persistent)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
   (use-package anzu
@@ -1426,23 +1393,6 @@ Use B to open link in firefox rather than eww
   (global-set-key "\M--" 'dispatch-goto-matching)
 #+end_src
 
-* Elixir
-
-#+begin_src emacs-lisp
-  (use-package flycheck-credo)
-  (use-package alchemist)
-
-  (use-package elixir-mode
-    :ensure t
-    :config
-    (add-hook 'elixir-mode-hook 'alchemist-mode)
-    (eval-after-load 'flycheck
-      '(flycheck-credo-setup))
-    (add-hook 'elixir-mode-hook 'flycheck-mode)
-    (add-hook 'elixir-mode-hook
-              (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
-#+end_src
-
 * Rust
 
 #+begin_src emacs-lisp
@@ -1497,54 +1447,12 @@ Use B to open link in firefox rather than eww
     (tsx-ts-mode . (lambda () (indent-tabs-mode -1))))
 #+end_src
 
-* Clojure
-
-#+begin_src emacs-lisp
-  (use-package cider
-    :ensure t
-    :config
-    (add-hook 'clojure-mode-hook 'paredit-mode))
-#+end_src
-
-* Haskell
-
-#+begin_src emacs-lisp
-  ;;  (use-package intero
-  ;;    :ensure t
-  ;;    :config
-  ;;    (add-hook 'haskell-mode-hook 'intero-mode)
-  ;;    (custom-set-variables
-  ;;     '(haskell-stylish-on-save t)))
-#+end_src
-
-* Dotnet
-
-#+begin_src emacs-lisp
-  (use-package sharper
-    :ensure t
-    :demand t
-    :bind
-    ("C-c N" . sharper-main-transient))
-
-  (use-package dotnet
-    :ensure t
-    :config
-    (add-hook 'csharp-mode-hook 'dotnet-mode)
-    (add-hook 'fsharp-mode-hook 'dotnet-mode))
-
-  (use-package fsharp-mode
-    :ensure t)
-
-  (use-package csharp-mode
-    :ensure t)
-#+end_src
-
 * Mastodon
 #+begin_src emacs-lisp
   (use-package mastodon
     :ensure t
     :config
-    (setq mastodon-instance-url "https://snac.nein.club"
+    (setq mastodon-instance-url "https://nein.club"
           mastodon-active-user "julienxx"
           mastodon-auth-source-file "~/.netrc"))
 #+end_src
@@ -1627,28 +1535,7 @@ Use B to browse article in gui browser instead of eww.
   (define-key elfeed-show-mode-map (kbd "B") 'jxx/elfeed-show-visit-gui)
 #+end_src
 
-* Pocket
-
-#+begin_src emacs-lisp
-  (use-package pocket-reader
-    :ensure t)
-#+end_src
-
-* PlantUML
-
-#+begin_src emacs-lisp
-  (use-package plantuml-mode
-    :ensure t
-    :config
-    (setq plantuml-executable-path "/usr/bin/plantuml")
-    (setq plantuml-default-exec-mode 'executable))
-#+end_src
-
 * LLM
-
-#+begin_src emacs-lisp
-  (use-package copilot-chat)
-#+end_src
 
 #+begin_src emacs-lisp
   (use-package minuet
@@ -1737,15 +1624,6 @@ Use B to browse article in gui browser instead of eww.
     :config
     ;; send last message in chat buffer with C-c C-c
     (add-hook 'org-ctrl-c-ctrl-c-hook #'ellama-chat-send-last-message))
-#+end_src
-
-* Dotnet
-
-#+begin_src emacs-lisp
-  (use-package sharper
-    :demand t
-    :bind
-    ("C-c N" . sharper-main-transient))
 #+end_src
 
 * EditorConfig
