@@ -1281,14 +1281,40 @@ Use B to open link in firefox rather than eww
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :init
-    (setq lsp-keymap-prefix "C-c l")
-    :hook ((csharp-mode . lsp)
-           (ruby-mode . lsp)
-           (javascript-mode . lsp)
-           (typescript-mode . lsp)
-           (golang-mode . lsp)
-           (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp)
+    (setq lsp-keymap-prefix "C-c l"
+          lsp-disabled-clients '(typeprof-ls)
+
+          ;; Ruby-specific
+          lsp-ruby-use-bundler t
+          lsp-ruby-formatter 'rubocop
+          lsp-sorbet-use-bundler t
+
+          lsp-log-io nil)
+    :hook
+    ((ruby-ts-mode       . lsp-deferred)
+     (go-ts-mode         . lsp-deferred)
+     (typescript-ts-mode . lsp-deferred)
+     (js-ts-mode         . lsp-deferred)
+     (lsp-mode           . lsp-enable-which-key-integration))
+    :commands (lsp lsp-deferred))
+
+  (with-eval-after-load 'lsp-mode
+    (setq lsp-client-packages
+          (remove 'lsp-sorbet lsp-client-packages))
+
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection
+      (lsp-stdio-connection
+       '("bundle" "exec" "srb" "typecheck" "--lsp" "--disable-watchman"))
+      :activation-fn (lsp-activate-on "ruby")
+      :server-id 'sorbet-ls
+      :priority -2
+      :add-on? t)))
+
+  (with-eval-after-load 'lsp-mode
+    (setq lsp-disabled-capabilities
+          '(documentFormattingProvider)))
 
   (use-package lsp-ui :commands lsp-ui-mode)
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
@@ -1298,8 +1324,8 @@ Use B to open link in firefox rather than eww
   (require 'dap-netcore)
 
   (use-package which-key
-      :config
-      (which-key-mode))
+    :config
+    (which-key-mode))
 #+end_src
 
 * Ruby
