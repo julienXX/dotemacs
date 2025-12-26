@@ -1207,13 +1207,18 @@ Corfu completion
 * Navigation
 
 #+begin_src emacs-lisp
-  (use-package xref)
+  (use-package xref
+    :config
+    ;; Show definitions in a completing-read interface
+    (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+
+  ;; Dumb-jump as fallback when LSP is not available
   (use-package dumb-jump
     :ensure t
     :config
     (require 'xref)
-    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-    (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+    ;; Add dumb-jump at the end of xref backends (LSP will be checked first)
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90))
 #+end_src
 
 ** backward-forward, use C-Left or C-Right
@@ -1407,14 +1412,38 @@ Auto-install tree-sitter grammars for all languages.
   (use-package lsp-mode
     :init
     (setq lsp-keymap-prefix "C-c l"
-          lsp-disabled-clients '(typeprof-ls)
+          lsp-disabled-clients '(ruby-lsp typeprof-ls)
 
           ;; Ruby-specific
-          lsp-ruby-use-bundler t
-          lsp-ruby-formatter 'rubocop
           lsp-sorbet-use-bundler t
+          lsp-rubocop-use-bundler t
 
-          lsp-log-io nil)
+          ;; Performance
+          lsp-idle-delay 0.5
+          lsp-log-io nil
+
+          ;; Enable features
+          lsp-enable-xref t
+          lsp-enable-imenu t
+          lsp-enable-completion-at-point t
+
+          ;; Header line breadcrumbs
+          lsp-headerline-breadcrumb-enable t
+
+          ;; Modeline diagnostics
+          lsp-modeline-diagnostics-enable t
+
+          ;; Enable multiple servers per buffer
+          lsp-prefer-flymake nil
+
+          ;; IMPORTANT: Auto-configure xref to use LSP
+          lsp-auto-configure t)
+    :config
+    (require 'ht)
+
+    ;; Load built-in Ruby LSP clients early
+    (require 'lsp-sorbet)
+    (require 'lsp-rubocop)
     :hook
     ((ruby-ts-mode       . lsp-deferred)
      (go-ts-mode         . lsp-deferred)
@@ -1436,24 +1465,46 @@ Auto-install tree-sitter grammars for all languages.
     :commands (lsp lsp-deferred))
 
   (with-eval-after-load 'lsp-mode
-    (setq lsp-client-packages
-          (remove 'lsp-sorbet lsp-client-packages))
+    ;; Go-specific LSP settings
+    (setq lsp-go-use-gofumpt t
+          lsp-go-analyses '((shadow . t)
+                           (simplifycompositelit . :json-false)))
 
+    ;; Remove built-in clients that only work with ruby-mode
+    (remhash 'sorbet-ls lsp-clients)
+    (remhash 'rubocop-ls lsp-clients)
+
+    ;; Re-register Sorbet with ruby-ts-mode support
     (lsp-register-client
      (make-lsp-client
-      :new-connection
-      (lsp-stdio-connection
-       '("bundle" "exec" "srb" "typecheck" "--lsp" "--disable-watchman"))
-      :activation-fn (lsp-activate-on "ruby")
-      :server-id 'sorbet-ls
-      :priority -2
-      :add-on? t)))
+      :new-connection (lsp-stdio-connection
+                       (lambda () '("bundle" "exec" "srb" "typecheck" "--lsp" "--disable-watchman")))
+      :major-modes '(ruby-mode ruby-ts-mode)
+      :priority 10
+      :server-id 'sorbet-ls))
 
-  (with-eval-after-load 'lsp-mode
-    (setq lsp-disabled-capabilities
-          '(documentFormattingProvider)))
+    ;; Re-register Rubocop with ruby-ts-mode support
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection (lsp-stdio-connection
+                       (lambda () '("bundle" "exec" "rubocop" "--lsp")))
+      :major-modes '(ruby-mode ruby-ts-mode)
+      :priority -1
+      :add-on? t
+      :server-id 'rubocop-ls)))
 
-  (use-package lsp-ui :commands lsp-ui-mode)
+  (use-package lsp-ui
+    :commands lsp-ui-mode
+    :hook (lsp-mode . lsp-ui-mode)
+    :config
+    (setq lsp-ui-doc-enable t
+          lsp-ui-doc-show-with-cursor t
+          lsp-ui-doc-delay 0.5
+          ;; lsp-ui-sideline-enable t
+          ;; lsp-ui-sideline-show-hover t
+          lsp-ui-peek-enable t
+          lsp-ui-peek-always-show t))
+
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
   (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
@@ -1583,16 +1634,7 @@ Auto-install tree-sitter grammars for all languages.
 #+end_src
 * Javascript
 
-#+begin_src emacs-lisp
-  (use-package js2-mode
-    :mode ("\\.js$" . js2-mode)
-    :ensure js2-mode
-    :config
-    (setq js2-highlight-level 3)
-    (defvar js-indent-level
-      (setq js-indent-level 2))
-    (setq js2-basic-offset 2))
-#+end_src
+JavaScript is configured in the Modes section using js-ts-mode.
 
 #+begin_src emacs-lisp
   (use-package typescript-mode
