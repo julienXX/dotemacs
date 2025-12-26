@@ -843,7 +843,7 @@ Use B to open link in firefox rather than eww
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
   ;; Rainbow mode hooks
-  (add-hook 'css-mode-hook 'rainbow-mode)
+  (add-hook 'css-ts-mode-hook 'rainbow-mode)
   (add-hook 'scss-mode-hook 'rainbow-mode)
   (add-hook 'sass-mode-hook 'rainbow-mode)
 
@@ -867,7 +867,7 @@ Use B to open link in firefox rather than eww
   (add-hook 'after-init-hook #'global-flycheck-mode)
 
   ;; tabs size 8 for Go
-  (add-hook 'go-mode-hook (lambda () (setq tab-width 8)))
+  (add-hook 'go-ts-mode-hook (lambda () (setq tab-width 8)))
 #+end_src
 
 * GNUS
@@ -968,17 +968,24 @@ Use B to open link in firefox rather than eww
 * Modes
 
 #+begin_src emacs-lisp
-  ;; Golang
-  (add-to-list 'auto-mode-alist (cons "\\.go$" #'go-mode))
+  ;; Golang with tree-sitter
+  (use-package go-ts-mode
+    :ensure nil
+    :mode "\\.go\\'"
+    :config
+    (setq go-ts-mode-indent-offset 8)
+    ;; Add GOPATH/bin to exec-path for gopls
+    (let ((gopath (or (getenv "GOPATH") (concat (getenv "HOME") "/go"))))
+      (add-to-list 'exec-path (concat gopath "/bin"))))
 
   ;; We never want to edit Rubinius bytecode or MacRuby binaries
   (add-to-list 'completion-ignored-extensions ".rbc")
   (add-to-list 'completion-ignored-extensions ".rbo")
 
   ;; Treat some files as shell scripts
-  (add-to-list 'auto-mode-alist '(".gitconfig$" . shell-script-mode))
-  (add-to-list 'auto-mode-alist '(".zshrc$" . shell-script-mode))
-  (add-to-list 'auto-mode-alist '(".zshenv$" . shell-script-mode))
+  (add-to-list 'auto-mode-alist '(".gitconfig$" . conf-mode))
+  (add-to-list 'auto-mode-alist '(".zshrc$" . sh-mode))
+  (add-to-list 'auto-mode-alist '(".zshenv$" . sh-mode))
 
   ;; Markdown
   (add-to-list 'auto-mode-alist '("\\.markdown" . markdown-mode))
@@ -986,22 +993,77 @@ Use B to open link in firefox rather than eww
   (add-to-list 'auto-mode-alist '("\\.mdown"    . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md"       . markdown-mode))
 
-  ;; Javascript
-  (add-to-list 'auto-mode-alist '("\\.js" . js2-mode))
+  ;; Javascript with tree-sitter
+  (use-package js-ts-mode
+    :ensure nil
+    :mode "\\.js\\'"
+    :config
+    (setq js-indent-level 2))
 
-  ;; JSON
-  (add-to-list 'auto-mode-alist '("\\.json" . json-mode))
+  ;; JSON with tree-sitter
+  (use-package json-ts-mode
+    :ensure nil
+    :mode "\\.json\\'")
 
   ;; RESTClient
   (add-to-list 'auto-mode-alist '("\\.http" . restclient-mode))
 
-  ;; Elixir
+  ;; CSS with tree-sitter
+  (use-package css-ts-mode
+    :ensure nil
+    :mode "\\.css\\'")
+
+  ;; Bash scripts with tree-sitter
+  (use-package bash-ts-mode
+    :ensure nil
+    :mode (("\\.sh\\'" . bash-ts-mode)
+           ("\\.bash\\'" . bash-ts-mode)))
+
+  ;; Python with tree-sitter
+  (use-package python-ts-mode
+    :ensure nil
+    :mode "\\.py\\'")
+
+  ;; C/C++ with tree-sitter
+  (use-package c-ts-mode
+    :ensure nil
+    :mode "\\.c\\'")
+
+  (use-package c++-ts-mode
+    :ensure nil
+    :mode (("\\.cpp\\'" . c++-ts-mode)
+           ("\\.hpp\\'" . c++-ts-mode)
+           ("\\.cc\\'" . c++-ts-mode)
+           ("\\.hh\\'" . c++-ts-mode)))
+
+  ;; TOML with tree-sitter
+  (use-package toml-ts-mode
+    :ensure nil
+    :mode "\\.toml\\'")
+
+  ;; Svelte with tree-sitter
+  (define-derived-mode svelte-ts-mode html-mode "Svelte"
+    "Major mode for editing Svelte files with tree-sitter."
+    (when (treesit-ready-p 'svelte)
+      (treesit-parser-create 'svelte)))
+
+  (add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-ts-mode))
+
+  ;; Vue with tree-sitter
+  (define-derived-mode vue-ts-mode html-mode "Vue"
+    "Major mode for editing Vue files with tree-sitter."
+    (when (treesit-ready-p 'vue)
+      (treesit-parser-create 'vue)))
+
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-ts-mode))
+
+  ;; Elixir (keeping non-tree-sitter for now as it needs external package)
   (add-to-list 'auto-mode-alist '("\\.exs" . elixir-mode))
 
-  ;; CoffeeScript
+  ;; CoffeeScript (no tree-sitter available)
   (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
 
-  ;; .NET
+  ;; .NET (no tree-sitter available)
   (add-to-list 'auto-mode-alist '("\\.fsproj" . fsharp-mode))
 #+end_src
 
@@ -1280,6 +1342,43 @@ Use B to open link in firefox rather than eww
     (global-undo-tree-mode 1))
 #+end_src
 
+* Tree-sitter
+
+Auto-install tree-sitter grammars for all languages.
+
+#+begin_src emacs-lisp
+  (setq treesit-language-source-alist
+        '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+          (c "https://github.com/tree-sitter/tree-sitter-c")
+          (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+          (css "https://github.com/tree-sitter/tree-sitter-css")
+          (go "https://github.com/tree-sitter/tree-sitter-go")
+          (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+          (json "https://github.com/tree-sitter/tree-sitter-json")
+          (python "https://github.com/tree-sitter/tree-sitter-python")
+          (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+          (rust "https://github.com/tree-sitter/tree-sitter-rust")
+          (svelte "https://github.com/Himujjal/tree-sitter-svelte")
+          (toml "https://github.com/tree-sitter/tree-sitter-toml")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+          (vue "https://github.com/ikatyang/tree-sitter-vue")
+          (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+  ;; Install tree-sitter grammars if not already installed
+  (defun install-treesit-grammars ()
+    "Install all tree-sitter grammars."
+    (interactive)
+    (dolist (lang treesit-language-source-alist)
+      (unless (treesit-language-available-p (car lang))
+        (message "Installing tree-sitter grammar for %s" (car lang))
+        (treesit-install-language-grammar (car lang)))))
+
+  ;; Auto-install grammars on startup
+  (install-treesit-grammars)
+#+end_src
+
 * LSP
 
 #+begin_src emacs-lisp
@@ -1298,7 +1397,19 @@ Use B to open link in firefox rather than eww
     ((ruby-ts-mode       . lsp-deferred)
      (go-ts-mode         . lsp-deferred)
      (typescript-ts-mode . lsp-deferred)
+     (tsx-ts-mode        . lsp-deferred)
      (js-ts-mode         . lsp-deferred)
+     (python-ts-mode     . lsp-deferred)
+     (rust-ts-mode       . lsp-deferred)
+     (c-ts-mode          . lsp-deferred)
+     (c++-ts-mode        . lsp-deferred)
+     (bash-ts-mode       . lsp-deferred)
+     (css-ts-mode        . lsp-deferred)
+     (json-ts-mode       . lsp-deferred)
+     (yaml-ts-mode       . lsp-deferred)
+     (toml-ts-mode       . lsp-deferred)
+     (svelte-ts-mode     . lsp-deferred)
+     (vue-ts-mode        . lsp-deferred)
      (lsp-mode           . lsp-enable-which-key-integration))
     :commands (lsp lsp-deferred))
 
@@ -1335,34 +1446,38 @@ Use B to open link in firefox rather than eww
 * Ruby
 
 #+begin_src emacs-lisp
-  (use-package ruby-mode
+  ;; Ruby Tree-sitter mode
+  (use-package ruby-ts-mode
     :ensure nil
+    :mode (("\\.rb\\'" . ruby-ts-mode)
+           ("\\.rake\\'" . ruby-ts-mode)
+           ("\\.thor\\'" . ruby-ts-mode)
+           ("\\.gemspec\\'" . ruby-ts-mode)
+           ("\\.ru\\'" . ruby-ts-mode)
+           ("\\.rabl\\'" . ruby-ts-mode)
+           ("Rakefile\\'" . ruby-ts-mode)
+           ("Thorfile\\'" . ruby-ts-mode)
+           ("Gemfile\\'" . ruby-ts-mode)
+           ("Procfile\\'" . ruby-ts-mode)
+           ("Capfile\\'" . ruby-ts-mode)
+           ("Vagrantfile\\'" . ruby-ts-mode))
+    :interpreter ("ruby" . ruby-ts-mode)
     :config
     ;; Setting rbenv path
     (setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
     (setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
-    (add-hook 'ruby-mode-hook
+    (add-hook 'ruby-ts-mode-hook
               (lambda ()
                 (ruby-tools-mode t)))
-    (add-to-list 'auto-mode-alist        '("\\.rb$" . ruby-mode))
-    (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("\\.rake$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("\\.thor$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("\\.gemspec$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("\\.ru$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("\\.rabl$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("Rakefile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("Thorfile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("Gemfile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("Procfile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("Capfile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        '("Vagrantfile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist        (cons "\\.erb$" #'rhtml-mode))
-    (define-key ruby-mode-map (kbd "C-c t") 'jxx-show-ruby-tags))
+    (define-key ruby-ts-mode-map (kbd "C-c t") 'jxx-show-ruby-tags))
 
-  (use-package yaml-mode
-    :config
-    (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+  ;; ERB files still use rhtml-mode
+  (add-to-list 'auto-mode-alist (cons "\\.erb$" #'rhtml-mode))
+
+  (use-package yaml-ts-mode
+    :ensure nil
+    :mode (("\\.yml\\'" . yaml-ts-mode)
+           ("\\.yaml\\'" . yaml-ts-mode)))
 
   (use-package rspec-mode
     :config
@@ -1417,7 +1532,7 @@ Use B to open link in firefox rather than eww
 
         (goto-match-paren arg)
 
-      (when (eq major-mode 'ruby-mode)
+      (when (or (eq major-mode 'ruby-mode) (eq major-mode 'ruby-ts-mode))
         (goto-matching-ruby-block arg))))
 
   (global-set-key "\M--" 'dispatch-goto-matching)
