@@ -606,14 +606,36 @@ Use B to open link in firefox rather than eww
 
 * Autocomplete
 
+Corfu completion
+
 #+begin_src emacs-lisp
-  (use-package company
+  (use-package corfu
     :ensure t
-    :defer t
-    :hook (after-init . global-company-mode)
+    :custom
+    (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)                 ;; Enable auto completion
+    (corfu-auto-delay 0.2)         ;; Delay before auto completion
+    (corfu-auto-prefix 2)          ;; Minimum prefix length for auto completion
+    (corfu-quit-no-match 'separator) ;; Don't quit if there's no match
+    (corfu-preview-current nil)    ;; Disable current candidate preview
+    (corfu-preselect 'prompt)      ;; Preselect the prompt
+    :init
+    (global-corfu-mode)
     :config
-    ;; Except when you're in term-mode.
-    (setq company-global-modes '(not term-mode)))
+    (setq corfu-excluded-modes '(term-mode)))
+
+  (use-package cape
+    :ensure t
+    :init
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    (add-to-list 'completion-at-point-functions #'cape-file))
+
+  (use-package corfu-popupinfo
+    :ensure nil
+    :after corfu
+    :hook (corfu-mode . corfu-popupinfo-mode)
+    :custom
+    (corfu-popupinfo-delay '(0.5 . 0.2)))
 #+end_src
 
 * Backup
