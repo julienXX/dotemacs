@@ -273,6 +273,16 @@ Extract value from .netrc
     (interactive "*P\nr")
     (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 
+  (defun copy-buffer-path ()
+    "Copy the current buffer file path to the clipboard."
+    (interactive)
+    (let ((path (if (equal major-mode 'dired-mode)
+                    default-directory
+                  (buffer-file-name))))
+      (when path
+        (kill-new path)
+        (message "Copied buffer file path '%s' to the clipboard." path))))
+
   ;; Smart move to begining of line
   (use-package crux
     :bind (("C-a" . crux-move-beginning-of-line)))
