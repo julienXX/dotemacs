@@ -74,12 +74,6 @@ Use exec-path-from-shell
   (tooltip-mode -1)
   (setq ring-bell-function (lambda () (message "*beep*")))
 
-  ;; initial frame size
-  (add-to-list 'default-frame-alist '(left . 10))
-  (add-to-list 'default-frame-alist '(top . 10))
-  (add-to-list 'default-frame-alist '(height . 46))
-  (add-to-list 'default-frame-alist '(width . 160))
-
   ;; set proper language (fixes cyrillic letters in ansi-term)
   (setenv "LANG" "fr_FR.UTF-8")
 
