@@ -288,7 +288,9 @@ Extract value from .netrc
   (use-package org
     :defer t
     :config
-    (setq org-reverse-note-order t
+    (setq org-use-sub-superscripts '{}
+          org-export-with-sub-superscripts '{}
+          org-reverse-note-order t
           org-support-shift-select t))
 #+end_src
 
