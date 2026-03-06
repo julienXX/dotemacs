@@ -1494,6 +1494,37 @@ Auto-install tree-sitter grammars for all languages.
                 (ruby-tools-mode t)))
     (define-key ruby-ts-mode-map (kbd "C-c t") 'jxx-show-ruby-tags))
 
+  (with-eval-after-load 'flycheck
+    (flycheck-add-mode 'ruby-rubocop 'ruby-ts-mode)
+
+    (flycheck-define-checker ruby-sorbet
+      "A Ruby type checker using Sorbet (srb tc)."
+      :command ("bundle" "exec" "srb" "tc"
+                "--no-error-count" "--no-error-sections" "--color" "never")
+      :working-directory
+      (lambda (_checker)
+        (locate-dominating-file default-directory "sorbet"))
+      :error-patterns
+      ((error line-start (file-name) ":" line ": " (message) line-end))
+      :modes (ruby-ts-mode ruby-mode)
+      :predicate
+      (lambda ()
+        (locate-dominating-file default-directory "sorbet")))
+
+    ;; Chain sorbet after rubocop (runs regardless of rubocop result)
+    (add-to-list 'flycheck-checkers 'ruby-sorbet t)  ;; append so ruby-rubocop stays first
+    (flycheck-add-next-checker 'ruby-rubocop '(t . ruby-sorbet))
+
+    ;; Use bundle exec for rubocop — skip if command already starts with bundle.
+    (add-hook 'ruby-ts-mode-hook
+              (lambda ()
+                (when (locate-dominating-file default-directory "Gemfile")
+                  (setq-local flycheck-command-wrapper-function
+                              (lambda (cmd)
+                                (if (equal (file-name-nondirectory (car cmd)) "bundle")
+                                    cmd
+                                  (append '("bundle" "exec") cmd))))))))
+
   ;; ERB files still use rhtml-mode
   (add-to-list 'auto-mode-alist (cons "\\.erb$" #'rhtml-mode))
 
