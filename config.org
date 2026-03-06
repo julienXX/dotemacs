@@ -987,7 +987,6 @@ Corfu completion
 * Modes
 
 #+begin_src emacs-lisp
-  ;; Golang with tree-sitter
   (use-package go-ts-mode
     :ensure nil
     :mode "\\.go\\'"
@@ -996,6 +995,15 @@ Corfu completion
     ;; Add GOPATH/bin to exec-path for gopls
     (let ((gopath (or (getenv "GOPATH") (concat (getenv "HOME") "/go"))))
       (add-to-list 'exec-path (concat gopath "/bin"))))
+
+  ;; Disable Go flycheck checkers — eglot/gopls provides diagnostics already
+  (with-eval-after-load 'flycheck
+    (add-hook 'go-ts-mode-hook
+              (lambda ()
+                (flycheck-disable-checker 'go-vet)
+                (flycheck-disable-checker 'go-build)
+                (flycheck-disable-checker 'go-errcheck)
+                (flycheck-disable-checker 'go-golint))))
 
   ;; We never want to edit Rubinius bytecode or MacRuby binaries
   (add-to-list 'completion-ignored-extensions ".rbc")
