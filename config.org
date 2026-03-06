@@ -1217,6 +1217,36 @@ Corfu completion
     (require 'xref)
     ;; Add dumb-jump at the end of xref backends (LSP will be checked first)
     (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90))
+
+  ;; In Ruby buffers with eglot active, xref stops at eglot's backend (depth 0)
+  ;; and never reaches dumb-jump (depth 90).  Wire up a combined backend that
+  ;; tries eglot first and falls back to dumb-jump when it returns nothing
+  (defun jxx/ruby-xref-backend ()
+    (when (eglot-current-server) 'jxx/ruby-xref))
+
+  (cl-defmethod xref-backend-identifier-at-point ((_b (eql jxx/ruby-xref)))
+    ;; Eglot's own implementation returns "LSP identifier at point" as a sentinel
+    ;; for non-prompting commands (M-.) and uses buffer position for the actual
+    ;; LSP request.  Return the real symbol text so dumb-jump can search for it.
+    (or (thing-at-point 'symbol t) "LSP identifier at point"))
+
+  (cl-defmethod xref-backend-identifier-completion-table ((_b (eql jxx/ruby-xref)))
+    (xref-backend-identifier-completion-table 'eglot))
+
+  (cl-defmethod xref-backend-definitions ((_b (eql jxx/ruby-xref)) identifier)
+    (or (xref-backend-definitions 'eglot identifier)
+        (xref-backend-definitions (dumb-jump-xref-activate) identifier)))
+
+  (cl-defmethod xref-backend-references ((_b (eql jxx/ruby-xref)) identifier)
+    (xref-backend-references 'eglot identifier))
+
+  (cl-defmethod xref-backend-apropos ((_b (eql jxx/ruby-xref)) pattern)
+    (xref-backend-apropos 'eglot pattern))
+
+  (add-hook 'ruby-ts-mode-hook
+            (lambda ()
+              ;; Add before eglot's own hook (depth -10 < eglot's 0) so ours wins
+              (add-hook 'xref-backend-functions #'jxx/ruby-xref-backend -10 t)))
 #+end_src
 
 ** backward-forward, use C-Left or C-Right
@@ -1378,117 +1408,61 @@ Auto-install tree-sitter grammars for all languages.
 * LSP
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode
-    :init
-    (setq lsp-keymap-prefix "C-c l"
-          lsp-disabled-clients '(ruby-lsp typeprof-ls)
-
-          ;; Ruby-specific
-          lsp-sorbet-use-bundler t
-          lsp-rubocop-use-bundler t
-
-          ;; Performance
-          lsp-idle-delay 0.5
-          lsp-log-io nil
-
-          ;; Enable features
-          lsp-enable-xref t
-          lsp-enable-imenu t
-          lsp-enable-completion-at-point t
-
-          ;; Header line breadcrumbs
-          lsp-headerline-breadcrumb-enable t
-
-          ;; Modeline diagnostics
-          lsp-modeline-diagnostics-enable t
-
-          ;; Enable multiple servers per buffer
-          lsp-prefer-flymake nil
-
-          ;; IMPORTANT: Auto-configure xref to use LSP
-          lsp-auto-configure t)
-    :config
-    (require 'ht)
-
-    ;; Load built-in Ruby LSP clients early
-    (require 'lsp-sorbet)
-    (require 'lsp-rubocop)
+  (use-package eglot
+    :ensure nil
     :hook
-    ((ruby-ts-mode       . lsp-deferred)
-     (go-ts-mode         . lsp-deferred)
-     (typescript-ts-mode . lsp-deferred)
-     (tsx-ts-mode        . lsp-deferred)
-     (js-ts-mode         . lsp-deferred)
-     (python-ts-mode     . lsp-deferred)
-     (rust-ts-mode       . lsp-deferred)
-     (c-ts-mode          . lsp-deferred)
-     (c++-ts-mode        . lsp-deferred)
-     (bash-ts-mode       . lsp-deferred)
-     (css-ts-mode        . lsp-deferred)
-     (json-ts-mode       . lsp-deferred)
-     (yaml-ts-mode       . lsp-deferred)
-     (toml-ts-mode       . lsp-deferred)
-     (svelte-ts-mode     . lsp-deferred)
-     (vue-ts-mode        . lsp-deferred)
-     (lsp-mode           . lsp-enable-which-key-integration))
-    :commands (lsp lsp-deferred))
-
-  (with-eval-after-load 'lsp-mode
-    ;; Go-specific LSP settings
-    (setq lsp-go-use-gofumpt t
-          lsp-go-analyses '((shadow . t)
-                           (simplifycompositelit . :json-false)))
-
-    ;; Remove built-in clients that only work with ruby-mode
-    (remhash 'sorbet-ls lsp-clients)
-    (remhash 'rubocop-ls lsp-clients)
-
-    ;; Re-register Sorbet with ruby-ts-mode support
-    (lsp-register-client
-     (make-lsp-client
-      :new-connection (lsp-stdio-connection
-                       (lambda () '("bundle" "exec" "srb" "typecheck" "--lsp" "--disable-watchman")))
-      :major-modes '(ruby-mode ruby-ts-mode)
-      :priority 10
-      :server-id 'sorbet-ls))
-
-    ;; Re-register Rubocop with ruby-ts-mode support
-    (lsp-register-client
-     (make-lsp-client
-      :new-connection (lsp-stdio-connection
-                       (lambda () '("bundle" "exec" "rubocop" "--lsp")))
-      :major-modes '(ruby-mode ruby-ts-mode)
-      :priority -1
-      :add-on? t
-      :server-id 'rubocop-ls)))
-
-  (use-package lsp-ui
-    :commands lsp-ui-mode
-    :hook (lsp-mode . lsp-ui-mode)
+    ((ruby-ts-mode       . eglot-ensure)
+     (go-ts-mode         . eglot-ensure)
+     (typescript-ts-mode . eglot-ensure)
+     (tsx-ts-mode        . eglot-ensure)
+     (js-ts-mode         . eglot-ensure)
+     (python-ts-mode     . eglot-ensure)
+     (rust-ts-mode       . eglot-ensure)
+     (c-ts-mode          . eglot-ensure)
+     (c++-ts-mode        . eglot-ensure)
+     (bash-ts-mode       . eglot-ensure)
+     (css-ts-mode        . eglot-ensure)
+     (json-ts-mode       . eglot-ensure)
+     (yaml-ts-mode       . eglot-ensure)
+     (toml-ts-mode       . eglot-ensure)
+     (svelte-ts-mode     . eglot-ensure)
+     (vue-ts-mode        . eglot-ensure))
+    :custom
+    (eglot-autoshutdown t)         ;; shut down server when no buffers use it
+    (eglot-sync-connect nil)       ;; don't block on connection
+    (eglot-extend-to-xref t)       ;; let xref use eglot for non-project files
     :config
-    (setq lsp-ui-doc-enable t
-          lsp-ui-doc-show-with-cursor t
-          lsp-ui-doc-delay 0.5
-          ;; lsp-ui-sideline-enable t
-          ;; lsp-ui-sideline-show-hover t
-          lsp-ui-peek-enable t
-          lsp-ui-peek-always-show t))
+    ;; Ruby: use the nearest Gemfile directory as the eglot project root.
+    ;; This ensures ruby-lsp receives the correct rootUri and workspace.
+    (defun jxx/ruby-lsp-project-find (dir)
+      (when (and eglot-lsp-context
+                 (derived-mode-p 'ruby-ts-mode 'ruby-mode))
+        (when-let* ((gemfile-dir (locate-dominating-file dir "Gemfile")))
+          (cons 'jxx-ruby-project (expand-file-name gemfile-dir)))))
 
-  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-  (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+    (cl-defmethod project-root ((project (head jxx-ruby-project)))
+      (cdr project))
 
-  (use-package dap-mode)
-  (require 'dap-netcore)
+    (add-to-list 'project-find-functions #'jxx/ruby-lsp-project-find)
 
-  (use-package which-key
-    :config
-    (which-key-mode))
+    (add-to-list 'eglot-server-programs
+                 '((ruby-ts-mode ruby-mode) . ("bundle" "exec" "ruby-lsp")))
+    ;; Re-enable font-lock after eglot managed mode activates.
+    ;; gopls declares semanticTokensProvider, which causes eglot to call
+    ;; (font-lock-mode -1) during setup and sometimes fail to re-enable it.
+    (add-hook 'eglot-managed-mode-hook
+              (lambda () (unless font-lock-mode (font-lock-mode 1))))
+
+    ;; Go: gopls workspace settings
+    (setq-default eglot-workspace-configuration
+                  '((:gopls . ((gofumpt . t)
+                               (analyses . ((shadow . t)
+                                            (simplifycompositelit . :json-false))))))))
 #+end_src
 
 * Ruby
 
 #+begin_src emacs-lisp
-  ;; Ruby Tree-sitter mode
   (use-package ruby-ts-mode
     :ensure nil
     :mode (("\\.rb\\'" . ruby-ts-mode)
@@ -1505,7 +1479,6 @@ Auto-install tree-sitter grammars for all languages.
            ("Vagrantfile\\'" . ruby-ts-mode))
     :interpreter ("ruby" . ruby-ts-mode)
     :config
-    ;; Setting rbenv path
     (setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
     (setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
     (add-hook 'ruby-ts-mode-hook
