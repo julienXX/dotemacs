@@ -585,14 +585,11 @@ Use B to open link in firefox rather than eww
 #+begin_src emacs-lisp
   (use-package smex :ensure t)
   (use-package counsel)
-  (use-package counsel-projectile)
-
   (use-package ivy
     :ensure t
     :config
     (require 'counsel)
     (ivy-mode 1)
-    (counsel-projectile-mode)
     (setq ivy-use-virtual-buffers t)
     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
@@ -1175,7 +1172,8 @@ Corfu completion
   (global-set-key (kbd "C-c C-r")      'ivy-resume)
   (global-set-key (kbd "<f6>")         'ivy-resume)
   (global-set-key (kbd "M-x")          'counsel-M-x)
-  (global-set-key (kbd "M-t")          'counsel-projectile-find-file)
+  (global-set-key (kbd "M-t")          'project-find-file)
+  (global-set-key (kbd "C-c p p")      'project-switch-project)
   (global-set-key (kbd "C-x C-f")      'counsel-find-file)
   (global-set-key (kbd "C-x b")        'ivy-switch-buffer)
   (global-set-key (kbd "C-c j")        'counsel-git-grep)
@@ -1335,12 +1333,6 @@ Corfu completion
     (setq git-gutter:added-sign "++ ")
     (setq git-gutter:deleted-sign "-- "))
 
-  (use-package projectile
-    :ensure t
-    :config
-    (projectile-mode)
-    (setq projectile-enable-caching 'persistent)
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
   (use-package anzu
     :ensure t
