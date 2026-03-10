@@ -1462,7 +1462,9 @@ Auto-install tree-sitter grammars for all languages.
     ;; gopls declares semanticTokensProvider, which causes eglot to call
     ;; (font-lock-mode -1) during setup and sometimes fail to re-enable it.
     (add-hook 'eglot-managed-mode-hook
-              (lambda () (unless font-lock-mode (font-lock-mode 1))))
+              (lambda ()
+                (unless font-lock-mode (font-lock-mode 1))
+                (add-hook 'before-save-hook #'eglot-format-buffer nil t)))
 
     ;; Go: gopls workspace settings
     (setq-default eglot-workspace-configuration
