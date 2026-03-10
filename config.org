@@ -1269,6 +1269,12 @@ Corfu completion
     (backward-forward-mode t))
 #+end_src
 
+** project.el, don't prompt and use file by default
+
+#+begin_src emacs-lisp
+  (setq project-switch-commands 'project-find-file)
+#+end_src
+
 * Other Packages
 
 #+begin_src emacs-lisp
