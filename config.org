@@ -993,7 +993,8 @@ Corfu completion
     :ensure nil
     :mode "\\.go\\'"
     :config
-    (setq go-ts-mode-indent-offset 8)
+    (setq go-ts-mode-indent-offset 4)
+    (add-hook 'go-ts-mode-hook (lambda () (setq tab-width 4)))
     ;; Add GOPATH/bin to exec-path for gopls
     (let ((gopath (or (getenv "GOPATH") (concat (getenv "HOME") "/go"))))
       (add-to-list 'exec-path (concat gopath "/bin"))))
