@@ -39,7 +39,7 @@ Require netrc to read secrets from ~/.netrc
   (require 'use-package-ensure)
   (setq use-package-always-ensure t)
 
-  (use-package delight :ensure t)
+  (use-package delight)
 #+end_src
 
 * Path
@@ -47,8 +47,7 @@ Require netrc to read secrets from ~/.netrc
 Use exec-path-from-shell
 
 #+begin_src emacs-lisp
-  (use-package exec-path-from-shell
-    :ensure t)
+  (use-package exec-path-from-shell)
 
   (exec-path-from-shell-initialize)
 #+end_src
@@ -61,7 +60,7 @@ Use exec-path-from-shell
   (setq inhibit-startup-screen t)
   (setq inhibit-startup-message t)
 
-  (fset 'yes-or-no-p 'y-or-n-p)
+  (setq use-short-answers t)
 
   (delete-selection-mode t)
   (scroll-bar-mode -1)
@@ -70,7 +69,6 @@ Use exec-path-from-shell
   (blink-cursor-mode t)
   (show-paren-mode t)
   (column-number-mode t)
-  (set-fringe-style -1)
   (tooltip-mode -1)
   (setq ring-bell-function (lambda () (message "*beep*")))
 
@@ -98,7 +96,6 @@ Use exec-path-from-shell
 
   ;; Soft morning theme
   (use-package soft-morning-theme
-    :ensure t
     :defer t
     :init
     (load-theme 'soft-morning t))
@@ -107,8 +104,7 @@ Use exec-path-from-shell
   (use-package all-the-icons-ivy
     :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
 
-  (delete-selection-mode 1)
-  (visual-line-mode 1)
+  (global-visual-line-mode 1)
 #+end_src
 
 ** Emojis
@@ -121,8 +117,7 @@ Use exec-path-from-shell
 
 ** Focus mode
 #+begin_src emacs-lisp
-  (use-package focus
-    :ensure t)
+  (use-package focus)
 #+end_src
 
 * Various functions
@@ -342,7 +337,6 @@ Extract value from .netrc
 
   (use-package org-roam
     :after org
-    :ensure t
     :init
     (setq org-roam-v2-ack t)
     :custom
@@ -374,7 +368,7 @@ Extract value from .netrc
 
 ** org-download
 #+begin_src emacs-lisp
-  (use-package org-download :ensure t)
+  (use-package org-download)
 #+end_src
 
 * Email
@@ -385,16 +379,14 @@ Load mu4e.
   (use-package mu4e
     :ensure nil
     :defer t
-    :load-path "/usr/share/emacs/site-lisp/mu4e")
+    :load-path "/opt/homebrew/Cellar/mu/1.12.15/share/emacs/site-lisp/mu/mu4e")
 #+end_src
 
 Add some notifications.
 
 #+begin_src emacs-lisp
-  (use-package alert
-    :ensure t)
+  (use-package alert)
   (use-package mu4e-alert
-    :ensure t
     :init
     (setq mu4e-alert-set-default-style 'libnotify)
     (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
@@ -405,7 +397,6 @@ Make it prettier.
 
 #+begin_src emacs-lisp
   (use-package mu4e-column-faces
-    :ensure t
     :after mu4e
     :config (mu4e-column-faces-mode))
 #+end_src
@@ -472,7 +463,7 @@ Make it prettier.
                '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 
 
-  (with-eval-after-load "mm-decode"
+  (with-eval-after-load 'mm-decode
     (add-to-list 'mm-discouraged-alternatives "text/html")
     (add-to-list 'mm-discouraged-alternatives "text/richtext"))
 
@@ -564,10 +555,7 @@ Make it prettier.
               (local-set-key (kbd "<tab>") 'shr-next-link)
               (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
-  (setq mu4e-alert-set-default-style 'libnotify)
   (setq mu4e-alert-email-notification-types '(count))
-
-  (mu4e-alert-enable-notifications)
 #+end_src
 
 Use B to open link in firefox rather than eww
@@ -585,10 +573,9 @@ Use B to open link in firefox rather than eww
 * Ivy
 
 #+begin_src emacs-lisp
-  (use-package smex :ensure t)
+  (use-package smex)
   (use-package counsel)
   (use-package ivy
-    :ensure t
     :config
     (require 'counsel)
     (ivy-mode 1)
@@ -609,7 +596,6 @@ Corfu completion
 
 #+begin_src emacs-lisp
   (use-package corfu
-    :ensure t
     :custom
     (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
     (corfu-auto t)                 ;; Enable auto completion
@@ -624,7 +610,6 @@ Corfu completion
     (setq corfu-excluded-modes '(term-mode)))
 
   (use-package cape
-    :ensure t
     :init
     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
     (add-to-list 'completion-at-point-functions #'cape-file))
@@ -643,12 +628,6 @@ Corfu completion
   (setq make-backup-files nil)
   (setq auto-save-default nil)
 
-  ;; Save temp file in /tmp
-  (setq backup-directory-alist
-        `((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms
-        `((".*" ,temporary-file-directory t)))
-
   ;; Auto refresh buffers
   (global-auto-revert-mode 1)
 
@@ -666,12 +645,10 @@ Corfu completion
     :config
     ;; Colourful columns.
     (use-package diredfl
-      :ensure t
       :config
       (diredfl-global-mode 1)))
 
   (use-package dired-git-info
-    :ensure t
     :bind (:map dired-mode-map
                 (")" . dired-git-info-mode)))
 #+end_src
@@ -680,12 +657,10 @@ Corfu completion
 
 #+begin_src emacs-lisp
   (use-package expand-region
-    :ensure t
     :config
     (global-set-key (kbd "C-=") 'er/expand-region))
 
   (use-package wrap-region
-    :ensure t
     :config
     (wrap-region-global-mode))
 
@@ -810,31 +785,26 @@ Corfu completion
     (cond ((not (> (count-windows)1))
            (message "You can't rotate a single window!"))
           (t
-           (setq i 1)
-           (setq numWindows (count-windows))
-           (while  (< i numWindows)
-             (let* (
-                    (w1 (elt (window-list) i))
-                    (w2 (elt (window-list) (+ (% i numWindows) 1)))
-
-                    (b1 (window-buffer w1))
-                    (b2 (window-buffer w2))
-
-                    (s1 (window-start w1))
-                    (s2 (window-start w2))
-                    )
-               (set-window-buffer w1  b2)
-               (set-window-buffer w2 b1)
-               (set-window-start w1 s2)
-               (set-window-start w2 s1)
-               (setq i (1+ i)))))))
+           (let ((i 1)
+                 (numWindows (count-windows)))
+             (while (< i numWindows)
+               (let* ((w1 (elt (window-list) i))
+                      (w2 (elt (window-list) (+ (% i numWindows) 1)))
+                      (b1 (window-buffer w1))
+                      (b2 (window-buffer w2))
+                      (s1 (window-start w1))
+                      (s2 (window-start w2)))
+                 (set-window-buffer w1 b2)
+                 (set-window-buffer w2 b1)
+                 (set-window-start w1 s2)
+                 (set-window-start w2 s1)
+                 (setq i (1+ i))))))))
 #+end_src
 
 * Flycheck
 
 #+begin_src emacs-lisp
   (use-package flycheck
-    :ensure t
     :config
     (add-hook 'after-init-hook #'global-flycheck-mode))
 #+end_src
@@ -884,9 +854,6 @@ Corfu completion
             (lambda ()
               (local-set-key (kbd "C-c o p") 'jxx-markdown-preview)))
 
-  ;; FlyCheck
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-
   ;; tabs size 8 for Go
   (add-hook 'go-ts-mode-hook (lambda () (setq tab-width 8)))
 #+end_src
@@ -894,54 +861,55 @@ Corfu completion
 * GNUS
 
 #+begin_src emacs-lisp
-  (require 'gnus)
+  (use-package gnus
+    :defer t
+    :config
+    (setq user-mail-address "julien@typed-hole.org"
+          user-full-name    "Julien")
 
-  (setq user-mail-address	"julien@typed-hole.org"
-        user-full-name	"Julien")
+    (setq gnus-select-method '(nntp "news.tilde.club" (nntp-port-number 119)))
 
-  (setq gnus-select-method '(nntp "news.tilde.club" (nntp-port-number 119)))
+    (add-to-list 'gnus-secondary-select-methods '(nntp "news.eternal-september.org" (nntp-port-number 119)))
 
-  (add-to-list 'gnus-secondary-select-methods '(nntp "news.eternal-september.org" (nntp-port-number 119)))
+    (setq send-mail-function       'smtpmail-send-it
+          message-send-mail-function 'smtpmail-send-it
+          smtpmail-smtp-server     "mail.typed-hole.org")
 
-  (setq send-mail-function		     'smtpmail-send-it
-        message-send-mail-function 'smtpmail-send-it
-        smtpmail-smtp-server		   "mail.typed-hole.org")
+    ;; http://groups.google.com/group/gnu.emacs.gnus/browse_thread/thread/a673a74356e7141f
+    (when window-system
+      (setq gnus-sum-thread-tree-indent "  ")
+      (setq gnus-sum-thread-tree-root "") ;; "● ")
+      (setq gnus-sum-thread-tree-false-root "") ;; "◯ ")
+      (setq gnus-sum-thread-tree-single-indent "") ;; "◎ ")
+      (setq gnus-sum-thread-tree-vertical        "│")
+      (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+      (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
+    (setq gnus-summary-line-format
+          (concat
+           "%0{%U%R%z%}"
+           "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
+           "  "
+           "%4{%-20,20f%}"               ;; name
+           "  "
+           "%3{│%}"
+           " "
+           "%1{%B%}"
+           "%s\n"))
+    (setq gnus-summary-display-arrow t)
 
-  ;; http://groups.google.com/group/gnu.emacs.gnus/browse_thread/thread/a673a74356e7141f
-  (when window-system
-    (setq gnus-sum-thread-tree-indent "  ")
-    (setq gnus-sum-thread-tree-root "") ;; "● ")
-    (setq gnus-sum-thread-tree-false-root "") ;; "◯ ")
-    (setq gnus-sum-thread-tree-single-indent "") ;; "◎ ")
-    (setq gnus-sum-thread-tree-vertical        "│")
-    (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-    (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
-  (setq gnus-summary-line-format
-        (concat
-         "%0{%U%R%z%}"
-         "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
-         "  "
-         "%4{%-20,20f%}"               ;; name
-         "  "
-         "%3{│%}"
-         " "
-         "%1{%B%}"
-         "%s\n"))
-  (setq gnus-summary-display-arrow t)
+    (setq gnus-visual t)
 
-  (setq gnus-visual t)
+    (setq gnus-thread-sort-functions
+          '(gnus-thread-sort-by-number
+            gnus-thread-sort-by-author
+            gnus-thread-sort-by-subject
+            gnus-thread-sort-by-date))
 
-  (setq gnus-thread-sort-functions
-        '(gnus-thread-sort-by-number
-          gnus-thread-sort-by-author
-          gnus-thread-sort-by-subject
-          gnus-thread-sort-by-date))
+    ;; do not hide killed threads automatically
+    (setq gnus-thread-hide-killed nil)
 
-  ;; do not hide killed threads automatically
-  (setq gnus-thread-hide-killed nil)
-
-  (set-face-underline 'gnus-summary-selected nil)
-  (set-face-background 'gnus-summary-selected "LightGrey")
+    (set-face-underline 'gnus-summary-selected nil)
+    (set-face-background 'gnus-summary-selected "LightGrey"))
 #+end_src
 
 * Libs
@@ -1101,7 +1069,6 @@ Corfu completion
 
 #+begin_src emacs-lisp
   (use-package magit
-    :ensure t
     :defer t
     :config
     (define-key magit-status-mode-map (kbd "C-x C-k") 'magit-kill-file-on-line)
@@ -1117,10 +1084,11 @@ Corfu completion
     (magit-refresh))
 
   ;; full screen magit-status
-  (defadvice magit-status (around magit-fullscreen activate)
-    (window-configuration-to-register :magit-fullscreen)
-    ad-do-it
-    (delete-other-windows))
+  (advice-add 'magit-status :around
+              (lambda (orig-fun &rest args)
+                (window-configuration-to-register :magit-fullscreen)
+                (apply orig-fun args)
+                (delete-other-windows)))
 
   (defun magit-quit-session ()
     "Restore the previous window configuration and kill the magit buffer."
@@ -1146,8 +1114,7 @@ Corfu completion
     (magit-refresh))
 
   ;; close popup when commiting
-  (defadvice git-commit-commit (after delete-window activate)
-    (delete-window))
+  (advice-add 'git-commit-commit :after (lambda (&rest _) (delete-window)))
 #+end_src
 
 * Mappings
@@ -1206,7 +1173,6 @@ Corfu completion
   (use-package diminish)
 
   (use-package doom-modeline
-    :ensure t
     :defer t
     :init (doom-modeline-mode 1)
     (setq doom-modeline-env-version nil)
@@ -1223,7 +1189,6 @@ Corfu completion
 
   ;; Dumb-jump as fallback when LSP is not available
   (use-package dumb-jump
-    :ensure t
     :config
     (require 'xref)
     ;; Add dumb-jump at the end of xref backends (LSP will be checked first)
@@ -1264,7 +1229,6 @@ Corfu completion
 
 #+begin_src emacs-lisp
   (use-package backward-forward
-    :ensure t
     :config
     (backward-forward-mode t))
 #+end_src
@@ -1278,8 +1242,21 @@ Corfu completion
 * Other Packages
 
 #+begin_src emacs-lisp
+  (use-package multiple-cursors
+    :bind (("C-S-c C-S-c" . mc/edit-lines)
+           ("C->"         . mc/mark-next-like-this)
+           ("C-<"         . mc/mark-previous-like-this)
+           ("C-c C-<"     . mc/mark-all-like-this)))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package pulsar
+    :config
+    (pulsar-global-mode 1))
+#+end_src
+
+#+begin_src emacs-lisp
   (use-package smartparens
-    :ensure t
     :config
     (require 'smartparens-config)
     (require 'smartparens-ruby)
@@ -1321,27 +1298,22 @@ Corfu completion
       (sp-local-pair "<" ">")
       (sp-local-pair "<%" "%>")))
 
-  (use-package yasnippet
-    :ensure t
-    :config
-    (setq yas-snippets-dir
-          '("~/.emacs.d/snippets"))
-    (yas-global-mode 1))
+  ;; (use-package yasnippet
+  ;;  :config
+  ;;  (setq yas-snippets-dir
+  ;;        '("~/.emacs.d/snippets"))
+  ;;  (yas-global-mode 1))
 
   (use-package gist
-    :ensure t
     :config
     (require 'eieio)
     (setq gist-use-curl t)
     (setq gist-view-gist t))
 
   (use-package ace-jump-mode
-    :ensure t
-    :config
-    (define-key global-map (kbd "C-c j") 'ace-jump-mode))
+    :bind ("C-c C-SPC" . ace-jump-mode))
 
   (use-package multi-term
-    :ensure t
     :config
     (set-terminal-coding-system 'utf-8-unix)
     (setq multi-term-dedicated-select-after-open-p t)
@@ -1362,18 +1334,15 @@ Corfu completion
       ))
 
   (use-package golden-ratio
-    :ensure t
     :config
     (golden-ratio-mode))
 
   (use-package markdown-mode
-    :ensure t
     :config
     (autoload 'markdown-mode "markdown-mode.el"
       "Major mode for editing Markdown files" t))
 
   (use-package git-gutter
-    :ensure t
     :config
     (global-git-gutter-mode t)
     (setq git-gutter:modified-sign "<> ")
@@ -1382,17 +1351,14 @@ Corfu completion
 
 
   (use-package anzu
-    :ensure t
     :config
     (global-anzu-mode +1))
 
   (use-package unkillable-scratch
-    :ensure t
     :config
     (unkillable-scratch 1))
 
   (use-package popwin
-    :ensure t
     :defer t
     :config
     (popwin-mode 1))
@@ -1498,15 +1464,27 @@ Auto-install tree-sitter grammars for all languages.
            ("Vagrantfile\\'" . ruby-ts-mode))
     :interpreter ("ruby" . ruby-ts-mode)
     :config
-    (setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
-    (setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
     (add-hook 'ruby-ts-mode-hook
               (lambda ()
                 (ruby-tools-mode t)))
     (define-key ruby-ts-mode-map (kbd "C-c t") 'jxx-show-ruby-tags))
 
+  (use-package rbenv
+    :config
+    (setq rbenv-show-active-ruby-in-modeline nil)
+    (global-rbenv-mode))
+
   (with-eval-after-load 'flycheck
     (flycheck-add-mode 'ruby-rubocop 'ruby-ts-mode)
+    ;; Run rubocop via "bundle exec" using the rbenv shim (bypasses PATH issues)
+    (add-hook 'ruby-ts-mode-hook
+              (lambda ()
+                (setq-local flycheck-command-wrapper-function
+                            (lambda (cmd)
+                              (if (string-match-p "rubocop$" (car cmd))
+                                  (cons (expand-file-name "~/.rbenv/shims/bundle")
+                                        (cons "exec" (cons "rubocop" (cdr cmd))))
+                                cmd)))))
 
     (flycheck-define-checker ruby-sorbet
       "A Ruby type checker using Sorbet (srb tc)."
@@ -1546,7 +1524,10 @@ Auto-install tree-sitter grammars for all languages.
 
   (use-package rspec-mode
     :config
-    (setq rspec-use-rake-when-possible nil))
+    (setq rspec-use-rake-when-possible nil)
+    (setq rspec-use-bundler-when-possible nil)
+    (setq rspec-spec-command
+          (concat (expand-file-name "~/.rbenv/shims/bundle") " exec rspec")))
 
   (use-package ruby-tools)
 
@@ -1630,7 +1611,6 @@ JavaScript is configured in the Modes section using js-ts-mode.
 
 #+begin_src emacs-lisp
   (use-package typescript-mode
-    :ensure t
     :mode
     (("\\.ts\\'" . tsx-ts-mode)
      ("\\.tsx\\'" . tsx-ts-mode))
@@ -1651,7 +1631,6 @@ JavaScript is configured in the Modes section using js-ts-mode.
 * Mastodon
 #+begin_src emacs-lisp
   (use-package mastodon
-    :ensure t
     :config
     (setq mastodon-instance-url "https://nein.club"
           mastodon-active-user "julienxx"
@@ -1688,13 +1667,11 @@ Open gopher and gemini links in elpher
 * RSS
 
 #+begin_src emacs-lisp
-  (use-package elfeed-protocol
-    :ensure t)
+  (use-package elfeed-protocol)
 #+end_src
 
 #+begin_src emacs-lisp
   (use-package elfeed
-    :ensure t
     :commands (elfeed)
     :config
     (setq elfeed-db-directory "~/.elfeed")
@@ -1740,7 +1717,6 @@ Use B to browse article in gui browser instead of eww.
 
 #+begin_src emacs-lisp
   (use-package copilot
-    :ensure t
     :hook (prog-mode . copilot-mode)
     :bind (:map copilot-completion-map
                 ("<tab>" . 'copilot-accept-completion)
@@ -1759,99 +1735,17 @@ Use B to browse article in gui browser instead of eww.
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package minuet
-    :bind
-    (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
-     ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
-
-     :map minuet-active-mode-map
-     ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
-     ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
-     ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
-     ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
-     ;; Accept the first line of completion, or N lines with a numeric-prefix:
-     ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
-     ("M-a" . #'minuet-accept-suggestion-line)
-     ("M-e" . #'minuet-dismiss-suggestion))
-
-    :init
-    ;; if you want to enable auto suggestion.
-    ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
-    ;; (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
-
+  (use-package agent-shell
     :config
-    (setq minuet-provider 'openai-fim-compatible)
-    (setq minuet-n-completions 1) ; recommended for Local LLM for resource saving
-    ;; I recommend beginning with a small context window size and incrementally
-    ;; expanding it, depending on your local computing power. A context window
-    ;; of 512, serves as an good starting point to estimate your computing
-    ;; power. Once you have a reliable estimate of your local computing power,
-    ;; you should adjust the context window to a larger value.
-    (setq minuet-context-window 512)
-    (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
-    ;; an arbitrary non-null environment variable as placeholder
-    (plist-put minuet-openai-fim-compatible-options :name "Ollama")
-    (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
-    (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder:7b")
-
-    (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
-#+end_src
-
-#+begin_src emacs-lisp
-  (use-package ellama
-    :bind ("C-c e" . ellama-transient-main-menu)
-    :init
-    ;; setup key bindings
-    ;; (setopt ellama-keymap-prefix "C-c e")
-    ;; language you want ellama to translate to
-    (setopt ellama-language "French")
-    ;; could be llm-openai for example
-    (require 'llm-ollama)
-    (setopt ellama-provider
-            (make-llm-ollama
-             ;; this model should be pulled to use it
-             ;; value should be the same as you print in terminal during pull
-             :chat-model "llama3:8b"
-             :embedding-model "nomic-embed-text"
-             :default-chat-non-standard-params '(("num_ctx" . 16384))))
-    (setopt ellama-coding-provider
-            (make-llm-ollama
-             :chat-model "qwen2.5-coder:7b"
-             :embedding-model "nomic-embed-text"
-             :default-chat-non-standard-params '(("num_ctx" . 32768))))
-    (setopt ellama-summarization-provider
-            (make-llm-ollama
-             :chat-model "llama3:8b"
-             :embedding-model "nomic-embed-text"
-             :default-chat-non-standard-params '(("num_ctx" . 32768))))
-    ;; Naming new sessions with llm
-    (setopt ellama-naming-provider
-            (make-llm-ollama
-             :chat-model "llama3:8b"
-             :embedding-model "nomic-embed-text"
-             :default-chat-non-standard-params '(("stop" . ("\n")))))
-    (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
-    ;; Translation llm provider
-    (setopt ellama-translation-provider
-            (make-llm-ollama
-             :chat-model "qwen2.5:3b"
-             :embedding-model "nomic-embed-text"
-             :default-chat-non-standard-params
-             '(("num_ctx" . 32768))))
-    ;; customize display buffer behaviour
-    ;; see ~(info "(elisp) Buffer Display Action Functions")~
-    (setopt ellama-chat-display-action-function #'display-buffer-full-frame)
-    (setopt ellama-instant-display-action-function #'display-buffer-at-bottom)
-    :config
-    ;; send last message in chat buffer with C-c C-c
-    (add-hook 'org-ctrl-c-ctrl-c-hook #'ellama-chat-send-last-message))
+    (setq agent-shell-anthropic-authentication
+          (agent-shell-anthropic-make-authentication
+           :login t)))
 #+end_src
 
 * EditorConfig
 
 #+begin_src emacs-lisp
   (use-package editorconfig
-    :ensure t
     :config
     (editorconfig-mode 1))
 #+end_src
