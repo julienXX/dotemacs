@@ -1117,6 +1117,12 @@ Corfu completion
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
     (setq magit-push-always-verify nil))
 
+  (use-package forge
+    :after magit
+    :config
+    (setq forge-status-buffer-default-topic-filters
+          (forge--topics-spec :type 'topic :active t :state 'open :order 'newest :limit 40)))
+
   (defun magit-kill-file-on-line ()
     "Show file on current magit line and prompt for deletion."
     (interactive)
