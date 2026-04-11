@@ -1,11 +1,11 @@
 #+TITLE:  Emacs Configuration File
 #+AUTHOR: Julien Blanchard
 #+EMAIL:  julien@typed-hole.org
-#+PROPERTY:    results silent
-#+PROPERTY:    header-args:sh  :tangle no
-#+PROPERTY:    tangle ~/.emacs.d/init.el
-#+PROPERTY:    eval no-export
-#+PROPERTY:    comments org
+#+PROPERTY: header-args :results silent
+#+PROPERTY: header-args:sh  :tangle no
+#+PROPERTY: header-args :tangle ~/.emacs.d/init.el
+#+PROPERTY: header-args :eval no-export
+#+PROPERTY: header-args :comments org
 #+STARTUP: overview
 
 * Emacs Initialization
