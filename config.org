@@ -356,6 +356,47 @@ Extract value from .netrc
     (require 'org-roam-dailies) ;; Ensure the keymap is available
     (org-roam-db-autosync-mode))
 
+  (defun my/org-roam-extract-incomplete-tasks (file)
+    "Return top-level TODO/DOING subtrees from FILE as a string."
+    (with-temp-buffer
+      (insert-file-contents file)
+      (org-mode)
+      (let (tasks)
+        (org-map-entries
+         (lambda ()
+           (when (and (= (org-current-level) 1)
+                      (member (org-get-todo-state) '("TODO" "DOING")))
+             (push (buffer-substring-no-properties
+                    (point)
+                    (save-excursion (org-end-of-subtree t t) (point)))
+                   tasks)))
+         nil nil)
+        (when tasks
+          (mapconcat #'identity (nreverse tasks) "")))))
+
+  (defun my/org-roam-daily-prepopulate (&rest _)
+    "Pre-populate a new daily file with unfinished tasks from the previous daily.
+Runs as advice after `org-roam-dailies-goto-today' so the header is already written."
+    (when-let* ((file (buffer-file-name))
+                (daily-dir (file-name-as-directory
+                            (expand-file-name org-roam-dailies-directory org-roam-directory)))
+                (_ (string-prefix-p daily-dir file))
+                (_ (not (save-excursion
+                          (goto-char (point-min))
+                          (re-search-forward "^\\*" nil t)))))
+      (let* ((today (file-name-base file))
+             (prev-file (car (last (seq-filter
+                                    (lambda (f) (string< (file-name-base f) today))
+                                    (sort (directory-files daily-dir t "\\.org$") #'string<))))))
+        (when prev-file
+          (when-let ((tasks (my/org-roam-extract-incomplete-tasks prev-file)))
+            (goto-char (point-max))
+            (unless (bolp) (insert "\n"))
+            (insert "\n")
+            (insert tasks))))))
+
+  (advice-add 'org-roam-dailies-goto-today :after #'my/org-roam-daily-prepopulate)
+
   (use-package deft
     :config
     (setq deft-directory org-directory
