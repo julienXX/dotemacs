@@ -8,6 +8,10 @@
 #+PROPERTY: header-args :comments org
 #+STARTUP: overview
 
+#+begin_src emacs-lisp :comments no :padline no
+;; -*- lexical-binding: t -*-
+#+end_src
+
 * Emacs Initialization
 
 This section contains the basic commands you need to know to properly initialize
@@ -22,6 +26,8 @@ your GNU Emacs.
 
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
+
+  (setq create-lockfiles nil)
 #+end_src
 
 Require netrc to read secrets from ~/.netrc
@@ -376,7 +382,7 @@ Extract value from .netrc
 
   (defun my/org-roam-daily-prepopulate (&rest _)
     "Pre-populate a new daily file with unfinished tasks from the previous daily.
-Runs as advice after `org-roam-dailies-goto-today' so the header is already written."
+  Runs as advice after `org-roam-dailies-goto-today' so the header is already written."
     (when-let* ((file (buffer-file-name))
                 (daily-dir (file-name-as-directory
                             (expand-file-name org-roam-dailies-directory org-roam-directory)))
@@ -389,7 +395,7 @@ Runs as advice after `org-roam-dailies-goto-today' so the header is already writ
                                     (lambda (f) (string< (file-name-base f) today))
                                     (sort (directory-files daily-dir t "\\.org$") #'string<))))))
         (when prev-file
-          (when-let ((tasks (my/org-roam-extract-incomplete-tasks prev-file)))
+          (when-let* ((tasks (my/org-roam-extract-incomplete-tasks prev-file)))
             (goto-char (point-max))
             (unless (bolp) (insert "\n"))
             (insert "\n")
@@ -409,6 +415,10 @@ Runs as advice after `org-roam-dailies-goto-today' so the header is already writ
 
 ** org-download
 #+begin_src emacs-lisp
+  ;; Emacs 32 removed url-handler-file-remote-p; keep org-download compatible.
+  (unless (fboundp 'url-handler-file-remote-p)
+    (defalias 'url-handler-file-remote-p #'file-remote-p))
+
   (use-package org-download)
 #+end_src
 
@@ -420,7 +430,7 @@ Load mu4e.
   (use-package mu4e
     :ensure nil
     :defer t
-    :load-path "/opt/homebrew/Cellar/mu/1.12.15/share/emacs/site-lisp/mu/mu4e")
+    :load-path "/usr/share/emacs/site-lisp/mu4e")
 #+end_src
 
 Add some notifications.
@@ -503,6 +513,9 @@ Make it prettier.
   (add-to-list 'mu4e-view-actions
                '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 
+  (add-hook 'mu4e-view-mode-hook
+            (lambda () (setq-local browse-url-browser-function #'eww-browse-url)))
+
 
   (with-eval-after-load 'mm-decode
     (add-to-list 'mm-discouraged-alternatives "text/html")
@@ -527,6 +540,7 @@ Make it prettier.
                     (mu4e-drafts-folder . "/TypedHole/Drafts")
                     (mu4e-sent-folder . "/TypedHole/Sent")
                     (mu4e-trash-folder . "/TypedHole/Trash")
+                    (jxx-mu4e-junk-folder . "/TypedHole/.Junk")
                     (mu4e-refile-folder . "/TypedHole/Archive")
                     (smtpmail-smtp-server . "mail.typed-hole.org")
                     (smtpmail-smtp-user . "julien")
@@ -547,6 +561,7 @@ Make it prettier.
                     (mu4e-drafts-folder . "/Sideburns/Drafts")
                     (mu4e-sent-folder . "/Sideburns/Sent")
                     (mu4e-trash-folder . "/Sideburns/Trash")
+                    (jxx-mu4e-junk-folder . "/Sideburns/Junk")
                     (mu4e-refile-folder . "/Sideburns/Archive")
                     (smtpmail-smtp-server . "smtp.fastmail.com")
                     (smtpmail-smtp-user . "julienblanchard@fastmail.fm")
@@ -567,16 +582,69 @@ Make it prettier.
                     (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
                     (mu4e-sent-folder . "/Gmail/[Gmail]/Sent Mail")
                     (mu4e-trash-folder . "/Gmail/[Gmail]/Trash")
-                    (mu4e-refile-folder . "/Gmail/[Gmail]/All Mail")
+                    (jxx-mu4e-junk-folder . "/Gmail/[Gmail]/Trash")
+                    (mu4e-refile-folder . "/Gmail/All Mail")
                     (smtpmail-smtp-server . "smtp.gmail.com")
                     (smtpmail-smtp-user . "julien.blanchard75@gmail.com")
                     (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
                     (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))))))
 
+  (defun jxx/mu4e-get-junk-folder (&optional msg)
+    "Return the junk folder for MSG based on its context."
+    (let ((ctx (mu4e-context-determine msg nil)))
+      (with-mu4e-context-vars ctx
+        (or (and (boundp 'jxx-mu4e-junk-folder) jxx-mu4e-junk-folder)
+            (mu4e-get-trash-folder msg)))))
+
+  (defun jxx/mu4e-mark-for-junk ()
+    "Mark the current message for moving to the configured junk folder."
+    (interactive)
+    (mu4e--in-headers-context
+     (let* ((msg (mu4e-message-at-point))
+            (target (jxx/mu4e-get-junk-folder msg)))
+       (unless target
+         (mu4e-error "No junk folder configured for this context"))
+       (mu4e-mark-set 'move target)
+       (when mu4e-headers-advance-after-mark
+         (mu4e-headers-next)))))
+
+  (defun jxx/mu4e-get-archive-folder (msg)
+    (let ((maildir (mu4e-message-field msg :maildir)))
+      (cond
+       ((string-prefix-p "/Gmail" maildir)     "/Gmail/All Mail")
+       ((string-prefix-p "/TypedHole" maildir) "/TypedHole/Archive")
+       ((string-prefix-p "/Sideburns" maildir) "/Sideburns/Archive")
+       (t (mu4e-error "No archive folder for maildir: %s" maildir)))))
+
+  (defun jxx/mu4e-archive ()
+    "Mark the current message for moving to its account's archive folder."
+    (interactive)
+    (mu4e--in-headers-context
+     (let* ((msg (mu4e-message-at-point))
+            (target (jxx/mu4e-get-archive-folder msg)))
+       (mu4e-mark-set 'move target)
+       (when mu4e-headers-advance-after-mark
+         (mu4e-headers-next)))))
+
+  (with-eval-after-load 'mu4e
+    (define-key mu4e-headers-mode-map (kbd "J") #'jxx/mu4e-mark-for-junk)
+    (define-key mu4e-view-mode-map (kbd "J") #'jxx/mu4e-mark-for-junk)
+    (define-key mu4e-headers-mode-map (kbd "A") #'jxx/mu4e-archive)
+    (define-key mu4e-view-mode-map (kbd "A") #'jxx/mu4e-archive))
+
   (add-to-list 'mu4e-bookmarks
                '( :name  "Inbox"
-                  :query "m:/Gmail/Inbox OR m:/Sideburns/INBOX OR m:/Typedhole/INBOX"
+                  :query "m:/Gmail/Inbox OR m:/Sideburns/INBOX OR m:/TypedHole/INBOX"
                   :key   ?i))
+
+  ;; Keep the default unread shortcut (`u`) focused on inboxes only.
+  (let ((unread-bookmark
+         (seq-find (lambda (bookmark)
+                     (string= (plist-get bookmark :name) "Unread messages"))
+                   mu4e-bookmarks)))
+    (when unread-bookmark
+      (setf (plist-get unread-bookmark :query)
+            "flag:unread AND NOT flag:trashed AND (maildir:/Gmail/Inbox OR maildir:/Sideburns/INBOX OR maildir:/TypedHole/INBOX)")))
 
   (set-face-underline 'mu4e-header-highlight-face nil)
 
@@ -623,7 +691,9 @@ Use B to open link in firefox rather than eww
     (setq ivy-use-virtual-buffers t)
     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
-  (use-package prescient)
+  (use-package prescient
+    :config
+    (prescient-persist-mode t))
   (use-package ivy-prescient
     :config
     (ivy-prescient-mode t))
@@ -916,41 +986,56 @@ Corfu completion
           message-send-mail-function 'smtpmail-send-it
           smtpmail-smtp-server     "mail.typed-hole.org")
 
-    ;; http://groups.google.com/group/gnu.emacs.gnus/browse_thread/thread/a673a74356e7141f
-    (when window-system
-      (setq gnus-sum-thread-tree-indent "  ")
-      (setq gnus-sum-thread-tree-root "") ;; "● ")
-      (setq gnus-sum-thread-tree-false-root "") ;; "◯ ")
-      (setq gnus-sum-thread-tree-single-indent "") ;; "◎ ")
-      (setq gnus-sum-thread-tree-vertical        "│")
-      (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-      (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
-    (setq gnus-summary-line-format
-          (concat
-           "%0{%U%R%z%}"
-           "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
-           "  "
-           "%4{%-20,20f%}"               ;; name
-           "  "
-           "%3{│%}"
-           " "
-           "%1{%B%}"
-           "%s\n"))
-    (setq gnus-summary-display-arrow t)
+    (setq gnus-permanently-visible-groups ".")
+    (setq gnus-large-newsgroup 500)
+    (setq gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
+    (setq gnus-article-sort-functions '((not gnus-article-sort-by-date)))
+    (add-hook 'gnus-started-hook
+              (lambda ()
+                (with-current-buffer gnus-group-buffer
+                  (gnus-group-list-all-groups))))
 
-    (setq gnus-visual t)
+    ;; local article cache via Gnus Agent
+    (setq gnus-agent t)
+    (setq gnus-agent-auto-agentize-methods '(nntp))
 
-    (setq gnus-thread-sort-functions
-          '(gnus-thread-sort-by-number
-            gnus-thread-sort-by-author
-            gnus-thread-sort-by-subject
-            gnus-thread-sort-by-date))
+    ;; auto-save: always restore without prompting
+    (setq gnus-always-read-dribble-file t)
 
-    ;; do not hide killed threads automatically
-    (setq gnus-thread-hide-killed nil)
+    ;; mu4e-style date: time for today, date for older
+    (setq gnus-user-date-format-alist
+          '(((gnus-seconds-today) . "%H:%M")
+            (t                    . "%d/%m/%Y")))
 
-    (set-face-underline 'gnus-summary-selected nil)
-    (set-face-background 'gnus-summary-selected "LightGrey"))
+    ;; 3-column layout: date | from | subject (full subject always shown)
+    (setq gnus-summary-line-format "%-10,10&user-date;  %-25,25f  %B%S\n")
+
+    ;; minimal thread tree
+    (setq gnus-sum-thread-tree-indent          "  ")
+    (setq gnus-sum-thread-tree-root            "")
+    (setq gnus-sum-thread-tree-false-root      "")
+    (setq gnus-sum-thread-tree-single-indent   "")
+    (setq gnus-sum-thread-tree-vertical        "│ ")
+    (setq gnus-sum-thread-tree-leaf-with-other "├─ ")
+    (setq gnus-sum-thread-tree-single-leaf     "└─ ")
+
+    ;; column headers + keybindings
+    (add-hook 'gnus-summary-mode-hook
+              (lambda ()
+                (hl-line-mode 1)
+                (setq header-line-format
+                      (format " %-10s  %-25s  %s" "Date" "From" "Subject"))
+                (local-set-key (kbd "RET")
+                               (lambda ()
+                                 (interactive)
+                                 (gnus-summary-select-article)
+                                 (let ((w (get-buffer-window gnus-article-buffer)))
+                                   (when w (select-window w)))))))
+
+    ;; selected row: theme hl-line color, no underline
+    (set-face-attribute 'gnus-summary-selected nil
+                        :background "#d3d2d1"
+                        :underline nil))
 #+end_src
 
 * Libs
@@ -1133,6 +1218,7 @@ Corfu completion
   ;; full screen magit-status
   (advice-add 'magit-status :around
               (lambda (orig-fun &rest args)
+                (interactive)
                 (window-configuration-to-register :magit-fullscreen)
                 (apply orig-fun args)
                 (delete-other-windows)))
@@ -1219,11 +1305,178 @@ Corfu completion
 #+begin_src emacs-lisp
   (use-package diminish)
 
-  (use-package doom-modeline
-    :defer t
-    :init (doom-modeline-mode 1)
-    (setq doom-modeline-env-version nil)
-    (setq doom-modeline-major-mode-color-icon t))
+  (defface jxx/ml-filename  '((t :background "#e2e2e5" :foreground "#4c4c4c" :weight bold)) "")
+  (defface jxx/ml-modified  '((t :background "#e2e2e5" :foreground "#d08689" :weight bold)) "")
+  (defface jxx/ml-mode      '((t :background "#e2e2e5" :foreground "#4c4c4c")) "")
+  (defface jxx/ml-diag-err  '((t :background "#d08689" :foreground "#ffffff" :weight bold)) "")
+  (defface jxx/ml-diag-warn '((t :background "#c9a227" :foreground "#ffffff")) "")
+  (defface jxx/ml-diag-ok   '((t :background "#8aa234" :foreground "#ffffff")) "")
+
+  ;; ── diagnostics ivy list ────────────────────────────────────────────────
+
+  (defun jxx/ml-show-diagnostics ()
+    (interactive)
+    (let ((buf (current-buffer)) candidates)
+      (cond
+       ((and (bound-and-true-p flycheck-mode) flycheck-current-errors)
+        (setq candidates
+              (mapcar (lambda (e)
+                        (propertize (format "%s %4d:%-3d %s"
+                                           (pcase (flycheck-error-level e) ('error "!") ('warning "~") (_ "·"))
+                                           (flycheck-error-line e)
+                                           (or (flycheck-error-column e) 0)
+                                           (flycheck-error-message e))
+                                    'jxx-e e))
+                      flycheck-current-errors)))
+       ((and (bound-and-true-p flymake-mode) (not (bound-and-true-p flycheck-mode))
+             (fboundp 'flymake-diagnostics))
+        (setq candidates
+              (mapcar (lambda (d)
+                        (let ((sev (flymake--lookup-type-property (flymake-diagnostic-type d)
+                                                                  'severity (warning-numeric-level :error))))
+                          (propertize (format "%s %4d  %s"
+                                             (cond ((> sev (warning-numeric-level :warning)) "!")
+                                                   ((> sev (warning-numeric-level :debug))   "~")
+                                                   (t "·"))
+                                             (line-number-at-pos (flymake-diagnostic-beg d))
+                                             (flymake-diagnostic-text d))
+                                      'jxx-d d)))
+                      (flymake-diagnostics)))))
+      (if (null candidates)
+          (message "No diagnostics")
+        (ivy-read "Diagnostics: " candidates
+                  :action (lambda (c)
+                            (with-current-buffer buf
+                              (if-let* ((e (get-text-property 0 'jxx-e c)))
+                                  (progn (goto-char (point-min))
+                                         (forward-line (1- (flycheck-error-line e)))
+                                         (move-to-column (max 0 (1- (or (flycheck-error-column e) 1)))))
+                                (when-let* ((d (get-text-property 0 'jxx-d c)))
+                                  (goto-char (flymake-diagnostic-beg d))))))
+                  :caller 'jxx/ml-show-diagnostics))))
+
+  (defvar jxx/ml-diag-map
+    (let ((m (make-sparse-keymap)))
+      (define-key m [mode-line mouse-1] #'jxx/ml-show-diagnostics) m))
+
+  ;; ── diagnostics segment ─────────────────────────────────────────────────
+
+  (defun jxx/ml--diag (face str)
+    (propertize str 'face face 'local-map jxx/ml-diag-map 'mouse-face 'mode-line-highlight))
+
+  (defun jxx/ml--flycheck ()
+    (when (bound-and-true-p flycheck-mode)
+      (pcase flycheck-last-status-change
+        ('running  (jxx/ml--diag 'jxx/ml-mode " … "))
+        ('finished
+         (let ((e 0) (w 0) (i 0))
+           (mapc (lambda (x)
+                   (pcase (flycheck-error-level-compilation-level (car x))
+                     (2 (cl-incf e (cdr x))) (1 (cl-incf w (cdr x))) (0 (cl-incf i (cdr x)))))
+                 (flycheck-count-errors flycheck-current-errors))
+           (cond ((> e 0) (jxx/ml--diag 'jxx/ml-diag-err  " ! "))
+                 ((> w 0) (jxx/ml--diag 'jxx/ml-diag-warn " ~ "))
+                 ((> i 0) (jxx/ml--diag 'jxx/ml-diag-warn " · "))
+                 (t       (jxx/ml--diag 'jxx/ml-diag-ok   " ✓ ")))))
+        (_ nil))))
+
+  (defun jxx/ml--flymake ()
+    (when (and (bound-and-true-p flymake-mode) (not (bound-and-true-p flycheck-mode))
+               (fboundp 'flymake-diagnostics))
+      (let ((wl (warning-numeric-level :warning)) (nl (warning-numeric-level :debug))
+            (e 0) (w 0))
+        (dolist (d (flymake-diagnostics))
+          (let ((s (flymake--lookup-type-property (flymake-diagnostic-type d)
+                                                  'severity (warning-numeric-level :error))))
+            (cond ((> s wl) (cl-incf e)) ((> s nl) (cl-incf w)))))
+        (jxx/ml--diag (cond ((> e 0) 'jxx/ml-diag-err) ((> w 0) 'jxx/ml-diag-warn) (t 'jxx/ml-diag-ok))
+                      (cond ((> e 0) " ! ") ((> w 0) " ~ ") (t " ✓ "))))))
+
+  ;; ── path ────────────────────────────────────────────────────────────────
+
+  (defun jxx/ml-shrink-path (file)
+    (if (not file) (buffer-name)
+      (let* ((home  (expand-file-name "~"))
+             (root  (when (fboundp 'project-current)
+                      (when-let* ((p (project-current nil (file-name-directory file))))
+                        (expand-file-name (project-root p)))))
+             (fname (file-name-nondirectory file))
+             (shrink (lambda (ps) (mapconcat (lambda (d) (substring d 0 1)) ps "/"))))
+        (if root
+            (let* ((parts (seq-filter #'identity
+                                      (split-string (or (file-name-directory (file-relative-name file root)) "") "/" t)))
+                   (proj  (file-name-nondirectory (directory-file-name root))))
+              (if parts (format "%s/%s/%s" proj (funcall shrink parts) fname)
+                (format "%s/%s" proj fname)))
+          (let* ((abbrev (if (string-prefix-p home file) (concat "~" (substring file (length home))) file))
+                 (parts  (seq-filter #'identity (split-string (or (file-name-directory abbrev) "") "/" t)))
+                 (last   (car (last parts))))
+            (cond ((> (length parts) 1) (format "%s/%s/%s" (funcall shrink (butlast parts)) last fname))
+                  (last (format "%s/%s" last fname))
+                  (t fname)))))))
+
+  ;; ── path + icon cache ───────────────────────────────────────────────────
+
+  (defvar-local jxx/ml--path nil)
+  (defvar-local jxx/ml--icon :unset)
+
+  (defun jxx/ml--reset-path-cache ()
+    (setq jxx/ml--path nil jxx/ml--icon :unset))
+
+  (add-hook 'find-file-hook  #'jxx/ml--reset-path-cache)
+  (add-hook 'after-save-hook #'jxx/ml--reset-path-cache)
+
+  (defun jxx/ml--compute-icon ()
+    (let ((ic (condition-case nil
+                  (if (buffer-file-name)
+                      (and (fboundp 'all-the-icons-icon-for-file) (all-the-icons-icon-for-file (buffer-file-name)))
+                    (and (fboundp 'all-the-icons-icon-for-mode) (all-the-icons-icon-for-mode major-mode)))
+                (error nil))))
+      (when (and ic (not (string-empty-p ic)))
+        (let* ((p (get-text-property 0 'face ic)) (s (copy-sequence ic)))
+          (put-text-property 0 (length s) 'face
+                             `(:background ,(face-background 'jxx/ml-mode nil t)
+                               :foreground ,(or (and (listp p) (plist-get p :foreground)) (face-foreground 'default nil t))
+                               :weight normal
+                               ,@(when (and (listp p) (plist-get p :family)) `(:family ,(plist-get p :family)))
+                               ,@(when (and (listp p) (plist-get p :height)) `(:height ,(plist-get p :height))))
+                             s) s))))
+
+  ;; ── moody setup ─────────────────────────────────────────────────────────
+
+  (use-package moody
+    :demand t
+    :config
+    (setq x-underline-at-descent-line t)
+    ;; Remove box, wire overline/underline so moody can draw raised tabs.
+    ;; Done after theme load so face colours are resolved.
+    (set-face-attribute 'mode-line          nil :background "#e2e2e5" :box nil :overline nil :underline nil)
+    (set-face-attribute 'mode-line-inactive nil :background "#e2e2e5" :box nil :overline nil :underline nil))
+
+  ;; ── format ──────────────────────────────────────────────────────────────
+
+  (setq-default mode-line-format
+                '("%e" (:eval
+                  (condition-case err
+                    (let* ((modified (and (buffer-file-name) (buffer-modified-p)))
+                           (_   (when (eq jxx/ml--icon :unset) (setq jxx/ml--icon (jxx/ml--compute-icon))))
+                           (_   (unless jxx/ml--path (setq jxx/ml--path (jxx/ml-shrink-path (buffer-file-name)))))
+                           (fly (or (jxx/ml--flycheck) (jxx/ml--flymake) "")))
+                      ;; moody-tab returns a list; use list here so mode-line engine
+                      ;; recurses into it rather than concat treating it as chars
+                      (list
+                       fly
+                       (propertize " " 'display '(space :width 4) 'face 'jxx/ml-mode)
+                       (moody-tab
+                        (concat
+                         (when jxx/ml--icon
+                           (concat (propertize " " 'face 'jxx/ml-mode) jxx/ml--icon (propertize " " 'face 'jxx/ml-mode)))
+                         (propertize (format " %s " jxx/ml--path)
+                                     'face (if modified 'jxx/ml-modified 'jxx/ml-filename)
+                                     'help-echo (or (buffer-file-name) (buffer-name))))
+                        nil 'up)
+                       (propertize (format-mode-line " %l:%c ") 'face '(:inherit jxx/ml-mode :weight normal))))
+                  (error (format " [ml-err: %s] " (error-message-string err)))))))
 #+end_src
 
 * Navigation
@@ -1461,6 +1714,8 @@ Auto-install tree-sitter grammars for all languages.
     (eglot-autoshutdown t)         ;; shut down server when no buffers use it
     (eglot-sync-connect nil)       ;; don't block on connection
     (eglot-extend-to-xref t)       ;; let xref use eglot for non-project files
+    (eglot-code-action-indications '(eldoc-hint margin))
+    (eglot-code-action-indicator "💡")
     :config
     ;; Ruby: use the nearest Gemfile directory as the eglot project root.
     ;; This ensures ruby-lsp receives the correct rootUri and workspace.
@@ -1475,8 +1730,76 @@ Auto-install tree-sitter grammars for all languages.
 
     (add-to-list 'project-find-functions #'jxx/ruby-lsp-project-find)
 
+    (defvar jxx/ruby-lsp--excluded-gems-cache (make-hash-table :test #'equal)
+      "Cache of Gemfile.lock mtime to excluded gem vector.")
+
+    (defun jxx/ruby-lsp--excluded-gems (root)
+      "Return a vector of locked gem names for ROOT."
+      (let* ((lockfile (expand-file-name "Gemfile.lock" root))
+             (mtime (when (file-exists-p lockfile)
+                      (file-attribute-modification-time (file-attributes lockfile))))
+             (cached (gethash root jxx/ruby-lsp--excluded-gems-cache)))
+        (if (and cached (equal (car cached) mtime))
+            (cdr cached)
+          (let ((default-directory root))
+            (with-temp-buffer
+              (if (zerop (process-file "bundle" nil t nil
+                                       "exec" "ruby" "-e"
+                                       "puts Bundler.locked_gems.specs.map(&:name).uniq.sort"))
+                  (let* ((lines (split-string (buffer-string) "\n" t))
+                         (gems (vconcat (seq-filter
+                                         (lambda (line)
+                                           (string-match-p "\\`[[:alnum:]_.-]+\\'" line))
+                                         lines))))
+                    (puthash root (cons mtime gems) jxx/ruby-lsp--excluded-gems-cache)
+                    gems)
+                []))))))
+
+    (defun jxx/ruby-lsp-contact (_interactive project)
+      "Build Eglot CONTACT for Ruby LSP with indexing options."
+      (let* ((root (expand-file-name (project-root project)))
+             (bundle-path (expand-file-name "vendor/bundle" root))
+             (excluded-gems (jxx/ruby-lsp--excluded-gems root)))
+        `("env" ,(format "BUNDLE_PATH=%s" bundle-path)
+          "RUBY_LSP_BYPASS_TYPECHECKER=true"
+          "bundle" "exec" "ruby-lsp"
+          :initializationOptions
+          (:formatter "none"
+           :linters []
+           :enabledFeatures (:diagnostics :json-false
+                             :formatting :json-false
+                             :onTypeFormatting :json-false)
+           :indexing (:excludedGems ,excluded-gems
+                      :excludedPatterns ["**/vendor/**/*"
+                                         "**/node_modules/**/*"
+                                         "**/tmp/**/*"
+                                         "**/log/**/*"
+                                         "**/public/assets/**/*"
+                                         "**/sorbet/**/*"
+                                         "**/spec/**/*"
+                                         "**/test/**/*"])))))
+
+    ;; Ruby LSP may register file watchers that are expensive to install on
+    ;; large repos. Skip the general and add-on watchers.
+    (defun jxx/eglot-skip-selected-ruby-watchers (orig-fn server method id &rest params)
+      "Skip selected Ruby watcher capabilities registered via Eglot."
+      (if (and (eq method 'workspace/didChangeWatchedFiles)
+               (member id '("workspace-watcher"
+                            "rubocop-watcher"
+                            "workspace/didChangeWatchedFilesRails"
+                            "workspace/didChangeWatchedFilesRuboCop")))
+          nil
+        (apply orig-fn server method id params)))
+
+    (unless (advice-member-p #'jxx/eglot-skip-selected-ruby-watchers
+                             'eglot-register-capability)
+      (advice-add 'eglot-register-capability
+                  :around
+                  #'jxx/eglot-skip-selected-ruby-watchers))
+
     (add-to-list 'eglot-server-programs
-                 '((ruby-ts-mode ruby-mode) . ("bundle" "exec" "ruby-lsp")))
+                 '((ruby-ts-mode ruby-mode) . jxx/ruby-lsp-contact))
+
     ;; Re-enable font-lock after eglot managed mode activates.
     ;; gopls declares semanticTokensProvider, which causes eglot to call
     ;; (font-lock-mode -1) during setup and sometimes fail to re-enable it.
@@ -1489,7 +1812,8 @@ Auto-install tree-sitter grammars for all languages.
     (setq-default eglot-workspace-configuration
                   '((:gopls . ((gofumpt . t)
                                (analyses . ((shadow . t)
-                                            (simplifycompositelit . :json-false))))))))
+                                            (simplifycompositelit . :json-false)))))))
+  )
 #+end_src
 
 * Ruby
@@ -1522,6 +1846,47 @@ Auto-install tree-sitter grammars for all languages.
     (global-rbenv-mode))
 
   (with-eval-after-load 'flycheck
+    (defvar-local jxx/flycheck-run-sorbet-next-check nil
+      "Non-nil means run Sorbet on the next Flycheck pass.")
+
+    (defun jxx/flycheck-enable-sorbet-next-check ()
+      "Enable Sorbet for the next Flycheck run in current buffer."
+      (setq-local jxx/flycheck-run-sorbet-next-check t))
+
+    (defun jxx/flycheck-run-sorbet ()
+      "Manually trigger a Flycheck run that includes Sorbet once."
+      (interactive)
+      (jxx/flycheck-enable-sorbet-next-check)
+      (flycheck-buffer))
+
+    (defun jxx/flycheck-run-sorbet-after-save ()
+      "Run Flycheck (including Sorbet) after saving a Ruby buffer."
+      (when (and (derived-mode-p 'ruby-ts-mode 'ruby-mode)
+                 (bound-and-true-p flycheck-mode))
+        (jxx/flycheck-enable-sorbet-next-check)
+        (flycheck-buffer)))
+
+    (defun jxx/flycheck-dedup-error-list (errors)
+      "Remove duplicate errors (same file, line, message) from ERRORS."
+      (cl-remove-duplicates
+       errors
+       :test (lambda (a b)
+               (and (equal (flycheck-error-filename a) (flycheck-error-filename b))
+                    (equal (flycheck-error-line     a) (flycheck-error-line     b))
+                    (equal (flycheck-error-message  a) (flycheck-error-message  b))))))
+
+    ;; Filter args before overlay creation — fixes duplicate hover text in minibuffer
+    (advice-add 'flycheck-display-errors :filter-args
+                (lambda (args) (list (jxx/flycheck-dedup-error-list (car args)))))
+
+    ;; Dedup the final accumulated list after all checkers finish — fixes modeline count
+    (add-hook 'flycheck-after-syntax-check-hook
+              (lambda ()
+                (setq flycheck-current-errors
+                      (jxx/flycheck-dedup-error-list flycheck-current-errors))
+                (when (derived-mode-p 'ruby-ts-mode 'ruby-mode)
+                  (setq-local jxx/flycheck-run-sorbet-next-check nil))))
+
     (flycheck-add-mode 'ruby-rubocop 'ruby-ts-mode)
     ;; Run rubocop via "bundle exec" using the rbenv shim (bypasses PATH issues)
     (add-hook 'ruby-ts-mode-hook
@@ -1545,16 +1910,18 @@ Auto-install tree-sitter grammars for all languages.
       :modes (ruby-ts-mode ruby-mode)
       :predicate
       (lambda ()
-        (locate-dominating-file default-directory "sorbet")))
+        (and jxx/flycheck-run-sorbet-next-check
+             (locate-dominating-file default-directory "sorbet"))))
 
-    ;; Chain sorbet after rubocop (runs regardless of rubocop result)
-    (add-to-list 'flycheck-checkers 'ruby-sorbet t)  ;; append so ruby-rubocop stays first
-    (flycheck-add-next-checker 'ruby-rubocop '(t . ruby-sorbet))
+    (add-to-list 'flycheck-checkers 'ruby-sorbet t)
+    ;; append=t uses member-check, preventing duplicate entries on config re-eval
+    (flycheck-add-next-checker 'ruby-rubocop '(t . ruby-sorbet) t)
 
     ;; Use bundle exec for rubocop — skip if command already starts with bundle.
     (add-hook 'ruby-ts-mode-hook
               (lambda ()
                 (when (locate-dominating-file default-directory "Gemfile")
+                  (add-hook 'after-save-hook #'jxx/flycheck-run-sorbet-after-save nil t)
                   (setq-local flycheck-command-wrapper-function
                               (lambda (cmd)
                                 (if (equal (file-name-nondirectory (car cmd)) "bundle")
@@ -1715,37 +2082,29 @@ Open gopher and gemini links in elpher
 
 #+begin_src emacs-lisp
   (use-package elfeed-protocol)
-#+end_src
 
-#+begin_src emacs-lisp
   (use-package elfeed
     :commands (elfeed)
     :config
     (setq elfeed-db-directory "~/.elfeed")
     (setq elfeed-enclosure-default-dir (expand-file-name "~/Downloads"))
+    (setq elfeed-use-curl t)
+    (elfeed-set-timeout 3600)
+    (setq elfeed-curl-extra-arguments '("--insecure"))
+    (setq-default elfeed-search-filter "+unread ")
     (advice-add #'elfeed-insert-html
                 :around
                 (lambda (fun &rest r)
                   (let ((shr-use-fonts nil))
-                    (apply fun r)))))
-
-  ;; curl recommend
-  (setq elfeed-use-curl t)
-  (elfeed-set-timeout 3600)
-  (setq elfeed-curl-extra-arguments '("--insecure")) ;necessary for https without a trust certificate
-
-  ;; declare my freshrss server using the fever protocol
-  (let ((freshrss-url "https://rss.typed-hole.org/p/api/fever.php"))
-    (setq elfeed-protocol-feeds (list
-                                 (list "fever+https://julien@rss.typed-hole.org"
-                                       :api-url freshrss-url
-                                       :password (jxx-netrc-get freshrss-url "password")))))
-
-  (setq elfeed-protocol-fever-update-unread-only t)
-  (setq-default elfeed-search-filter "+unread ")
-
-  ;; enable elfeed-protocol
-  (elfeed-protocol-enable)
+                    (apply fun r))))
+    (require 'elfeed-protocol)
+    (let ((freshrss-url "https://rss.typed-hole.org/p/api/fever.php"))
+      (setq elfeed-feeds (list
+                          (list "fever+https://julien@rss.typed-hole.org"
+                                :api-url freshrss-url
+                                :password (jxx-netrc-get freshrss-url "password")))))
+    (setq elfeed-protocol-fever-update-unread-only t)
+    (elfeed-protocol-enable))
 #+end_src
 
 Use B to browse article in gui browser instead of eww.
@@ -1757,7 +2116,23 @@ Use B to browse article in gui browser instead of eww.
     (let ((browse-url-generic-program "/usr/bin/xdg-open"))
       (elfeed-show-visit t)))
 
+  (add-hook 'elfeed-show-mode-hook
+            (lambda () (setq-local browse-url-browser-function #'eww-browse-url)))
+
   (define-key elfeed-show-mode-map (kbd "B") 'jxx/elfeed-show-visit-gui)
+  (define-key elfeed-show-mode-map (kbd "b") 'elfeed-show-visit)
+
+  (defun jxx/elfeed-purge (&optional days)
+    "Delete entries older than DAYS (default 90) that are not starred."
+    (interactive "P")
+    (let* ((days (or days 90))
+           (cutoff (- (float-time) (* days 24 60 60)))
+           (to-delete (cl-loop for entry being the hash-values of elfeed-db-entries
+                               when (and (< (elfeed-entry-date entry) cutoff)
+                                         (not (elfeed-tagged-p 'star entry)))
+                               collect entry)))
+      (elfeed-db-delete to-delete)
+      (message "Purged %d entries older than %d days" (length to-delete) days)))
 #+end_src
 
 * LLM

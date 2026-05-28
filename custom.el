@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -12,26 +13,66 @@
      default))
  '(org-agenda-files nil)
  '(package-selected-packages
-   '(ace-jump-mode agent-shell ai-code all-the-icons-ivy anzu
-                   backward-forward bazel cape cargo citre claude-code
-                   company consult-eglot copilot corfu-prescient
-                   counsel-projectile crux dap-mode dape dashboard
-                   deft delight devcontainer devdocs diminish
-                   directory-slideshow dired-git-info diredfl
-                   doom-modeline dumb-jump elfeed-protocol ellama
-                   elpher emojify exec-path-from-shell expand-region
-                   flycheck-rust flymake-racket focus gist git-gutter
-                   golden-ratio ivy-hydra ivy-lobsters ivy-prescient
-                   js2-mode lorem-ipsum lsp-ivy lsp-ui magit mastodon
-                   mathjax minions minuet moody mu4e-alert
-                   mu4e-column-faces multi-term nano-modeline
-                   org-download org-present org-roam org-superstar
-                   pgmacs popwin protobuf-ts-mode racket-mode rbenv
-                   robe rspec-mode ruby-tools rustic smartparens smex
-                   soft-morning-theme solaire-mode svelte-mode svg-lib
-                   tempel tree-sitter treesit-auto typescript-mode
-                   undo-tree unkillable-scratch vue-mode websocket
-                   wrap-region yaml-mode yasnippet))
+   '(ace-jump-mode agent-shell all-the-icons-ivy anzu backward-forward
+                   cape cargo copilot corfu counsel crux deft delight
+                   diminish dired-git-info diredfl dumb-jump
+                   elfeed-protocol elpher emojify exec-path-from-shell
+                   expand-region flycheck-rust focus forge gist
+                   git-gutter golden-ratio ivy-hydra ivy-prescient
+                   mastodon moody mu4e-alert mu4e-column-faces
+                   multi-term multiple-cursors nerd-icons org-download
+                   org-roam org-superstar popwin pulsar rbenv
+                   rspec-mode ruby-tools rustic smartparens smex
+                   soft-morning-theme treesit-auto typescript-mode
+                   undo-tree unkillable-scratch wrap-region))
+ '(safe-local-variable-values
+   '((eglot-workspace-configuration lambda (arg)
+                                    (when
+                                        (string-match-p "gopls"
+                                                        (format "%s"
+                                                                (or
+                                                                 arg
+                                                                 "")))
+                                      (list
+                                       (cons "gopls"
+                                             (list
+                                              (intern
+                                               ":build.directoryFilters")
+                                              (vector "-bazel-bin"
+                                                      "-bazel-out"
+                                                      "-bazel-testlogs"
+                                                      "-bazel-entropy")
+                                              (intern ":build.env")
+                                              (list
+                                               (intern ":GOFLAGS")
+                                               "-mod=mod")
+                                              (intern
+                                               ":formatting.gofumpt")
+                                              t
+                                              (intern
+                                               ":formatting.local")
+                                              "github.com/livestorm/entropy"
+                                              (intern
+                                               ":ui.semanticTokens")
+                                              t
+                                              (intern ":ui.codelenses")
+                                              (list
+                                               (intern ":gc_details")
+                                               :json-false
+                                               (intern
+                                                ":regenerate_cgo")
+                                               :json-false
+                                               (intern ":generate")
+                                               :json-false
+                                               (intern ":test")
+                                               :json-false
+                                               (intern ":tidy")
+                                               :json-false
+                                               (intern
+                                                ":upgrade_dependency")
+                                               :json-false
+                                               (intern ":vendor")
+                                               :json-false))))))))
  '(smtpmail-smtp-server "mail.typed-hole.org")
  '(smtpmail-smtp-service 25))
 (custom-set-faces
