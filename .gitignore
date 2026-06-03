@@ -11,3 +11,4 @@ auto-save-list
 /transient/
 /recentf
 /.agent-shell/
+tree-sitter/libtree-sitter-Go.so
