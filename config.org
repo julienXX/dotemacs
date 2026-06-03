@@ -30,10 +30,8 @@ your GNU Emacs.
   (setq create-lockfiles nil)
 #+end_src
 
-Require netrc to read secrets from ~/.netrc
-
 #+begin_src emacs-lisp
-  (require 'netrc)
+  (require 'auth-source)
 #+end_src
 
 * Packages config
@@ -139,11 +137,12 @@ Edit this file
   (global-set-key (kbd "C-c I") 'find-config)
 #+end_src
 
-Extract value from .netrc
-
 #+begin_src emacs-lisp
-  (defun jxx-netrc-get (machine key)
-    (netrc-get (netrc-machine (netrc-parse "~/.netrc") machine) key))
+  (defun jxx-auth-source-get (host)
+    (let ((secret (plist-get
+                   (car (auth-source-search :host host :require '(:secret)))
+                   :secret)))
+      (when secret (if (functionp secret) (funcall secret) secret))))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -459,6 +458,12 @@ Make it prettier.
   ;; Mu4e general settings
   (setq mail-user-agent 'mu4e-user-agent ;; Use mu4e as default Emacs mail agent
         mu4e-maildir "~/Maildir"
+        ;; Explicit identities used by mu4e for address classification/reply logic.
+        mu4e-personal-addresses
+        '("julien@typed-hole.org"
+          "julien@sideburns.eu"
+          "julien.blanchard75@gmail.com"
+          "julien.blanchard@livestorm.co")
 
         ;; Use mbsync for mail sync
         mu4e-get-mail-command "mbsync -a"
@@ -534,7 +539,8 @@ Make it prettier.
             ;; We match based on the contact-fields of the message
             :match-func (lambda (msg)
                           (when msg
-                            (mu4e-message-contact-field-matches msg :to "julien@typed-hole.org")))
+                            (or (mu4e-message-contact-field-matches msg :to "julien@typed-hole.org")
+                                (mu4e-message-contact-field-matches msg :from "julien@typed-hole.org"))))
             :vars '((user-mail-address . "julien@typed-hole.org")
                     (user-full-name . "Julien Blanchard")
                     (mu4e-drafts-folder . "/TypedHole/Drafts")
@@ -555,7 +561,8 @@ Make it prettier.
             ;; We match based on the contact-fields of the message
             :match-func (lambda (msg)
                           (when msg
-                            (mu4e-message-contact-field-matches msg :to "julien@sideburns.eu")))
+                            (or (mu4e-message-contact-field-matches msg :to "julien@sideburns.eu")
+                                (mu4e-message-contact-field-matches msg :from "julien@sideburns.eu"))))
             :vars '((user-mail-address . "julien@sideburns.eu")
                     (user-full-name . "Julien Blanchard")
                     (mu4e-drafts-folder . "/Sideburns/Drafts")
@@ -575,19 +582,42 @@ Make it prettier.
             :leave-func (lambda () (mu4e-message "Leaving Gmail context"))
             :match-func (lambda (msg)
                           (when msg
-                            (mu4e-message-contact-field-matches msg :to "julien.blanchard75@gmail.com")))
+                            (or (mu4e-message-contact-field-matches msg :to "julien.blanchard75@gmail.com")
+                                (mu4e-message-contact-field-matches msg :from "julien.blanchard75@gmail.com"))))
             :vars '((user-mail-address . "julien.blanchard75@gmail.com")
                     (user-full-name . "Julien Blanchard")
                     (mu4e-compose-signature . (concat "Liwen Knight-Zhang | +44 (0)7894 222 323\n"))
                     (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
-                    (mu4e-sent-folder . "/Gmail/[Gmail]/Sent Mail")
-                    (mu4e-trash-folder . "/Gmail/[Gmail]/Trash")
-                    (jxx-mu4e-junk-folder . "/Gmail/[Gmail]/Trash")
+                    (mu4e-sent-folder . "/Gmail/Sent Mail")
+                    (mu4e-trash-folder . "/Gmail/Trash")
+                    (jxx-mu4e-junk-folder . "/Gmail/Trash")
                     (mu4e-refile-folder . "/Gmail/All Mail")
                     (smtpmail-smtp-server . "smtp.gmail.com")
                     (smtpmail-smtp-user . "julien.blanchard75@gmail.com")
                     (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))))))
+                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))
+                    (smtpmail-default-smtp-server . "smtp.gmail.com")))
+
+          ,(make-mu4e-context
+            :name "livestorm"
+            :enter-func (lambda () (mu4e-message "Entering Livestorm context"))
+            :leave-func (lambda () (mu4e-message "Leaving Livestorm context"))
+            :match-func (lambda (msg)
+                          (when msg
+                            (or (mu4e-message-contact-field-matches msg :to "julien.blanchard@livestorm.co")
+                                (mu4e-message-contact-field-matches msg :from "julien.blanchard@livestorm.co"))))
+            :vars '((user-mail-address . "julien.blanchard@livestorm.co")
+                    (user-full-name . "Julien Blanchard")
+                    (mu4e-drafts-folder . "/Livestorm/Drafts")
+                    (mu4e-sent-folder . "/Livestorm/Sent Mail")
+                    (mu4e-trash-folder . "/Livestorm/Trash")
+                    (jxx-mu4e-junk-folder . "/Livestorm/Trash")
+                    (mu4e-refile-folder . "/Livestorm/All Mail")
+                    (smtpmail-smtp-server . "smtp.gmail.com")
+                    (smtpmail-smtp-user . "julien.blanchard@livestorm.co")
+                    (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
+                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard@livestorm.co" nil)))
+                    (smtpmail-default-smtp-server . "smtp.gmail.com")))))
 
   (defun jxx/mu4e-get-junk-folder (&optional msg)
     "Return the junk folder for MSG based on its context."
@@ -612,6 +642,7 @@ Make it prettier.
     (let ((maildir (mu4e-message-field msg :maildir)))
       (cond
        ((string-prefix-p "/Gmail" maildir)     "/Gmail/All Mail")
+       ((string-prefix-p "/Livestorm" maildir) "/Livestorm/All Mail")
        ((string-prefix-p "/TypedHole" maildir) "/TypedHole/Archive")
        ((string-prefix-p "/Sideburns" maildir) "/Sideburns/Archive")
        (t (mu4e-error "No archive folder for maildir: %s" maildir)))))
@@ -634,7 +665,7 @@ Make it prettier.
 
   (add-to-list 'mu4e-bookmarks
                '( :name  "Inbox"
-                  :query "m:/Gmail/Inbox OR m:/Sideburns/INBOX OR m:/TypedHole/INBOX"
+                  :query "m:/Gmail/Inbox OR m:/Livestorm/Inbox OR m:/Sideburns/INBOX OR m:/TypedHole/INBOX"
                   :key   ?i))
 
   ;; Keep the default unread shortcut (`u`) focused on inboxes only.
@@ -644,7 +675,7 @@ Make it prettier.
                    mu4e-bookmarks)))
     (when unread-bookmark
       (setf (plist-get unread-bookmark :query)
-            "flag:unread AND NOT flag:trashed AND (maildir:/Gmail/Inbox OR maildir:/Sideburns/INBOX OR maildir:/TypedHole/INBOX)")))
+            "flag:unread AND NOT flag:trashed AND (maildir:/Gmail/Inbox OR maildir:/Livestorm/Inbox OR maildir:/Sideburns/INBOX OR maildir:/TypedHole/INBOX)")))
 
   (set-face-underline 'mu4e-header-highlight-face nil)
 
@@ -2102,7 +2133,7 @@ Open gopher and gemini links in elpher
       (setq elfeed-feeds (list
                           (list "fever+https://julien@rss.typed-hole.org"
                                 :api-url freshrss-url
-                                :password (jxx-netrc-get freshrss-url "password")))))
+                                :password (jxx-auth-source-get "rss.typed-hole.org")))))
     (setq elfeed-protocol-fever-update-unread-only t)
     (elfeed-protocol-enable))
 #+end_src
