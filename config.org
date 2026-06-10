@@ -426,6 +426,9 @@ Edit this file
 Load mu4e.
 
 #+begin_src emacs-lisp
+  ;; Use Emacs minibuffer for GPG passphrase (needed for .authinfo.gpg).
+  (setq epg-pinentry-mode 'loopback)
+
   (use-package mu4e
     :ensure nil
     :defer t
