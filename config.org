@@ -2097,6 +2097,7 @@ Browse everything with EWW
 
 #+begin_src emacs-lisp
   ;; (setq browse-url-browser-function 'eww-browse-url)
+  (setq shr-use-fonts nil)
 #+end_src
 
 Open gopher and gemini links in elpher
