@@ -2137,7 +2137,7 @@ Open gopher and gemini links in elpher
       (setq elfeed-feeds (list
                           (list "fever+https://julien@rss.typed-hole.org"
                                 :api-url freshrss-url
-                                :password (jxx-auth-source-get "rss.typed-hole.org")))))
+                                :password (lambda () (jxx-auth-source-get "rss.typed-hole.org"))))))
     (setq elfeed-protocol-fever-update-unread-only t)
     (elfeed-protocol-enable))
 #+end_src
