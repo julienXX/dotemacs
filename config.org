@@ -32,6 +32,9 @@ your GNU Emacs.
 
 #+begin_src emacs-lisp
   (require 'auth-source)
+  ;; Ask for the GPG passphrase in the minibuffer, not a GUI pinentry popup.
+  ;; Set early so it applies to the first .authinfo.gpg decryption (e.g. org-gcal).
+  (setq epg-pinentry-mode 'loopback)
 #+end_src
 
 * Packages config
@@ -330,7 +333,7 @@ Edit this file
 
 ** org-roam
 #+begin_src emacs-lisp
-  (setq org-directory (concat (getenv "HOME") "/Documents/org-roam/"))
+  (setq org-directory (concat (getenv "HOME") "/org-roam/"))
   (setq org-roam-dailies-directory "journal/")
 
   ;; Improve org mode looks
@@ -354,7 +357,8 @@ Edit this file
            ("C-M-i" . completion-at-point)
            :map org-roam-dailies-map
            ("Y" . org-roam-dailies-capture-yesterday)
-           ("T" . org-roam-dailies-capture-tomorrow))
+           ("T" . org-roam-dailies-capture-tomorrow)
+           ("a" . my/org-roam-daily-insert-agenda))
     :bind-keymap
     ("C-c n d" . org-roam-dailies-map)
     :config
@@ -379,8 +383,55 @@ Edit this file
         (when tasks
           (mapconcat #'identity (nreverse tasks) "")))))
 
+  (defun my/org-agenda-today-string (&optional date)
+    "Return DATE's agenda entries as `* MEETING' headings (a string), or nil.
+  DATE is a calendar list (MONTH DAY YEAR); defaults to today.  Files in
+  `org-agenda-files' that do not exist yet are skipped."
+    (require 'org-agenda)
+    (let* ((date (or date (calendar-current-date)))
+           (m (nth 0 date)) (d (nth 1 date)) (y (nth 2 date))
+           entries)
+      (dolist (file (org-agenda-files))
+        (when (file-exists-p file)
+          (setq entries (append entries
+                                (org-agenda-get-day-entries
+                                 file date :timestamp :scheduled :deadline)))))
+      (setq entries (sort entries
+                          (lambda (a b)
+                            (< (or (get-text-property 0 'time-of-day a) 0)
+                               (or (get-text-property 0 'time-of-day b) 0)))))
+      (when entries
+        (mapconcat
+         (lambda (e)
+           (let* ((time (get-text-property 0 'time-of-day e))
+                  (txt  (substring-no-properties (get-text-property 0 'txt e)))
+                  (hh   (and time (/ time 100)))
+                  (mm   (and time (% time 100)))
+                  (ts   (format-time-string
+                         (if time "<%Y-%m-%d %a %H:%M>" "<%Y-%m-%d %a>")
+                         (encode-time 0 (or mm 0) (or hh 0) d m y))))
+             (format "** MEETING %s\n%s" txt ts)))
+         entries "\n"))))
+
+  (defun my/org-roam-daily-insert-agenda ()
+    "Insert today's agenda as MEETING headings under an Agenda section.
+  Removes any previous Agenda section first, so it is safe to re-run (e.g.
+  when the daily was opened before the calendar synced)."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward "^\\* Agenda$" nil t)
+        (let ((beg (line-beginning-position)))
+          (goto-char beg)
+          (org-end-of-subtree t t)
+          (delete-region beg (point))))
+      (when-let* ((agenda (my/org-agenda-today-string)))
+        (goto-char (point-max))
+        (unless (bolp) (insert "\n"))
+        (insert "\n* Agenda\n" agenda "\n"))))
+
   (defun my/org-roam-daily-prepopulate (&rest _)
-    "Pre-populate a new daily file with unfinished tasks from the previous daily.
+    "Pre-populate a new daily file with unfinished tasks and today's agenda.
   Runs as advice after `org-roam-dailies-goto-today' so the header is already written."
     (when-let* ((file (buffer-file-name))
                 (daily-dir (file-name-as-directory
@@ -392,13 +443,18 @@ Edit this file
       (let* ((today (file-name-base file))
              (prev-file (car (last (seq-filter
                                     (lambda (f) (string< (file-name-base f) today))
-                                    (sort (directory-files daily-dir t "\\.org$") #'string<))))))
+                                    (sort (directory-files daily-dir t "\\.org$") #'string<)))))
+             (agenda (my/org-agenda-today-string)))
         (when prev-file
           (when-let* ((tasks (my/org-roam-extract-incomplete-tasks prev-file)))
             (goto-char (point-max))
             (unless (bolp) (insert "\n"))
             (insert "\n")
-            (insert tasks))))))
+            (insert tasks)))
+        (when agenda
+          (goto-char (point-max))
+          (unless (bolp) (insert "\n"))
+          (insert "\n* Agenda\n" agenda "\n")))))
 
   (advice-add 'org-roam-dailies-goto-today :after #'my/org-roam-daily-prepopulate)
 
@@ -410,6 +466,35 @@ Edit this file
           deft-use-filename-as-title t)
     :bind
     ("C-c n s" . deft))
+#+end_src
+
+** Google Calendar (org-gcal)
+Pull both Google calendars into org files that feed the agenda.  The client
+ID isn't secret; the secret lives in =~/.authinfo.gpg= as:
+=machine org-gcal login <CLIENT_ID> password <CLIENT_SECRET>=
+
+#+begin_src emacs-lisp
+  (use-package org-gcal
+    :after org
+    :init
+    ;; Must be set BEFORE the package loads, or it warns at load time.
+    (let ((auth (car (auth-source-search :host "org-gcal" :max 1))))
+      (when auth
+        (setq org-gcal-client-id (plist-get auth :user)
+              org-gcal-client-secret (let ((s (plist-get auth :secret)))
+                                       (if (functionp s) (funcall s) s)))))
+    :config
+    (setq org-gcal-fetch-file-alist
+          `(("julien.blanchard@livestorm.co"  . ,(expand-file-name "gcal-livestorm.org" org-directory))
+            ("julien.blanchard75@gmail.com"   . ,(expand-file-name "gcal-perso.org" org-directory))))
+    (org-gcal-reload-client-id-secret))
+
+  ;; Make the synced calendars (and captured invites) visible to org-agenda.
+  (setq org-agenda-files
+        (delete-dups
+         (append org-agenda-files
+                 (mapcar (lambda (f) (expand-file-name f org-directory))
+                         '("gcal-livestorm.org" "gcal-perso.org" "calendar.org")))))
 #+end_src
 
 ** org-download
@@ -426,9 +511,6 @@ Edit this file
 Load mu4e.
 
 #+begin_src emacs-lisp
-  ;; Use Emacs minibuffer for GPG passphrase (needed for .authinfo.gpg).
-  (setq epg-pinentry-mode 'loopback)
-
   (use-package mu4e
     :ensure nil
     :defer t
@@ -452,6 +534,20 @@ Make it prettier.
   (use-package mu4e-column-faces
     :after mu4e
     :config (mu4e-column-faces-mode))
+#+end_src
+
+Calendar invites: show Accept/Tentative/Decline in the message view, send the
+RSVP through the matching context, and capture accepted events to org so they
+land in the agenda.
+
+#+begin_src emacs-lisp
+  (with-eval-after-load 'mu4e
+    (require 'mu4e-icalendar)
+    (mu4e-icalendar-setup)
+    (setq mu4e-icalendar-trash-after-reply nil
+          gnus-icalendar-org-capture-file (expand-file-name "calendar.org" org-directory)
+          gnus-icalendar-org-capture-headline '("Invitations"))
+    (gnus-icalendar-org-setup))
 #+end_src
 
 #+begin_src emacs-lisp
