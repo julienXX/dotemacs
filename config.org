@@ -2065,47 +2065,45 @@ Open gopher and gemini links in elpher
 * RSS
 
 #+begin_src emacs-lisp
-  (use-package elfeed-protocol)
-
-  (use-package elfeed
-    :commands (elfeed)
-    :config
-    (setq elfeed-db-directory "~/.elfeed")
-    (setq elfeed-enclosure-default-dir (expand-file-name "~/Downloads"))
-    (setq elfeed-use-curl t)
-    (elfeed-set-timeout 3600)
-    (setq elfeed-curl-extra-arguments '("--insecure"))
-    (setq-default elfeed-search-filter "+unread ")
-    (advice-add #'elfeed-insert-html
-                :around
-                (lambda (fun &rest r)
-                  (let ((shr-use-fonts nil))
-                    (apply fun r))))
-    (require 'elfeed-protocol)
-    (let ((freshrss-url "https://rss.typed-hole.org/p/api/fever.php"))
-      (setq elfeed-feeds (list
-                          (list "fever+https://julien@rss.typed-hole.org"
-                                :api-url freshrss-url
-                                :password (lambda () (jxx-auth-source-get "rss.typed-hole.org"))))))
-    (setq elfeed-protocol-fever-update-unread-only t)
-    (elfeed-protocol-enable))
-#+end_src
-
-Use B to browse article in gui browser instead of eww.
-
-#+begin_src emacs-lisp
   (defun jxx/elfeed-show-visit-gui ()
     "Wrapper for elfeed-show-visit to use gui browser instead of eww"
     (interactive)
     (let ((browse-url-generic-program "/usr/bin/xdg-open"))
       (elfeed-show-visit t)))
 
-  (add-hook 'elfeed-show-mode-hook
-            (lambda () (setq-local browse-url-browser-function #'eww-browse-url)))
+  (defun jxx/elfeed-show-use-eww ()
+    (setq-local browse-url-browser-function #'eww-browse-url))
 
-  (define-key elfeed-show-mode-map (kbd "B") 'jxx/elfeed-show-visit-gui)
-  (define-key elfeed-show-mode-map (kbd "b") 'elfeed-show-visit)
+  (use-package elfeed-protocol :defer t)
+  (use-package elfeed-protocol-freshrss :defer t)
 
+  (use-package elfeed
+    :custom
+    (elfeed-db-directory "~/.elfeed")
+    (elfeed-enclosure-default-dir (expand-file-name "~/Downloads"))
+    (elfeed-use-curl t)
+    (elfeed-curl-timeout 3600)
+    ;; Use B to browse article in gui browser instead of eww.
+    :bind (:map elfeed-show-mode-map
+                ("B" . jxx/elfeed-show-visit-gui)
+                ("b" . elfeed-show-visit))
+    :hook (elfeed-show-mode . jxx/elfeed-show-use-eww)
+    :config
+    (advice-add #'elfeed-insert-html
+                :around
+                (lambda (fun &rest r)
+                  (let ((shr-use-fonts nil))
+                    (apply fun r))))
+    (setq elfeed-feeds `(("freshrss+https://julien@rss.typed-hole.org"
+                          :api-url "https://rss.typed-hole.org/p/api/greader.php"
+                          :password (lambda () (jxx-auth-source-get "rss.typed-hole.org")))))
+    (require 'elfeed-protocol)
+    (require 'elfeed-protocol-freshrss)
+    (elfeed-protocol-enable)
+    (elfeed-protocol-freshrss-register-protocol))
+#+end_src
+
+#+begin_src emacs-lisp
   (defun jxx/elfeed-purge (&optional days)
     "Delete entries older than DAYS (default 90) that are not starred."
     (interactive "P")
