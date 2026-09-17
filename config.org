@@ -1761,10 +1761,10 @@ Auto-install tree-sitter grammars for all languages.
           "RUBY_LSP_BYPASS_TYPECHECKER=true"
           "bundle" "exec" "ruby-lsp"
           :initializationOptions
-          (:formatter "none"
-           :linters []
-           :enabledFeatures (:diagnostics :json-false
-                             :formatting :json-false
+          (:formatter "rubocop"
+           :linters ["rubocop"]
+           :enabledFeatures (:diagnostics t
+                             :formatting t
                              :onTypeFormatting :json-false)
            :indexing (:excludedGems ,excluded-gems
                       :excludedPatterns ["**/vendor/**/*"
@@ -1863,37 +1863,10 @@ Auto-install tree-sitter grammars for all languages.
         (jxx/flycheck-enable-sorbet-next-check)
         (flycheck-buffer)))
 
-    (defun jxx/flycheck-dedup-error-list (errors)
-      "Remove duplicate errors (same file, line, message) from ERRORS."
-      (cl-remove-duplicates
-       errors
-       :test (lambda (a b)
-               (and (equal (flycheck-error-filename a) (flycheck-error-filename b))
-                    (equal (flycheck-error-line     a) (flycheck-error-line     b))
-                    (equal (flycheck-error-message  a) (flycheck-error-message  b))))))
-
-    ;; Filter args before overlay creation — fixes duplicate hover text in minibuffer
-    (advice-add 'flycheck-display-errors :filter-args
-                (lambda (args) (list (jxx/flycheck-dedup-error-list (car args)))))
-
-    ;; Dedup the final accumulated list after all checkers finish — fixes modeline count
     (add-hook 'flycheck-after-syntax-check-hook
               (lambda ()
-                (setq flycheck-current-errors
-                      (jxx/flycheck-dedup-error-list flycheck-current-errors))
                 (when (derived-mode-p 'ruby-ts-mode 'ruby-mode)
                   (setq-local jxx/flycheck-run-sorbet-next-check nil))))
-
-    (flycheck-add-mode 'ruby-rubocop 'ruby-ts-mode)
-    ;; Run rubocop via "bundle exec" using the rbenv shim (bypasses PATH issues)
-    (add-hook 'ruby-ts-mode-hook
-              (lambda ()
-                (setq-local flycheck-command-wrapper-function
-                            (lambda (cmd)
-                              (if (string-match-p "rubocop$" (car cmd))
-                                  (cons (expand-file-name "~/.rbenv/shims/bundle")
-                                        (cons "exec" (cons "rubocop" (cdr cmd))))
-                                cmd)))))
 
     (flycheck-define-checker ruby-sorbet
       "A Ruby type checker using Sorbet (srb tc)."
@@ -1911,19 +1884,16 @@ Auto-install tree-sitter grammars for all languages.
              (locate-dominating-file default-directory "sorbet"))))
 
     (add-to-list 'flycheck-checkers 'ruby-sorbet t)
-    ;; append=t uses member-check, preventing duplicate entries on config re-eval
-    (flycheck-add-next-checker 'ruby-rubocop '(t . ruby-sorbet) t)
 
-    ;; Use bundle exec for rubocop — skip if command already starts with bundle.
     (add-hook 'ruby-ts-mode-hook
               (lambda ()
+                ;; This Flycheck already claims ruby-ts-mode for its own Ruby
+                ;; checkers; disable them so ruby-lsp is the only linter.
+                (setq-local flycheck-disabled-checkers
+                            '(ruby-rubocop ruby-chef-cookstyle ruby-standard
+                              ruby-reek ruby))
                 (when (locate-dominating-file default-directory "Gemfile")
-                  (add-hook 'after-save-hook #'jxx/flycheck-run-sorbet-after-save nil t)
-                  (setq-local flycheck-command-wrapper-function
-                              (lambda (cmd)
-                                (if (equal (file-name-nondirectory (car cmd)) "bundle")
-                                    cmd
-                                  (append '("bundle" "exec") cmd))))))))
+                  (add-hook 'after-save-hook #'jxx/flycheck-run-sorbet-after-save nil t)))))
 
   ;; ERB files still use rhtml-mode
   (add-to-list 'auto-mode-alist (cons "\\.erb$" #'rhtml-mode))
