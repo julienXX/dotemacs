@@ -18,8 +18,7 @@
                    diminish dired-git-info diredfl dumb-jump efinger
                    eiffel-ts-mode elfeed-protocol
                    elfeed-protocol-freshrss elpher emojify
-                   exec-path-from-shell expand-region flycheck-rust
-                   focus forge gist git-gutter golden-ratio
+                   exec-path-from-shell expand-region focus forge gist git-gutter golden-ratio
                    haskell-mode ivy-hydra ivy-prescient mastodon moody
                    mu4e-alert mu4e-column-faces multi-term
                    multiple-cursors nerd-icons nonogram org-download
