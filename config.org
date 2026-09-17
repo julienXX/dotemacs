@@ -39,6 +39,22 @@ your GNU Emacs.
   (setq plstore-cache-passphrase-for-symmetric-encryption t)
 #+end_src
 
+** Platform
+
+Constants for the few places where macOS and Linux need different
+settings. Everything else in this file is platform neutral.
+
+#+begin_src emacs-lisp
+  (defconst jxx/macos-p (eq system-type 'darwin)
+    "Non-nil when running on macOS.")
+  (defconst jxx/linux-p (eq system-type 'gnu/linux)
+    "Non-nil when running on Linux.")
+
+  (when jxx/macos-p
+    ;; Use Command as Meta
+    (setq mac-command-modifier 'meta))
+#+end_src
+
 * Packages config
 
 #+begin_src emacs-lisp
@@ -88,7 +104,7 @@ Use exec-path-from-shell
   ;; Set default font
   (set-face-attribute 'default nil
                       :family "Source Code Pro"
-                      :height 110
+                      :height (if jxx/macos-p 130 110)
                       :weight 'normal
                       :width 'normal)
 
@@ -333,7 +349,7 @@ Edit this file
 
 ** org-roam
 #+begin_src emacs-lisp
-  (setq org-directory (concat (getenv "HOME") "/org-roam/"))
+  (setq org-directory (expand-file-name (if jxx/macos-p "~/Documents/org-roam/" "~/org-roam/")))
   (setq org-roam-dailies-directory "journal/")
 
   ;; Improve org mode looks
@@ -518,7 +534,11 @@ Load mu4e.
   (use-package mu4e
     :ensure nil
     :defer t
-    :load-path "/usr/share/emacs/site-lisp/mu4e")
+    :init
+    ;; Homebrew's unversioned symlink on macOS, distro path on Linux.
+    (add-to-list 'load-path (if jxx/macos-p
+                                "/opt/homebrew/share/emacs/site-lisp/mu/mu4e"
+                              "/usr/share/emacs/site-lisp/mu4e")))
 #+end_src
 
 Add some notifications.
@@ -1334,7 +1354,11 @@ Corfu completion
     (define-key magit-status-mode-map (kbd "C-x C-k") 'magit-kill-file-on-line)
     (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-    (setq magit-push-always-verify nil))
+    (setq magit-push-always-verify nil)
+    ;; macOS: pin emacsclient to the build matching the running Emacs
+    (let ((client "/opt/homebrew/opt/emacs-plus@32/bin/emacsclient"))
+      (when (and jxx/macos-p (file-executable-p client))
+        (setq with-editor-emacsclient-executable client))))
 
   (use-package forge
     :after magit
@@ -2068,7 +2092,7 @@ Open gopher and gemini links in elpher
   (defun jxx/elfeed-show-visit-gui ()
     "Wrapper for elfeed-show-visit to use gui browser instead of eww"
     (interactive)
-    (let ((browse-url-generic-program "/usr/bin/xdg-open"))
+    (let ((browse-url-generic-program (if jxx/macos-p "open" "/usr/bin/xdg-open")))
       (elfeed-show-visit t)))
 
   (defun jxx/elfeed-show-use-eww ()
