@@ -477,17 +477,21 @@ ID isn't secret; the secret lives in =~/.authinfo.gpg= as:
   (use-package org-gcal
     :after org
     :init
-    ;; Must be set BEFORE the package loads, or it warns at load time.
-    (let ((auth (car (auth-source-search :host "org-gcal" :max 1))))
-      (when auth
-        (setq org-gcal-client-id (plist-get auth :user)
-              org-gcal-client-secret (let ((s (plist-get auth :secret)))
-                                       (if (functionp s) (funcall s) s)))))
+    (setq org-gcal-client-id "" org-gcal-client-secret "")
+    (defun jxx-org-gcal-ensure-credentials (&rest _)
+      (when (member org-gcal-client-id '(nil ""))
+        (when-let* ((auth (car (auth-source-search :host "org-gcal" :max 1))))
+          (setq org-gcal-client-id (plist-get auth :user)
+                org-gcal-client-secret (let ((s (plist-get auth :secret)))
+                                         (if (functionp s) (funcall s) s)))
+          (org-gcal-reload-client-id-secret))))
+    (dolist (fn '(org-gcal-sync org-gcal-fetch org-gcal-sync-buffer
+                  org-gcal-post-at-point))
+      (advice-add fn :before #'jxx-org-gcal-ensure-credentials))
     :config
     (setq org-gcal-fetch-file-alist
           `(("julien.blanchard@livestorm.co"  . ,(expand-file-name "gcal-livestorm.org" org-directory))
-            ("julien.blanchard75@gmail.com"   . ,(expand-file-name "gcal-perso.org" org-directory))))
-    (org-gcal-reload-client-id-secret))
+            ("julien.blanchard75@gmail.com"   . ,(expand-file-name "gcal-perso.org" org-directory)))))
 
   ;; Make the synced calendars (and captured invites) visible to org-agenda.
   (setq org-agenda-files
