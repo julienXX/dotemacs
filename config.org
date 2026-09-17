@@ -1071,12 +1071,19 @@ Corfu completion
                  (setq i (1+ i))))))))
 #+end_src
 
-* Flycheck
+* Flymake
+
+Flymake is the only diagnostics framework. Eglot feeds it in LSP-managed
+buffers, where the language server is the sole linter (see
+=jxx/eglot-managed-setup=); elsewhere the major mode's built-in backends run.
 
 #+begin_src emacs-lisp
-  (use-package flycheck
-    :config
-    (add-hook 'after-init-hook #'global-flycheck-mode))
+  (use-package flymake
+    :ensure nil
+    :hook (prog-mode . flymake-mode)
+    :custom
+    (flymake-no-changes-timeout 0.5)
+    (flymake-start-on-save-buffer t))
 #+end_src
 
 * Hooks
@@ -1251,15 +1258,6 @@ Corfu completion
     ;; Add GOPATH/bin to exec-path for gopls
     (let ((gopath (or (getenv "GOPATH") (concat (getenv "HOME") "/go"))))
       (add-to-list 'exec-path (concat gopath "/bin"))))
-
-  ;; Disable Go flycheck checkers — eglot/gopls provides diagnostics already
-  (with-eval-after-load 'flycheck
-    (add-hook 'go-ts-mode-hook
-              (lambda ()
-                (flycheck-disable-checker 'go-vet)
-                (flycheck-disable-checker 'go-build)
-                (flycheck-disable-checker 'go-errcheck)
-                (flycheck-disable-checker 'go-golint))))
 
   ;; We never want to edit Rubinius bytecode or MacRuby binaries
   (add-to-list 'completion-ignored-extensions ".rbc")
@@ -1697,7 +1695,6 @@ Auto-install tree-sitter grammars for all languages.
      (tsx-ts-mode        . eglot-ensure)
      (js-ts-mode         . eglot-ensure)
      (python-ts-mode     . eglot-ensure)
-     (rust-ts-mode       . eglot-ensure)
      (c-ts-mode          . eglot-ensure)
      (c++-ts-mode        . eglot-ensure)
      (bash-ts-mode       . eglot-ensure)
@@ -1758,6 +1755,8 @@ Auto-install tree-sitter grammars for all languages.
              (bundle-path (expand-file-name "vendor/bundle" root))
              (excluded-gems (jxx/ruby-lsp--excluded-gems root)))
         `("env" ,(format "BUNDLE_PATH=%s" bundle-path)
+          ;; Ruby LSP would otherwise defer to Sorbet's own LSP, which eglot
+          ;; cannot run alongside it.  Sorbet runs through flymake instead.
           "RUBY_LSP_BYPASS_TYPECHECKER=true"
           "bundle" "exec" "ruby-lsp"
           :initializationOptions
@@ -1797,13 +1796,18 @@ Auto-install tree-sitter grammars for all languages.
     (add-to-list 'eglot-server-programs
                  '((ruby-ts-mode ruby-mode) . jxx/ruby-lsp-contact))
 
-    ;; Re-enable font-lock after eglot managed mode activates.
-    ;; gopls declares semanticTokensProvider, which causes eglot to call
-    ;; (font-lock-mode -1) during setup and sometimes fail to re-enable it.
-    (add-hook 'eglot-managed-mode-hook
-              (lambda ()
-                (unless font-lock-mode (font-lock-mode 1))
-                (add-hook 'before-save-hook #'eglot-format-buffer nil t)))
+    (defun jxx/eglot-managed-setup ()
+      "Per-buffer setup once eglot manages the buffer."
+      (when (eglot-managed-p)
+        ;; gopls declares semanticTokensProvider, which makes eglot call
+        ;; (font-lock-mode -1) during setup and sometimes fail to re-enable it.
+        (unless font-lock-mode (font-lock-mode 1))
+        (add-hook 'before-save-hook #'eglot-format-buffer nil t)
+        ;; The server is the linter: drop the major modes' own flymake
+        ;; backends that would report the same things twice.
+        (dolist (backend '(python-flymake sh-shellcheck-flymake ruby-flymake-auto))
+          (remove-hook 'flymake-diagnostic-functions backend t))))
+    (add-hook 'eglot-managed-mode-hook #'jxx/eglot-managed-setup)
 
     ;; Go: gopls workspace settings
     (setq-default eglot-workspace-configuration
@@ -1842,58 +1846,69 @@ Auto-install tree-sitter grammars for all languages.
     (setq rbenv-show-active-ruby-in-modeline nil)
     (global-rbenv-mode))
 
-  (with-eval-after-load 'flycheck
-    (defvar-local jxx/flycheck-run-sorbet-next-check nil
-      "Non-nil means run Sorbet on the next Flycheck pass.")
+  ;; Sorbet as a flymake backend.
+  (defvar-local jxx/sorbet--results nil
+    "Last Sorbet results for this buffer as (LINE . MESSAGE) conses.")
+  (defvar-local jxx/sorbet--run-next nil
+    "Non-nil means the next flymake pass runs Sorbet instead of re-reporting.")
+  (defvar-local jxx/sorbet--process nil)
+  (defvar-local jxx/sorbet--report-fn nil
+    "Flymake's most recent REPORT-FN.  Sorbet is slow; a result must go
+through the latest one or flymake discards it as obsolete.")
 
-    (defun jxx/flycheck-enable-sorbet-next-check ()
-      "Enable Sorbet for the next Flycheck run in current buffer."
-      (setq-local jxx/flycheck-run-sorbet-next-check t))
+  (defun jxx/sorbet-run-on-next-check ()
+    "Make the next flymake pass run Sorbet.  For `after-save-hook'."
+    (setq jxx/sorbet--run-next t))
 
-    (defun jxx/flycheck-run-sorbet ()
-      "Manually trigger a Flycheck run that includes Sorbet once."
-      (interactive)
-      (jxx/flycheck-enable-sorbet-next-check)
-      (flycheck-buffer))
+  (defun jxx/sorbet--report ()
+    "Send `jxx/sorbet--results' to flymake as diagnostics."
+    (funcall jxx/sorbet--report-fn
+             (mapcar (pcase-lambda (`(,line . ,message))
+                       (pcase-let ((`(,beg . ,end) (flymake-diag-region (current-buffer) line)))
+                         (flymake-make-diagnostic (current-buffer) beg end :error message)))
+                     jxx/sorbet--results)))
 
-    (defun jxx/flycheck-run-sorbet-after-save ()
-      "Run Flycheck (including Sorbet) after saving a Ruby buffer."
-      (when (and (derived-mode-p 'ruby-ts-mode 'ruby-mode)
-                 (bound-and-true-p flycheck-mode))
-        (jxx/flycheck-enable-sorbet-next-check)
-        (flycheck-buffer)))
+  (defun jxx/flymake-sorbet (report-fn &rest _)
+    "Flymake backend running `bundle exec srb tc' after a save."
+    (setq jxx/sorbet--report-fn report-fn)
+    (if (not jxx/sorbet--run-next)
+        (jxx/sorbet--report)
+      (setq jxx/sorbet--run-next nil)
+      (when (process-live-p jxx/sorbet--process)
+        (kill-process jxx/sorbet--process))
+      (let* ((source (current-buffer))
+             (root (locate-dominating-file default-directory "sorbet"))
+             (file (file-relative-name buffer-file-name root))
+             (pattern (concat "^" (regexp-quote file) ":\\([0-9]+\\): \\(.*\\)$"))
+             (default-directory root))
+        (setq jxx/sorbet--process
+              (make-process
+               :name "sorbet" :noquery t :connection-type 'pipe
+               :buffer (generate-new-buffer " *sorbet*")
+               :command '("bundle" "exec" "srb" "tc"
+                          "--no-error-count" "--no-error-sections" "--color" "never")
+               :sentinel
+               (lambda (proc _event)
+                 (when (memq (process-status proc) '(exit signal))
+                   (unwind-protect
+                       (when (buffer-live-p source)
+                         (let (results)
+                           (with-current-buffer (process-buffer proc)
+                             (goto-char (point-min))
+                             (while (re-search-forward pattern nil t)
+                               (push (cons (string-to-number (match-string 1)) (match-string 2))
+                                     results)))
+                           (with-current-buffer source
+                             (setq jxx/sorbet--results (nreverse results))
+                             (jxx/sorbet--report))))
+                     (kill-buffer (process-buffer proc))))))))))
 
-    (add-hook 'flycheck-after-syntax-check-hook
-              (lambda ()
-                (when (derived-mode-p 'ruby-ts-mode 'ruby-mode)
-                  (setq-local jxx/flycheck-run-sorbet-next-check nil))))
-
-    (flycheck-define-checker ruby-sorbet
-      "A Ruby type checker using Sorbet (srb tc)."
-      :command ("bundle" "exec" "srb" "tc"
-                "--no-error-count" "--no-error-sections" "--color" "never")
-      :working-directory
-      (lambda (_checker)
-        (locate-dominating-file default-directory "sorbet"))
-      :error-patterns
-      ((error line-start (file-name) ":" line ": " (message) line-end))
-      :modes (ruby-ts-mode ruby-mode)
-      :predicate
-      (lambda ()
-        (and jxx/flycheck-run-sorbet-next-check
-             (locate-dominating-file default-directory "sorbet"))))
-
-    (add-to-list 'flycheck-checkers 'ruby-sorbet t)
-
-    (add-hook 'ruby-ts-mode-hook
-              (lambda ()
-                ;; This Flycheck already claims ruby-ts-mode for its own Ruby
-                ;; checkers; disable them so ruby-lsp is the only linter.
-                (setq-local flycheck-disabled-checkers
-                            '(ruby-rubocop ruby-chef-cookstyle ruby-standard
-                              ruby-reek ruby))
-                (when (locate-dominating-file default-directory "Gemfile")
-                  (add-hook 'after-save-hook #'jxx/flycheck-run-sorbet-after-save nil t)))))
+  (add-hook 'ruby-ts-mode-hook
+            (lambda ()
+              (when (locate-dominating-file default-directory "sorbet")
+                (add-hook 'flymake-diagnostic-functions #'jxx/flymake-sorbet nil t)
+                ;; Depth -10: run before flymake's own after-save hook.
+                (add-hook 'after-save-hook #'jxx/sorbet-run-on-next-check -10 t))))
 
   ;; ERB files still use rhtml-mode
   (add-to-list 'auto-mode-alist (cons "\\.erb$" #'rhtml-mode))
@@ -1969,13 +1984,14 @@ Auto-install tree-sitter grammars for all languages.
 
 #+begin_src emacs-lisp
   (use-package cargo)
-  (use-package flycheck-rust)
 
   (use-package rustic
-    :ensure
+    :custom
+    (rustic-lsp-client 'eglot)
+    ;; rustfmt runs through eglot's before-save formatting, like every other
+    ;; LSP language; rustic's own hook would format a second time.
+    (rustic-format-on-save nil)
     :config
-    ;; comment to disable rustfmt on save
-    (setq rustic-format-on-save t)
     (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
 
   (defun rk/rustic-mode-hook ()

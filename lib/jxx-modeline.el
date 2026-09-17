@@ -1,4 +1,4 @@
-;;; jxx-modeline.el --- Minimal moody modeline with diagnostics  -*- lexical-binding: t -*-
+;;; jxx-modeline.el --- Minimal moody modeline with flymake diagnostics  -*- lexical-binding: t -*-
 
 ;; Author: Julien Blanchard
 ;; Keywords: faces, mode-line
@@ -10,14 +10,14 @@
 ;;
 ;;   [!] |  icon  project/s/u/b/file.el  | 12:4
 ;;
-;; 1. A diagnostics glyph fed by flycheck or flymake, whichever is on.
-;;    Clicking it lists the diagnostics and jumps to the chosen one.
+;; 1. A flymake diagnostics glyph.  Clicking it lists the diagnostics and
+;;    jumps to the chosen one.
 ;; 2. A `moody' tab holding the all-the-icons glyph for the buffer and a
 ;;    shortened path: the project name, one letter per directory, the file.
 ;; 3. Line and column.
 ;;
-;; Enable with `jxx-modeline-mode'.  flycheck, flymake, ivy and
-;; all-the-icons are optional; they are used when loaded.
+;; Enable with `jxx-modeline-mode'.  ivy and all-the-icons are optional;
+;; they are used when loaded.
 
 ;;; Code:
 
@@ -27,25 +27,13 @@
 (require 'subr-x)
 (require 'warnings)
 
-(defvar flycheck-mode)
-(defvar flycheck-current-errors)
-(defvar flycheck-last-status-change)
-(defvar flymake-mode)
-(declare-function flycheck-error-level "flycheck")
-(declare-function flycheck-error-message "flycheck")
-(declare-function flycheck-error-pos "flycheck")
-(declare-function flycheck-error-level-compilation-level "flycheck")
-(declare-function flymake-diagnostics "flymake")
-(declare-function flymake-diagnostic-type "flymake")
-(declare-function flymake-diagnostic-text "flymake")
-(declare-function flymake-diagnostic-beg "flymake")
-(declare-function flymake--severity "flymake")
+(require 'flymake)
 (declare-function ivy-read "ivy")
 (declare-function all-the-icons-icon-for-file "all-the-icons")
 (declare-function all-the-icons-icon-for-mode "all-the-icons")
 
 (defgroup jxx-modeline nil
-  "Minimal moody modeline with diagnostics."
+  "Minimal moody modeline with flymake diagnostics."
   :group 'mode-line)
 
 ;;;; Faces
@@ -89,25 +77,16 @@ from `mode-line'."
   :group 'jxx-modeline)
 
 ;;;; Diagnostics
-;; One backend-neutral list feeds both the modeline glyph and the picker.
+;; One list feeds both the modeline glyph and the picker.
 
 (defconst jxx-modeline--severity-glyphs
   '((error . "!") (warning . "~") (info . "·"))
   "Diagnostic severities, worst first, with the glyph shown for each.")
 
 (defun jxx-modeline--diagnostics ()
-  "Diagnostics of the current buffer as (SEVERITY MESSAGE OBJECT) lists.
-SEVERITY is `error', `warning' or `info'.  OBJECT is the backend's own
-diagnostic, see `jxx-modeline--diagnostic-pos'.  Flycheck wins over flymake."
-  (cond
-   ((bound-and-true-p flycheck-mode)
-    (mapcar (lambda (err)
-              (list (pcase (flycheck-error-level-compilation-level (flycheck-error-level err))
-                      (2 'error) (1 'warning) (_ 'info))
-                    (flycheck-error-message err)
-                    err))
-            flycheck-current-errors))
-   ((bound-and-true-p flymake-mode)
+  "Flymake diagnostics of the current buffer as (SEVERITY MESSAGE DIAG) lists.
+SEVERITY is `error', `warning' or `info'; DIAG is the flymake diagnostic."
+  (when flymake-mode
     (mapcar (lambda (diag)
               (let ((severity (flymake--severity (flymake-diagnostic-type diag))))
                 (list (cond ((> severity (warning-numeric-level :warning)) 'error)
@@ -115,13 +94,7 @@ diagnostic, see `jxx-modeline--diagnostic-pos'.  Flycheck wins over flymake."
                             (t 'info))
                       (flymake-diagnostic-text diag)
                       diag)))
-            (flymake-diagnostics)))))
-
-(defun jxx-modeline--diagnostic-pos (object)
-  "Buffer position of the backend diagnostic OBJECT."
-  (if (eq (type-of object) 'flycheck-error)
-      (flycheck-error-pos object)
-    (flymake-diagnostic-beg object)))
+            (flymake-diagnostics))))
 
 (defun jxx-modeline--worst-severity (diagnostics)
   "Worst severity present in DIAGNOSTICS, or nil when there are none."
@@ -137,8 +110,8 @@ Uses ivy when available, `completing-read' otherwise."
     (if (null diagnostics)
         (message "No diagnostics")
       (let* ((candidates
-              (mapcar (pcase-lambda (`(,severity ,message ,object))
-                        (let ((pos (jxx-modeline--diagnostic-pos object)))
+              (mapcar (pcase-lambda (`(,severity ,message ,diag))
+                        (let ((pos (flymake-diagnostic-beg diag)))
                           (propertize (format "%s %4d:%-3d %s"
                                               (alist-get severity jxx-modeline--severity-glyphs)
                                               (line-number-at-pos pos)
@@ -162,25 +135,27 @@ Uses ivy when available, `completing-read' otherwise."
   "Keymap of the diagnostics glyph.")
 
 (defun jxx-modeline--diag-segment ()
-  "Clickable glyph for the buffer's worst diagnostic, or nil without a checker."
-  (pcase-let
-      ((`(,face . ,glyph)
-        (cond
-         ((and (bound-and-true-p flycheck-mode)
-               (not (eq flycheck-last-status-change 'finished)))
-          (and (eq flycheck-last-status-change 'running) '(jxx-modeline-base . "…")))
-         ((or (bound-and-true-p flycheck-mode) (bound-and-true-p flymake-mode))
-          (let ((worst (jxx-modeline--worst-severity (jxx-modeline--diagnostics))))
-            (cons (pcase worst
-                    ('error 'jxx-modeline-diag-error)
-                    ((or 'warning 'info) 'jxx-modeline-diag-warning)
-                    (_ 'jxx-modeline-diag-ok))
-                  (alist-get worst jxx-modeline--severity-glyphs "✓")))))))
-    (when glyph
-      (propertize (format " %s " glyph)
-                  'face face
-                  'local-map jxx-modeline-diag-map
-                  'mouse-face 'mode-line-highlight))))
+  "Clickable glyph summarising the buffer's diagnostics, or nil.
+The worst reported severity wins.  Otherwise \"✓\" once any backend has
+reported a clean buffer, even if a slower one is still running, so a slow
+or silent backend never hides a verdict.  \"…\" only while nothing has
+reported yet, and nil when flymake is off or has no backend."
+  (let* ((worst    (jxx-modeline--worst-severity (jxx-modeline--diagnostics)))
+         ;; Both queries signal `user-error' until flymake has initialized.
+         (running  (and flymake-mode (ignore-errors (flymake-running-backends))))
+         (reported (and flymake-mode (ignore-errors (flymake-reporting-backends)))))
+    (pcase-let ((`(,face . ,glyph)
+                 (cond (worst    (cons (if (eq worst 'error)
+                                           'jxx-modeline-diag-error
+                                         'jxx-modeline-diag-warning)
+                                       (alist-get worst jxx-modeline--severity-glyphs)))
+                       (reported '(jxx-modeline-diag-ok . "✓"))
+                       (running  '(jxx-modeline-base . "…")))))
+      (when glyph
+        (propertize (format " %s " glyph)
+                    'face face
+                    'local-map jxx-modeline-diag-map
+                    'mouse-face 'mode-line-highlight)))))
 
 ;;;; Path and icon
 
