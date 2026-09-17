@@ -2142,7 +2142,23 @@ Use B to browse article in gui browser instead of eww.
     :config
     (setq agent-shell-anthropic-authentication
           (agent-shell-anthropic-make-authentication
-           :login t)))
+           :login t))
+    (setq agent-shell-session-strategy 'prompt)
+    (setq agent-shell-session-restore-verbosity 'full)
+    (setq agent-shell-cwd-function (lambda () default-directory))
+    (defun jxx-agent-shell-dot-subdir (subdir)
+      (expand-file-name (file-name-concat ".agent-shell" subdir)
+                        user-emacs-directory))
+    (setq agent-shell-dot-subdir-function #'jxx-agent-shell-dot-subdir)
+    (setq agent-shell-transcript-file-path-function
+          (lambda ()
+            (let ((dir (jxx-agent-shell-dot-subdir "transcripts")))
+              (make-directory dir t)
+              (expand-file-name
+               (format "%s-%s.md"
+                       (format-time-string "%F-%H-%M-%S")
+                       (file-name-nondirectory (directory-file-name (agent-shell-cwd))))
+               dir)))))
 #+end_src
 
 * EditorConfig
