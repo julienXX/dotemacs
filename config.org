@@ -2173,6 +2173,21 @@ JavaScript is configured in the Modes section using js-ts-mode.
     (tsx-ts-mode . (lambda () (indent-tabs-mode -1))))
 #+end_src
 
+* Haskell
+#+begin_src emacs-lisp
+  (use-package haskell-mode
+    :hook
+    (haskell-mode . eglot-ensure)
+
+    :custom
+    (haskell-process-type 'auto))
+
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((haskell-mode haskell-literate-mode)
+                   . ("haskell-language-server-wrapper" "--lsp"))))
+#+end_src
+
 * Mastodon
 #+begin_src emacs-lisp
   (use-package mastodon
