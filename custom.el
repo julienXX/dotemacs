@@ -15,16 +15,20 @@
  '(package-selected-packages
    '(ace-jump-mode agent-shell all-the-icons-ivy anzu backward-forward
                    cape cargo copilot corfu counsel crux deft delight
-                   diminish dired-git-info diredfl dumb-jump
-                   elfeed-protocol elpher emojify exec-path-from-shell
-                   expand-region flycheck-rust focus forge gist
-                   git-gutter golden-ratio ivy-hydra ivy-prescient
-                   mastodon moody mu4e-alert mu4e-column-faces
-                   multi-term multiple-cursors nerd-icons org-download
-                   org-roam org-superstar popwin pulsar rbenv
-                   rspec-mode ruby-tools rustic smartparens smex
-                   soft-morning-theme treesit-auto typescript-mode
-                   undo-tree unkillable-scratch wrap-region))
+                   diminish dired-git-info diredfl dumb-jump efinger
+                   eiffel-ts-mode elfeed-protocol
+                   elfeed-protocol-freshrss elpher emojify
+                   exec-path-from-shell expand-region flycheck-rust
+                   focus forge gist git-gutter golden-ratio
+                   haskell-mode ivy-hydra ivy-prescient mastodon moody
+                   mu4e-alert mu4e-column-faces multi-term
+                   multiple-cursors nerd-icons nonogram org-download
+                   org-gcal org-roam org-superstar popwin pulsar rbenv
+                   rspec-mode ruby-tools rustic smartparens smex soft-morning-theme terraform-mode
+                   treesit-auto typescript-mode undo-tree
+                   unkillable-scratch wrap-region))
+ '(package-vc-selected-packages
+   '((eiffel-ts-mode :url "https://github.com/imustafin/eiffel-ts-mode")))
  '(safe-local-variable-values
    '((eglot-workspace-configuration lambda (arg)
                                     (when
