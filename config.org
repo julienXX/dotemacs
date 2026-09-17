@@ -54,9 +54,10 @@ your GNU Emacs.
 Use exec-path-from-shell
 
 #+begin_src emacs-lisp
-  (use-package exec-path-from-shell)
-
-  (exec-path-from-shell-initialize)
+  (use-package exec-path-from-shell
+    :config
+    (setq exec-path-from-shell-arguments '("-l"))
+    (exec-path-from-shell-initialize))
 #+end_src
 
 * Appearance
