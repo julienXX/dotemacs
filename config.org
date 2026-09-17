@@ -545,11 +545,21 @@ Add some notifications.
 
 #+begin_src emacs-lisp
   (use-package alert)
+  (defvar jxx/mu4e-unread-inbox-query
+    "flag:unread AND NOT flag:trashed AND (maildir:/Gmail/Inbox OR maildir:/Livestorm/Inbox OR maildir:/Sideburns/INBOX OR maildir:/TypedHole/INBOX)"
+    "Unread mail in the four inboxes, shared by the bookmark and notifications.")
+
   (use-package mu4e-alert
-    :init
-    (setq mu4e-alert-set-default-style 'libnotify)
-    (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
-    (add-hook 'after-init-hook #'mu4e-alert-enable-notifications))
+    :after alert
+    :demand t
+    :config
+    (setq mu4e-alert-interesting-mail-query jxx/mu4e-unread-inbox-query)
+    (mu4e-alert-set-default-style
+     (cond (jxx/macos-p 'notifier)
+           (jxx/linux-p 'notifications)
+           (t 'message)))
+    (mu4e-alert-enable-mode-line-display)
+    (mu4e-alert-enable-notifications))
 #+end_src
 
 Make it prettier.
@@ -673,8 +683,7 @@ land in the agenda.
                     (mu4e-refile-folder . "/TypedHole/Archive")
                     (smtpmail-smtp-server . "mail.typed-hole.org")
                     (smtpmail-smtp-user . "julien")
-                    (smtpmail-starttls-credentials . '(("mail.typed-hole.org" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("mail.typed-hole.org" 587 "julien" nil)))
+                    (smtpmail-smtp-service . 587)
                     (smtpmail-default-smtp-server . "mail.typed-hole.org")))
 
           ,(make-mu4e-context
@@ -695,8 +704,7 @@ land in the agenda.
                     (mu4e-refile-folder . "/Sideburns/Archive")
                     (smtpmail-smtp-server . "smtp.fastmail.com")
                     (smtpmail-smtp-user . "julienblanchard@fastmail.fm")
-                    (smtpmail-starttls-credentials . '(("smtp.fastmail.com" 465 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.fastmail.com" 465 "julienblanchard@fastmail.fm" nil)))
+                    (smtpmail-smtp-service . 587)
                     (smtpmail-default-smtp-server . "smtp.fastmail.com")))
 
           ,(make-mu4e-context
@@ -717,8 +725,7 @@ land in the agenda.
                     (mu4e-refile-folder . "/Gmail/All Mail")
                     (smtpmail-smtp-server . "smtp.gmail.com")
                     (smtpmail-smtp-user . "julien.blanchard75@gmail.com")
-                    (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard75@gmail.com" nil)))
+                    (smtpmail-smtp-service . 587)
                     (smtpmail-default-smtp-server . "smtp.gmail.com")))
 
           ,(make-mu4e-context
@@ -738,8 +745,7 @@ land in the agenda.
                     (mu4e-refile-folder . "/Livestorm/All Mail")
                     (smtpmail-smtp-server . "smtp.gmail.com")
                     (smtpmail-smtp-user . "julien.blanchard@livestorm.co")
-                    (smtpmail-starttls-credentials . '(("smtp.gmail.com" 587 nil nil)))
-                    (smtpmail-auth-credentials . '(("smtp.gmail.com" 587 "julien.blanchard@livestorm.co" nil)))
+                    (smtpmail-smtp-service . 587)
                     (smtpmail-default-smtp-server . "smtp.gmail.com")))))
 
   (defun jxx/mu4e-get-junk-folder (&optional msg)
@@ -797,8 +803,7 @@ land in the agenda.
                      (string= (plist-get bookmark :name) "Unread messages"))
                    mu4e-bookmarks)))
     (when unread-bookmark
-      (setf (plist-get unread-bookmark :query)
-            "flag:unread AND NOT flag:trashed AND (maildir:/Gmail/Inbox OR maildir:/Livestorm/Inbox OR maildir:/Sideburns/INBOX OR maildir:/TypedHole/INBOX)")))
+      (setf (plist-get unread-bookmark :query) jxx/mu4e-unread-inbox-query)))
 
   (set-face-underline 'mu4e-header-highlight-face nil)
 
