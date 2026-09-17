@@ -35,6 +35,8 @@ your GNU Emacs.
   ;; Ask for the GPG passphrase in the minibuffer, not a GUI pinentry popup.
   ;; Set early so it applies to the first .authinfo.gpg decryption (e.g. org-gcal).
   (setq epg-pinentry-mode 'loopback)
+  ;; Reuse one passphrase for the whole session
+  (setq plstore-cache-passphrase-for-symmetric-encryption t)
 #+end_src
 
 * Packages config
