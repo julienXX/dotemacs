@@ -2016,6 +2016,62 @@ Auto-install tree-sitter grammars for all languages.
     (when buffer-file-name
       (setq-local buffer-save-without-query t)))
 #+end_src
+
+* Haskell
+
+#+begin_src emacs-lisp
+  (use-package haskell-mode
+    :mode
+    (("\\.hs\\'"  . haskell-mode)
+     ("\\.lhs\\'" . haskell-literate-mode)
+     ("\\.cabal\\'" . haskell-cabal-mode))
+    :hook
+    ((haskell-mode          . eglot-ensure)
+     (haskell-literate-mode . eglot-ensure)
+     (haskell-mode          . interactive-haskell-mode))
+    :custom
+    (haskell-process-type 'cabal-repl)
+    (haskell-indentation-layout-offset 4)
+    (haskell-indentation-left-offset 4)
+    :config
+    (with-eval-after-load 'haskell
+      (define-key interactive-haskell-mode-map (kbd "C-c C-c") #'haskell-compile)
+      (define-key interactive-haskell-mode-map (kbd "C-c C-e") #'jxx/haskell-cabal-run)
+      (advice-add 'haskell-process-do-cabal :around #'jxx/haskell-in-cabal-dir))
+
+    (defun jxx/haskell-in-cabal-dir (orig &rest args)
+      "Call ORIG with `default-directory' bound to the cabal root."
+      (let ((default-directory (or (haskell-cabal-find-dir) default-directory)))
+        (apply orig args)))
+
+    (defun jxx/haskell-cabal-run ()
+      "Run `cabal run' from the cabal root in a compilation buffer."
+      (interactive)
+      (save-some-buffers (not compilation-ask-about-save)
+                         compilation-save-buffers-predicate)
+      (let ((default-directory
+             (or (haskell-cabal-find-dir)
+                 (user-error "No .cabal file found above %s" default-directory))))
+        (compile "cabal run")))
+    (define-key haskell-mode-map (kbd "C-c C-e") #'jxx/haskell-cabal-run)
+
+    ;; Add ~/.ghcup/bin to exec-path so eglot finds haskell-language-server-wrapper
+    (let ((ghcup-bin (expand-file-name "~/.ghcup/bin")))
+      (when (file-directory-p ghcup-bin)
+        (add-to-list 'exec-path ghcup-bin)
+        (setenv "PATH" (concat ghcup-bin path-separator (getenv "PATH")))))
+
+    (with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs
+                   '((haskell-mode haskell-literate-mode)
+                     . ("haskell-language-server-wrapper" "--lsp")))
+      ;; HLS settings: formatter and plugins
+      (setq-default eglot-workspace-configuration
+                    (append eglot-workspace-configuration
+                            '((:haskell . ((formattingProvider . "ormolu")
+                                           (checkProject . t))))))))
+#+end_src
+
 * Javascript
 
 JavaScript is configured in the Modes section using js-ts-mode.
@@ -2037,21 +2093,6 @@ JavaScript is configured in the Modes section using js-ts-mode.
 
     :hook
     (tsx-ts-mode . (lambda () (indent-tabs-mode -1))))
-#+end_src
-
-* Haskell
-#+begin_src emacs-lisp
-  (use-package haskell-mode
-    :hook
-    (haskell-mode . eglot-ensure)
-
-    :custom
-    (haskell-process-type 'auto))
-
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs
-                 '((haskell-mode haskell-literate-mode)
-                   . ("haskell-language-server-wrapper" "--lsp"))))
 #+end_src
 
 * Mastodon
