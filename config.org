@@ -2187,6 +2187,75 @@ Open gopher and gemini links in elpher
       (message "Purged %d entries older than %d days" (length to-delete) days)))
 #+end_src
 
+* IRC
+
+#+begin_src emacs-lisp
+  (use-package erc
+    :ensure nil
+    :commands (erc erc-tls jxx/erc-znc jxx/erc-znc-all)
+    :bind ("C-c i" . erc-track-switch-buffer)
+    :custom
+    (erc-track-enable-keybindings nil)
+    (erc-nick "julienxx")
+    (erc-user-full-name "julienxx")
+    (erc-prompt-for-password nil)
+    (erc-server-reconnect-attempts 5)
+    (erc-server-reconnect-timeout 5)
+    (erc-hide-list '("JOIN" "PART" "QUIT"))
+    (erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                               "324" "329" "332" "333" "353" "477"))
+    (erc-track-exclude-server-buffer t)
+    (erc-fill-function #'erc-fill-wrap)
+    (erc-fill-static-center 18)
+    (erc-interpret-mirc-color t)
+    (erc-kill-buffer-on-part t)
+    (erc-kill-server-buffer-on-quit t)
+    :config
+    (dolist (module '(fill-wrap keep-place nicks scrolltobottom spelling))
+      (add-to-list 'erc-modules module))
+    (setq erc-modules (delq 'autojoin erc-modules))
+    (erc-update-modules))
+
+  (defvar jxx/znc-host "typed-hole.org")
+  (defvar jxx/znc-port 6697)
+  (defvar jxx/znc-user "julien"
+    "ZNC account name, also the login used for the auth-source lookup.")
+  (defvar jxx/znc-client "emacs"
+    "ZNC client identifier, so the bouncer tracks this device separately.")
+  (defvar jxx/znc-nick "julienxx"
+    "IRC nick to use on the networks.")
+  (defvar jxx/znc-networks '("libera" "oftc" "sdf" "tildechat")
+    "ZNC network names, each one a separate connection to the bouncer.")
+
+  (defun jxx/znc-password ()
+    "ZNC password from auth-source for `jxx/znc-host'."
+    (let ((secret (plist-get
+                   (car (auth-source-search :host jxx/znc-host
+                                            :user jxx/znc-user
+                                            :require '(:secret)))
+                   :secret)))
+      (when secret (if (functionp secret) (funcall secret) secret))))
+
+  (defun jxx/erc-znc (network)
+    "Connect to ZNC NETWORK through the bouncer with TLS and show its buffer."
+    (interactive (list (completing-read "ZNC network: " jxx/znc-networks nil t)))
+    (let ((password (or (jxx/znc-password)
+                        (user-error "No ZNC password for %s/%s in auth-source"
+                                    jxx/znc-host jxx/znc-user))))
+      (pop-to-buffer-same-window
+       (erc-tls :server jxx/znc-host
+                :port jxx/znc-port
+                :nick jxx/znc-nick
+                :user (format "%s@%s/%s" jxx/znc-user jxx/znc-client network)
+                :password password
+                :id (intern (concat "znc-" network))))))
+
+  (defun jxx/erc-znc-all ()
+    "Connect to every network in `jxx/znc-networks'."
+    (interactive)
+    (mapc #'jxx/erc-znc jxx/znc-networks))
+#+end_src
+
 * LLM
 
 #+begin_src emacs-lisp
