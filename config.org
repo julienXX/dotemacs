@@ -1317,6 +1317,26 @@ buffers, where the language server is the sole linter (see
            ("\\.cc\\'" . c++-ts-mode)
            ("\\.hh\\'" . c++-ts-mode)))
 
+  (use-package clang-format
+    :ensure t
+    :custom
+    (clang-format-style "file")
+    (clang-format-fallback-style "none")
+    :hook ((c-mode c-ts-mode c++-mode c++-ts-mode) . jxx/clang-format-on-save-mode)
+    :init
+    (defun jxx/clang-format-on-save ()
+      "Run `clang-format-buffer' when a .clang-format is found for this file."
+      (when (and buffer-file-name
+                 (locate-dominating-file buffer-file-name ".clang-format"))
+        (clang-format-buffer)))
+
+    (define-minor-mode jxx/clang-format-on-save-mode
+      "Format the buffer with clang-format before saving."
+      :lighter " cf"
+      (if jxx/clang-format-on-save-mode
+          (add-hook 'before-save-hook #'jxx/clang-format-on-save nil t)
+        (remove-hook 'before-save-hook #'jxx/clang-format-on-save t))))
+
   ;; TOML with tree-sitter
   (use-package toml-ts-mode
     :ensure nil
